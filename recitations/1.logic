@@ -1,0 +1,39 @@
+Logic
+=====
+
+source: [Logic, proving an implication](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec01.pdf)
+
+1 Team Problem: A Mystery
+----------------------------------
+
+1. There are at least 3 people in the cabal
+    - there are either one or two people in the cabal
+2. Stav and David are not both in the cabal 
+    - could be either or, or neither.
+3. if matryna or patrice are in the cabal, then everyone is 
+    - becuase of 1, we know not everyone can be, so if either martyna or patrice were, then the implication would be false. So neither martyna nor patrice can be.
+4. if stav is in the cabal then so is David 
+    - but because of 2, Stav definitely isn't, but David might be
+5. if darren is in cabal, then so is Martyna
+    - but we've already established matryna can't be, so Darren also can't be because T + F => F
+6. if oscar or nick are in the cabal, then tom is not.
+    - it can't be oscar and tom
+    - it can't be nick and tom
+7. if oscar or david are in the cabal then marten is not
+  - it can't be oscar and marten
+  - it can't be david and marten
+
+ALL = {Oscar, Stav, Darren, Patrice, David, Nick, Martyna, Marten, Tom}
+
+DEDUCTION = {Oscar, Nick, Marten, Tom, David}
+
+OPTIONS = {
+    Oscar + Nick
+    Oscar + David
+    Nick + Marten
+    Nick + David
+    Marten + Tom
+    Tom + David
+}
+
+Assuming oscar is, tom and marten are out, meaning one of Nick and David might be
