@@ -1,0 +1,34 @@
+Problem Set 1
+-------------
+
+ - ∀ for every
+ - ∨ or
+ - ∧ and
+ - ⇒ implication
+ - ¬ not
+
+1. Using the following definitions, convert English sentences into predicate logic.
+
+
+	X is the set of people	
+	S(x) ::= x has been a student of 6.042
+	A(x) ::= x got an A on 6.042
+	T(x) ::= x is a TA on 6.042
+	E(x,y) ::= x and y are the same person
+
+a) There are people who have taken 6.042 and have gotten A’s in 6.042
+
+	∃x ∈ X. S(x) ∧ A(x)
+
+b) All people who are 6.042 TA’s and have taken 6.042 got A’s in 6.042
+
+	∃x ∈ X. T(x) ∧ S(x) ⇒ A(x)
+
+c) There are no people who are 6.042 TA’s who did not get A’s in 6.042
+
+	∀x ∈ X. ¬A(x) ⇒ ¬T(x)
+
+d) There are at least three people who are TA’s in 6.042 and have not taken 6.042
+
+	∃x,y,z ∈ X. ¬E(x,y) ∧ ¬E(x,z) ∧ ¬E(y,z) ∧ (T(x) ∧  ¬S(x)) ∧ (T(y) ∧  ¬S(y)) ∧ (T(z) ∧  ¬S(z))
+
