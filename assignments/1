@@ -1,5 +1,5 @@
 Problem Set 1
--------------
+=============
 
  - ∀ for every
  - ∨ or
@@ -7,7 +7,9 @@ Problem Set 1
  - ⇒ implication
  - ¬ not
 
-1. Using the following definitions, convert English sentences into predicate logic.
+## Problem 1
+
+Using the following definitions, convert English sentences into predicate logic.
 
 
 	X is the set of people	
@@ -32,3 +34,61 @@ d) There are at least three people who are TA’s in 6.042 and have not taken 6.
 
 	∃x,y,z ∈ X. ¬E(x,y) ∧ ¬E(x,z) ∧ ¬E(y,z) ∧ (T(x) ∧  ¬S(x)) ∧ (T(y) ∧  ¬S(y)) ∧ (T(z) ∧  ¬S(z))
 
+
+## Problem 2
+
+Use a truth table to prove or disprove the following statements:
+
+a) ¬(P ∨ (Q ∧ R)) = (¬P) ∧ (¬Q ∨ ¬R)
+
+| P | Q | R |  ¬(P ∨ (Q ∧ R)) | (¬P) ∧ (¬Q ∨ ¬R) |
+| F | F | F |        T        |          T        |
+| F | F | T |        T        |          T        |
+| F | T | F |        T        |          T        |
+| F | T | T |        F        |          F        |
+| T | F | F |        F        |          F        |
+| T | F | T |        F        |          F        |
+| T | T | F |        F        |          F        |
+| T | T | T |        F        |          F        |
+
+They're all the same, so they are equal. For fun I ran this in python to verify.
+
+```python
+from itertools import product
+X = product([True, False], repeat=3)
+result = 'Proved'
+for P, Q, R in X:
+	if not (P or (Q and R)) != (not P) and (not Q or not R):
+		print((P, Q, R))
+		result = 'Disproved'
+print(result)
+# >>> Proved
+```
+
+b) ¬(P ∧ (Q ∨ R)) = ¬P ∨ (¬Q ∨ ¬R)
+
+| P | Q | R |  ¬(P ∧ (Q ∨ R)) | ¬P ∨ (¬Q ∨ ¬R) |
+| F | F | F |        T        |        T        |
+| F | F | T |        T        |        T        |
+| F | T | F |        T        |        T        |
+| F | T | T |        T        |        T        |
+| T | F | F |        T        |        T        |
+| T | F | T |        F        |        T        |
+| T | T | F |        F        |        T        |
+| T | T | T |        F        |        F        |
+
+Two discrepancies at TFT and TTF. I ran in through python again, to check my answers.
+
+```python
+from itertools import product
+X = product([True, False], repeat=3)
+result = 'Proved'
+for P, Q, R in X:
+	if not (P and (Q or R)) != (not P or (not Q or not R)):
+		print((P, Q, R))
+		result = 'Disproved'
+print(result)
+# >>> (True, True, False)
+# >>> (True, False, True)
+# >>> Disproved
+```
