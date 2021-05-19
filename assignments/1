@@ -125,3 +125,40 @@ ii) Construct a second expression that always evaluates to false
 
 	((A ⊼ A) ⊼ A) ⊼ ((A ⊼ A) ⊼ A)
 
+
+## Problem 4
+
+12 coins and a balance scale, one coin is fake.
+All real coins weigh the same, but the fake coin weighs less than the rest. 
+In at most 3 weighings, give a strategy that detects the fake coin.
+
+	Reliable Strategy:
+	(guranteed to find fake in exactly 3 weighings)
+
+	First, 6 on each side of the scale, discard the heavier side
+	Second, 3 on each side of scale, discard the heavier side
+	Third, 1 on each side, 
+	    if balanced, the third coin is fake
+	    else the lighter side is the fake
+
+
+	High Risk - High Reward Strategy:
+	(could find fake on first try, might not find it at all)
+	
+	Randomly pick two coins and place on each side of scale.
+		if unbalanced, the lighter side is the fake
+		else discard both coins
+		repeat until fake is found or 3 weighings
+
+
+	Best Stategy
+	(could find fake in 2 weighings, definitely in 3)
+
+	First, 4 on each side, with 4 remainder
+		if balanced, discard both, as fake is in remainder
+		else discard heavier side and remainder
+	Second, 1 on each side, 2 remainder
+		if unbalanced, the lighter side is the fake
+		else discard both
+	Third, (if necessary) 1 on each side
+		the lighter side is the fake
