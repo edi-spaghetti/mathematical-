@@ -4,6 +4,7 @@ Problem Set 1
  - ∀ for every
  - ∨ or
  - ∧ and
+ - ⊼ nand
  - ⇒ implication
  - ¬ not
 
@@ -92,3 +93,35 @@ print(result)
 # >>> (True, False, True)
 # >>> Disproved
 ```
+
+
+## Problem 3
+
+a) Find equivalent expressions using only ⊼ (nand) and ¬ (not)
+
+i) A ∧ B
+
+	¬(A ⊼ B)
+
+ii) A ∨ B
+
+	(¬A) ⊼ (¬B)
+
+iii) A ⇒ B
+
+	¬A ⊼ (¬B)
+
+b) Find an equivalent expression for (¬A) using only nand and grouping parentheses
+
+	(A ⊼ A)
+
+c) The constants true and false themselves may be expressed using only nand.
+
+i) Construct an expression using an arbitrary statement A and nand that evaluates to true regardless of whether A is true or false
+
+	(A ⊼ A) ⊼ A
+
+ii) Construct a second expression that always evaluates to false
+
+	((A ⊼ A) ⊼ A) ⊼ ((A ⊼ A) ⊼ A)
+
