@@ -6,7 +6,15 @@ Problem Set 1
  - ∧ and
  - ⊼ nand
  - ⇒ implication
+ - ⇔ if and only if
  - ¬ not
+ - {R} real numbers (all integers, plus all rational and irrational)
+ - {Z} positive and negative integers {..., -2, -1, 0, 1, 2, ...}
+ - {Z+} positive integers only {1, 2, 3, ...}
+ - {Z≠0} non zero integer
+ - {Q} rational numbers (sum of two integers)
+ - ■ end of proof
+
 
 ## Problem 1
 
@@ -162,3 +170,37 @@ In at most 3 weighings, give a strategy that detects the fake coin.
 		else discard both
 	Third, (if necessary) 1 on each side
 		the lighter side is the fake
+
+## Problem 5
+
+Prove the following statement by proving its contrapositive: 
+if r is irrational, then r¹⸍⁵ is irrational.
+
+	P(r) ::= r is irrational
+	Q(r) ::= r¹⸍⁵ is irrational
+	Theorem: ∀r ∈ {R}. P(r) ⇒ Q(r)
+	Proof: We prove by contrapositive if r¹⸍⁵ is rational, then r is rational.
+	       Assuming r¹⸍⁵ is rational, we can assume the following
+
+lemma 1: [rational numbers are equal to a ratio of two integers](https://proofwiki.org/wiki/Definition:Rational_Number)
+
+			∀c ∈ {Q}. ∃a ∈ {Z}. ∃b ∈ {Z≠0}. c = a / b
+
+		   r¹⸍⁵ = a / b
+		   r   = ⁵√(a/b)
+
+lemma 2: [nth root of non-integers are irrational](https://proofwiki.org/wiki/Nth_Root_of_Integer_is_Integer_or_Irrational)
+		   
+		   if r is rational, then a / b must be an integer.
+		   from lemma 1, a and b are coprime with gcd(a, b) = 1
+		   meaning for a / b to be an integer b must equal 1.
+
+		   r = a⁵ / b⁵
+
+		   if b = 1 then b⁵ = 1
+
+		   r = a⁵
+
+		   Since a is an integer, and integers are closed under multiplication,
+		   it follows that r is also an integer, i.e. rational.
+		   ■
