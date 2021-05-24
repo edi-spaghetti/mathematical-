@@ -204,3 +204,112 @@ lemma 2: [nth root of non-integers are irrational](https://proofwiki.org/wiki/Nt
 		   Since a is an integer, and integers are closed under multiplication,
 		   it follows that r is also an integer, i.e. rational.
 		   ■
+
+## Problem 6
+
+Suppose that w² + x² + y² = z², where w, x, y, and z always denote positive integers.
+Prove the proposition: z is even if and only if w, x, and y are even.
+
+	Theorem:
+	Given the formula w² + x² + y² = z², where w, x, y, and z are positive integers,
+	z is even if and only if w, x and y are all even. 
+
+	Thus: 
+	The domain of discourse is all positive integers or {Z+}
+	E(n) ::= n is even
+	∀w,x,y∃z. ((w² + x² + y² = z²) ⇒ E(z)) ⇔ E(w) ∧ E(x) ∧ E(y)
+
+	Proof: We shall prove by cases
+
+	Lemma 1: All odd integers can be rewritten as '2i + 1' where i is an integer.
+			 ∀k∃i. ¬E(k) ⇒ (2i + 1 = k)
+			 All even integers can be rewritten as '2j' where j is an integer.
+	         ∀k∃j. E(k) ⇒ (2j = k)
+
+	In each case w,x,y and z will be rewritten as multiples of integers a,b,c and d respectively.
+
+	Case 1: All three of {x,y,z} are odd
+			e.g. ¬E(w) ∧ ¬E(x) ∧ ¬E(y)
+
+			From lemma 1, this can be rewritten as;
+
+			(2a + 1)² + (2b + 1)² + (2c + 1)² = (2d)²
+
+			Then following expansion,
+
+			4a² + 1 + 4b² + 1 + 4c² + 1 = 4d²
+			4a² + 4b² + 4c² + 3 = 4d²
+			(4a² + 4b² + 4c² + 3) / 4 = d²
+			a² + b² + c² + ( 3 / 4 ) = d²
+
+			a,b,c and d are integers, meaning their squares are also integers.
+			Integers added together result in an integer, so we get,
+			
+			integer + ( 3 / 4 ) = integer
+
+			Adding 0.75 to any integer cannot result in an integer.
+			This is a contradiction, so {w,x,y} cannot all be odd.
+
+	Case 2: One of {x,y,z} is even, the others are odd
+	        e.g. E(w) ∧ ¬E(x) ∧ ¬E(y)
+
+			From lemma 1, this can be rewritten as;
+
+			(2a)² + (2b + 1)² + (2c + 1)² = (2d)²
+
+			Then following expansion,
+
+			4a² + 4b² + 1 + 4c² + 1 = 4d²
+			4a² + 4b² + 4c² + 2 = 4d²
+			(4a² + 4b² + 4c² + 2) / 4 = d²
+			a² + b² + c² + ( 1 / 2 ) = d²
+			
+			Following the same reasoning as case 1, we end up with,
+			
+			integer + 0.5 = integer
+			
+			Adding 0.5 to any integer cannot result in an integer. 
+			This is a contradiction, so one of {w,x,y} cannot be even.
+
+	Case 3: Two out of {x,y,z} are even, the other is odd
+			e.g. E(w) ∧ E(x) ∧ ¬E(y)
+
+			From lemma 1, this can be rewritten as;
+
+			(2a)² + (2b)² + (2c + 1)² = (2d)²
+
+			Then following expansion,
+
+			4a² + 4b² + 4c² + 1 = 4d²
+			(4a² + 4b² + 4c² + 1) / 4 = d²
+			a² + b² + c² + ( 1 / 4 ) = d²
+
+			Again, we end up with,
+			
+			integer + 0.25 = integer.
+
+			Adding 0.25 to any integer cannot result in an integer.
+			This is a contradiction, so two of {w,x,y} cannot be even. 
+
+	Case 4: They're all even
+			e.g. E(w) ∧ E(x) ∧ E(y)
+
+			From lemma 1, this can be rewritten as;
+			
+			(2a)² + (2b)² + (2c)² = (2d)²
+
+			Then following expansion
+
+			4a² + 4b² + 4c² = 4d²
+			(4a² + 4b² + 4c²) / 4 = d²
+			a² + b² + c² = d²
+
+			As before, this gives us,
+			
+			integer = integer
+			
+			Which is true, so the theorem holds true in this case.
+	
+	Case 4 is the only case where the theorem can be true, thus proving the 
+	if and only if relationship.
+	■
