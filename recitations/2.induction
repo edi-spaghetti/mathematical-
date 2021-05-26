@@ -1,0 +1,47 @@
+Induction
+=========
+
+source: [Induction](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec02.pdf)
+
+1 A Geometric Sum
+-----------------
+
+Use the well ordering principle, and then induction, to prove that this formula is correct for all real values r ≠ 1:
+
+**1 + r + r² + r³ + ... rⁿ = (1 - rⁿ⁺¹) / (1 - r)**
+
+#### Answer
+
+Theorem: 1 + r + r² + r³ + ... rⁿ = (1 - rⁿ⁺¹) / (1 - r) for all real values of r except r = 1
+
+**Proof. by Well Ordering and contradiction.**
+
+We assume the theorem false and collect a set of counterexamples;
+
+	C ::= { n ∈ {N} | 1 + r + r² + r³ + ... rⁿ ≠ (1 - rⁿ⁺¹) / (1 - r) and r ≠ 1}
+
+By our assumption that there can be counterexamples, C is a non-empty set.
+By the well ordering principle, there should be a smallest element, which we shall refer to as c.
+	
+Since c is the smallest counterexample, the theorem should be false for n = c, but true for n < c.
+If n is 0, the theorem is true;
+
+	1 = (1 - r⁰⁺¹) / (1 - r)
+	  = (1 - r) / (1 - r)
+	  = 1
+
+So n must be larger than 0. This also means c - 1 must be a non-negative integer.
+Since it is less that c, the theorem must be true for it;
+
+	1 + r + r² + r³ + ... rᶜ⁻¹ = (1 - rᶜ) / (1 - r)
+
+But then if we add rᶜ to both sides we get;
+
+	1 + r + r² + r³ + ... rᶜ⁻¹ + rᶜ = ( (1 - rᶜ) / (1 - r) ) + rᶜ
+	                               = ( (1 - rᶜ) + ( (1 - r) * rᶜ) ) / (1 - r)
+	                               = (1 - rᶜ + rᶜ - rᶜ⁺¹) / (1 - r)
+	                               = (1 - rᶜ⁺¹) / (1 - r)
+
+So the theorem holds for c after all. This is a contradiction, so the theorem must be true.
+■
+
