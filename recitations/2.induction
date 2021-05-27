@@ -45,3 +45,29 @@ But then if we add rᶜ to both sides we get;
 So the theorem holds for c after all. This is a contradiction, so the theorem must be true.
 ■
 
+**Proof. By induction.**
+
+Let P(n) be the predicate defined like so,
+
+	P(n) ::= n ∈ {N}. {r ∈ {R} | r ≠ 1}. 1 + r + r² + r³ + ... rⁿ = (1 - rⁿ⁺¹) / (1 - r)
+	That is, for any non-negative integer 'n', with r being any real number not equal to 1,
+	1 + r + r² + r³ + ... rⁿ is equal to (1 - rⁿ⁺¹) / (1 - r)
+
+Theorem: P(n) ⇒ P(n + 1)
+
+Base Case: P(0) is true, because both sides equal 1 when n = 0
+
+	1 = (1 - r⁰⁺¹) / (1 - r)
+	  = (1 - r) / (1 - r)
+	  = 1
+
+Inductive Step: Assuming P(n) is true, where n in a non-negative integer, then;
+
+	1 + r + r² + r³ + ... rⁿ + rⁿ⁺¹ = ( (1 - rⁿ⁺¹) / (1 - r) ) + rⁿ⁺¹     (by induction hypothesis)
+
+	                               = ( (1 - rⁿ⁺¹) + ( (1 - r) * rⁿ⁺¹) ) / (1 - r)
+	                               = (1 - rⁿ⁺¹ + rⁿ⁺¹ - rⁿ⁺²) / (1 - r)
+	                               = (1 - rⁿ⁺²) / (1 - r)                (by simple algebra)
+
+This proves P(n + 1), so by the principle of induction it follows that P(n) is true for all non-negative n.
+■
