@@ -1,8 +1,9 @@
 MIT Math for Computer Science
 -----------------------------
 
-This isn't strictly a coding project, but I found some resources online, including 
-[this math for comp sci](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/index.htm)
-course, which I've decided is a key area I need to improve on.
+Contained in this repo is my coursework for MIT's [math for comp sci](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/index.htm).
 
 I'll be uploading the recitations and assignments here so I can keep track of my progress.
+There are final exams which I'll be doing under test conditions, and hopefully find someone to grade it for me.
+
+I'm also building all the coursework with sphinx, you can view it [here](https://edi-spaghetti.github.io/mathematical-/).
