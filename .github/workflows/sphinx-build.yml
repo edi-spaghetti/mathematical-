@@ -9,31 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # setup dependencies
       - uses: actions/checkout@v2
-
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.6'
-
       - run: pip install sphinx
 
+      # build the docs
       - run: make html
 
+      # arrange build so github pages can serve it
       - run: mkdir docs || true
-
       - run: cp -r build/html/* docs/
-
       - run: touch docs/.nojekyll
 
+      # setup git
       - run: git config --global user.email "epfspencer@yahoo.com"
-
       - run: git config --global user.name "Edward Spencer"
-
       - run: git checkout 1-setup-workflow-for-github-pages
 
+      # push back updated docs to sphinx-build branch
       - run: git add --all
-
       - run: git commit -m 'Update sphinx build'
-
       - run: git push origin 1-setup-workflow-for-github-pages
