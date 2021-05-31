@@ -2,7 +2,7 @@ name: Build Sphinx Pages
 
 on:
   push:
-    branches: [sphinx-build, master]
+    branches: [sphinx-build, main]
 
 jobs:
   build:
@@ -17,20 +17,21 @@ jobs:
           python-version: '3.6'
       - run: pip install sphinx
 
-      # build the docs
-      - run: make html
-
-      # arrange build so github pages can serve it
-      - run: mkdir docs || true
-      - run: cp -r build/html/* docs/
-      - run: touch docs/.nojekyll
-
       # setup git
       - run: git config --global user.email "epfspencer@yahoo.com"
       - run: git config --global user.name "Edward Spencer"
+      - run: git fetch origin sphinx-build
+      - run: git branch -f sphinx-build origin/sphinx-build
       - run: git checkout sphinx-build
+
+      # rebuild the docs
+      - run: make html
+      - run: if [[ -d docs ]]; then rm -rf docs; fi
+      - run: mkdir docs
+      - run: cp -r build/html/* docs/
+      - run: touch docs/.nojekyll
 
       # push back updated docs to sphinx-build branch
       - run: git add --all
       - run: git commit -m 'Update sphinx build'
-      - run: git push origin sphinx-build
+      - run: git push origin sphinx-build --force
