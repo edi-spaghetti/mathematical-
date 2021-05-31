@@ -2,7 +2,7 @@ name: Build Sphinx Pages
 
 on:
   push:
-    branches: [1-setup-workflow-for-github-pages, master]
+    branches: [sphinx-build, master]
 
 jobs:
   build:
@@ -28,9 +28,9 @@ jobs:
       # setup git
       - run: git config --global user.email "epfspencer@yahoo.com"
       - run: git config --global user.name "Edward Spencer"
-      - run: git checkout 1-setup-workflow-for-github-pages
+      - run: git checkout sphinx-build
 
       # push back updated docs to sphinx-build branch
       - run: git add --all
       - run: git commit -m 'Update sphinx build'
-      - run: git push origin 1-setup-workflow-for-github-pages
+      - run: git push origin sphinx-build
