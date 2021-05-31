@@ -27,7 +27,7 @@ For an extra challenge (because I'm a nerd) I've defined these here;
 
 .. math:: incabal(x) ::= \text{x is in the cabal}
 
-.. math:: Cabal ::= \{ x \in Staff | incabal(x) \}
+.. math:: Cabal ::= \{ x \in Staff \mid incabal(x) \}
 
 Translation
 """""""""""
