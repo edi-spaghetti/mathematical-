@@ -11,3 +11,4 @@ The important thing is not just getting the right answer, but being able to stru
 	:maxdepth: 2
 
 	logic
+	induction
