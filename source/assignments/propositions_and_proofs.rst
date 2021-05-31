@@ -187,7 +187,7 @@ ii) :math:`A \lor B`
 
 iii) :math:`A \Rightarrow B`
 
-.. math:: \lnotA \barwedge (\lnot B)
+.. math:: \lnot A \barwedge (\lnot B)
 
 b) *Find an equivalent expression for (* :math:`\lnot` *A) using only nand and grouping parentheses*
 
