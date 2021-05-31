@@ -2,7 +2,7 @@ name: Build Sphinx Pages
 
 on:
   push:
-    branches: [sphinx-build, main]
+    branches: [main]
 
 jobs:
   build:
@@ -20,9 +20,9 @@ jobs:
       # setup git
       - run: git config --global user.email "epfspencer@yahoo.com"
       - run: git config --global user.name "Edward Spencer"
-      - run: git fetch origin sphinx-build
-      - run: git branch -f sphinx-build origin/sphinx-build
-      - run: git checkout sphinx-build
+
+      # force build branch to current head
+      - run: git branch -f sphinx-build
 
       # rebuild the docs
       - run: make html
@@ -32,6 +32,7 @@ jobs:
       - run: touch docs/.nojekyll
 
       # push back updated docs to sphinx-build branch
+      - run: git checkout sphinx-build
       - run: git add --all
       - run: git commit -m 'Update sphinx build'
       - run: git push origin sphinx-build --force
