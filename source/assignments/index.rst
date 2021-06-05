@@ -9,3 +9,4 @@ If you spot something I've done wrong, please let me know!
 	:maxdepth: 2
 
 	propositions_and_proofs
+	number_theory
