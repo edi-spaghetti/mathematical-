@@ -92,3 +92,79 @@ This leaves 2 options for :math:`a_5`;
 This gives us a *3-chain* in all cases, which contradicts our proposition.
 So the theory must be true - any sequence of five distinct integers must contain a *3-chain*.
 :math:`\blacksquare`
+
+
+Problem 2
+---------
+
+Prove by either the Well Ordering Principle or induction that for all nonnegative integers, n:
+
+.. math::
+
+	\sum_{i=0}^n i^3 = \bigg( {n(n+1) \over 2} \bigg)^2
+
+**Proof**. By induction.
+
+Let P(n) be the predicate defined like so,
+
+.. math::
+
+	P(n)\ ::=\ \forall n \in \Bbb Z^+. n^3 = \bigg( {n(n+1) \over 2} \bigg)^2
+
+**Theorem**: :math:`P(n) \Rightarrow P(n + 1)`
+
+**Base Case**: P(0) is true, because both sides equal 0 when n = 0
+
+.. math::
+
+	\begin{aligned}
+
+	0^3 &= \bigg( {0(0+1) \over 2} \bigg)^2 \cr
+
+	0^3 &= \bigg( {0 \cdot 1 \over 2} \bigg)^2 \cr
+
+	0^3 &= \bigg( {0 \over 2} \bigg)^2 \cr
+
+	0^3 &= 0^2 \cr
+
+	0 &= 0
+
+	\end{aligned}
+
+**Inductive Step**: Assuming P(n) is true, we prove P(n + 1) is true;
+
+.. math::
+
+	\begin{aligned}
+
+	0^3 + 1^3 + 2^3 + \dots + (n + 1)^3 &= \bigg( {n(n + 1) \over 2} \bigg)^2 + (n + 1)^3
+		\qquad && \text{(by inductive step)} \cr
+
+	&= { n^4 + 2n^3 + n^2 \over 4} + n^3 + 3n^2 + 3n + 1
+		\qquad && \text{(bracket expansion)} \cr
+
+	&= { n^4 + 2n^3 + n^2 \over 4} + {4n^3 + 12n^2 + 12n + 4 \over 4 }
+		\qquad && \text{(multiply up to common denominator)} \cr
+
+	&= { n^4 + 6n^3 + 13n^2 + 12n + 4 \over 4 }
+		\qquad && \text{(add numerators)} \cr
+
+	&= { (n + 1)(n^3 + 5n^2 + 8n + 4) \over 4 }
+		\qquad && \text{(factor out n + 1)} \cr
+
+	&= { (n + 1)(n + 2)(n^2 + 3n + 2) \over 4 }
+		\qquad && \text{(factor out n + 2)} \cr
+
+	&= { (n + 1)(n + 2)(n + 1)(n + 2) \over 4 }
+		\qquad && \text{(factor out another n + 1)} \cr
+
+	&= { \big( (n + 1)(n + 2) \big)^2 \over 2^2 }
+		\qquad && \text{(simplify power of fraction)} \cr
+
+	&= \bigg( { (n + 1)(n + 2) \over 2 } \bigg)^2
+		\qquad && \text{(simplify power of fraction again)} \cr
+
+	\end{aligned}
+
+This proves P(n + 1), so by the principle of induction it follows that P(n) is true for all non-negative integers n.
+:math:`\blacksquare`
