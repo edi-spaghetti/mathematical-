@@ -490,3 +490,48 @@ Since 4(n - 1) < 4n, if there are fewer than n initially infected,
 the boundary length can never reach the boundary length where every position is infected.
 Therefore, the whole class will never be completely infected.
 :math:`\blacksquare`
+
+
+Problem 4
+---------
+
+Find the flaw in the following bogus proof that :math:`a^n = 1` for all nonnegative integers n, whenever a is a nonzero real number.
+
+**Proof**. The *bogus* proof is by induction on n, with hypothesis
+
+.. math::
+
+	P(n) ::= \forall k \le n. a^k = 1
+
+where k is a nonnegative integer valued variable.
+
+**Base Case**: P(0) is equivalent to :math:`a^0 = 1`, which is true by definition of :math:`a^0`.
+(By convention, this holds even if a = 0.)
+
+**Inductive Step**: By induction hypothesis, :math:`a^k = 1` for all :math:`k \in \Bbb N` such that :math:`k \le n`.
+But then
+
+.. math::
+
+	a^{n+1} = {a^n \cdot a^n \over a^{n-1}} = {1 \cdot 1 \over 1} = 1,
+
+which implies that P(n + 1) holds.
+It follows by induction that P(n) holds for all :math:`n \in \Bbb N`,
+and in particular, :math:`a^n = 1` holds for all :math:`n \in \Bbb N`.
+
+.. raw:: html
+
+	<hr>
+
+Firstly, the proof introduces an additional variable k in the definition of P.
+It also does not specify that a is a nonzero real number.
+It should be;
+
+.. math::
+
+	P(n) ::= \forall a \in \Bbb R_{\ne 0}. \forall n \in \Bbb N^{+}. a^n = 1
+
+Next, in the base case, they show that P(0) holds even if a = 0, which contradicts 'a' being a *nonzero* real number.
+
+Then in the inductive step they use the reasoning that :math:`a^k = 1` where k is less than or equal to n.
+However, they then prove :math:`a^{n+1} = a^k` - but :math:`n+1 \ne k` because k must be equal or less than n.
