@@ -168,3 +168,325 @@ Let P(n) be the predicate defined like so,
 
 This proves P(n + 1), so by the principle of induction it follows that P(n) is true for all non-negative integers n.
 :math:`\blacksquare`
+
+Problem 3
+---------
+
+During 6.042, the students are sitting in an n × n grid.
+A sudden outbreak of beaver flu (a rare variant of bird flu that lasts forever;
+symptoms include yearning for problem sets and craving for ice cream study sessions)
+causes some students to get infected.
+Here is an example where n = 6 and infected students are marked x.
+
+.. table::
+
+	+---+---+---+---+---+---+
+	| x | o | o | o | x | o |
+	+---+---+---+---+---+---+
+	| o | x | o | o | o | o |
+	+---+---+---+---+---+---+
+	| o | o | x | x | o | o |
+	+---+---+---+---+---+---+
+	| o | o | o | o | o | o |
+	+---+---+---+---+---+---+
+	| o | o | x | o | o | o |
+	+---+---+---+---+---+---+
+	| o | o | o | x | o | x |
+	+---+---+---+---+---+---+
+
+
+Now the infection begins to spread every minute (in discrete time-steps).
+Two students are considered adjacent if they share an edge
+(i.e., front, back, left or right, but NOT diagonal);
+thus, each student is adjacent to 2, 3 or 4 others.
+A student is infected in the next time step if either
+-  the student was previously infected (since beaver flu lasts forever), or
+- the student is adjacent to at least two already-infected students.
+In the example, the infection spreads as shown below.
+
+.. list-table::
+
+	* - .. table::
+
+		+---+---+---+---+---+---+
+		| x | x |   |   | x |   |
+		+---+---+---+---+---+---+
+		| x | x | x |   |   |   |
+		+---+---+---+---+---+---+
+		|   | x | x | x |   |   |
+		+---+---+---+---+---+---+
+		|   |   | x |   |   |   |
+		+---+---+---+---+---+---+
+		|   |   | x | x |   |   |
+		+---+---+---+---+---+---+
+		|   |   | x | x | x | x |
+		+---+---+---+---+---+---+
+
+	  - .. table::
+
+		+---+---+---+---+---+---+
+		| x | x | x |   | x |   |
+		+---+---+---+---+---+---+
+		| x | x | x | x |   |   |
+		+---+---+---+---+---+---+
+		| x | x | x | x |   |   |
+		+---+---+---+---+---+---+
+		|   | x | x | x |   |   |
+		+---+---+---+---+---+---+
+		|   |   | x | x | x |   |
+		+---+---+---+---+---+---+
+		|   |   | x | x | x | x |
+		+---+---+---+---+---+---+
+
+	  - .. table::
+
+		+---+---+---+---+---+---+
+		| x | x | x | x | x |   |
+		+---+---+---+---+---+---+
+		| x | x | x | x | x |   |
+		+---+---+---+---+---+---+
+		| x | x | x | x |   |   |
+		+---+---+---+---+---+---+
+		| x | x | x | x | x |   |
+		+---+---+---+---+---+---+
+		|   | x | x | x | x | x |
+		+---+---+---+---+---+---+
+		|   |   | x | x | x | x |
+		+---+---+---+---+---+---+
+
+	* - 1
+	  - 2
+	  - 3
+
+In this example, over the next few time-steps, all the students in class become infected.
+
+*Theorem. If fewer than n students in class are initially infected, the whole class will never
+be completely infected.*
+
+Prove this theorem.
+
+First, we look at how the infection can be spread.
+We used x to represent an infected position, and other letters to represent adjacent positions.
+For any given infected position there are 4 possible adjacent positions to infect;
+
+.. list-table::
+
+	* - .. table::
+
+		+---+---+---+---+
+		|   | 1 | 2 | 3 |
+		+===+===+===+===+
+		| 1 |   | a |   |
+		+---+---+---+---+
+		| 2 | d | x | b |
+		+---+---+---+---+
+		| 3 |   | c |   |
+		+---+---+---+---+
+
+	* - fig. 1
+
+In figure 1, we can see the four positions: above (a), right (b), bottom (c) and left (d).
+For consistency I'll label all example edges clockwise from the top.
+
+These form the boundary of infection spread from any given time step.
+Note that for the purposes of counting the length of the boundary,
+an edge is considered *from* an infected position *to* a vacant one.
+So overlapping edges count twice, occupied positions don't count,
+and positions are considered vacant even if they are off the board.
+
+.. list-table::
+
+	* - .. table::
+
+		+---+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |   |
+		+===+===+===+===+===+===+
+		| 1 |   | a |   | e |   |
+		+---+---+---+---+---+---+
+		| 2 | d | x |b h| x | f |
+		+---+---+---+---+---+---+
+		| 3 |   | c |   | g |   |
+		+---+---+---+---+---+---+
+
+	  - .. table::
+
+		+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |
+		+===+===+===+===+===+
+		| 1 |   | a | b |   |
+		+---+---+---+---+---+
+		| 2 | f | x | x | c |
+		+---+---+---+---+---+
+		| 3 |   | e | d |   |
+		+---+---+---+---+---+
+
+	* - fig. 2
+
+	  - fig. 3
+
+As you can see from figure 2, the position at (2, 2) has two edges (b and h),
+one from the left x, and one from the right x - making the total length of the boundary 8.
+Also note edges d and f spread outside the original board where n=3.
+
+In figure 3 you can see the infected positions at (1, 2) and (2, 2) are adjacent,
+so there are only 6 edges in the boundary in total.
+
+**Theorem 1**: The boundary length never increases.
+
+**Proof**: By cases.
+
+Let's look at how the boundary changes when infection spreads.
+Per the rules, a position only becomes infected if there are 2 or more adjacent infected positions.
+Since there are maximum four adjacent positions, this means there are three different possibilities;
+2, 3 or 4 adjacent infected positions.
+
+*Case 1*: 2 adjacent infected positions
+
+.. list-table::
+
+	* - .. table::
+
+		+---+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |   |
+		+===+===+===+===+===+===+
+		| 1 |   | a |   | e |   |
+		+---+---+---+---+---+---+
+		| 2 | d | x |b h| x | f |
+		+---+---+---+---+---+---+
+		| 3 |   | c |   | g |   |
+		+---+---+---+---+---+---+
+
+	  - .. table::
+
+		+---+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |   |
+		+===+===+===+===+===+===+
+		| 1 |   | a | i | e |   |
+		+---+---+---+---+---+---+
+		| 2 | d | x | x | x | f |
+		+---+---+---+---+---+---+
+		| 3 |   | c | j | g |   |
+		+---+---+---+---+---+---+
+
+	* - fig. 4a
+
+	  - fig. 4b
+
+In figure 4a there are 8 edges in the boundary (a-h).
+One time step later, in figure 4b, 2 edges (b and h) have been removed, and 2 have been added (i and j).
+This gives us no net change in boundary length, there are still 8 edges,
+so the boundary has not increased.
+
+*Case 2*: 3 adjacent infected positions
+
+.. list-table::
+
+	* - .. table::
+
+		+---+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |   |
+		+===+===+===+===+===+===+
+		|   |   |   | i |   |   |
+		+---+---+---+---+---+---+
+		| 1 |   |a l| x |e j|   |
+		+---+---+---+---+---+---+
+		| 2 | d | x |bhk| x | f |
+		+---+---+---+---+---+---+
+		| 3 |   | c |   | g |   |
+		+---+---+---+---+---+---+
+
+	  - .. table::
+
+		+---+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |   |
+		+===+===+===+===+===+===+
+		|   |   |   | i |   |   |
+		+---+---+---+---+---+---+
+		| 1 |   |a l| x |e j|   |
+		+---+---+---+---+---+---+
+		| 2 | d | x | x | x | f |
+		+---+---+---+---+---+---+
+		| 3 |   | c | m | g |   |
+		+---+---+---+---+---+---+
+
+	* - fig. 5a
+
+	  - fig. 5b
+
+In figure 5a there are 12 edges in the boundary (a-k).
+On time step later in figure 5b, we lose 3 (b, h and k), but gain 1 (m).
+This gives us a net loss of 2 edges, so the boundary has not increased.
+
+.. note::
+
+	positions (1, 1) and (3, 1) also have overlapping edges, so would spread the infection on the time step.
+	However, they are just variations on case 1, so I didn't consider them in figure 5b,
+	because we have already demonstrated 2 adjacent infections results in no net gain of boundary length.
+
+
+*Case 3*: 4 adjacent infected positions
+
+.. list-table::
+
+	* - .. table::
+
+		+---+---+---+----+---+---+
+		|   |   | 1 | 2  | 3 |   |
+		+===+===+===+====+===+===+
+		|   |   |   | i  |   |   |
+		+---+---+---+----+---+---+
+		| 1 |   |a l| x  |e j|   |
+		+---+---+---+----+---+---+
+		| 2 | d | x |bhkm| x | f |
+		+---+---+---+----+---+---+
+		| 3 |   |c p| x  |g n|   |
+		+---+---+---+----+---+---+
+		|   |   |   | o  |   |   |
+		+---+---+---+----+---+---+
+
+	  - .. table::
+
+		+---+---+---+---+---+---+
+		|   |   | 1 | 2 | 3 |   |
+		+===+===+===+===+===+===+
+		|   |   |   | i |   |   |
+		+---+---+---+---+---+---+
+		| 1 |   |a l| x |e j|   |
+		+---+---+---+---+---+---+
+		| 2 | d | x | x | x | f |
+		+---+---+---+---+---+---+
+		| 3 |   |c p| x |g n|   |
+		+---+---+---+---+---+---+
+		|   |   |   | o |   |   |
+		+---+---+---+---+---+---+
+
+	* - fig. 6a
+
+	  - fig. 6b
+
+In figure 6a there are 16 edges in the boundary (a-p).
+In figure 6b (on time step later) we lose 4 edges (b, h, k and m) and gain no new edges.
+This gives us a net loss of 4 edges, so again, the boundary length has not increased.
+
+.. note::
+
+	As before, the overlapping edges in (1, 1), (3, 1), (1, 3) and (3, 3) are the same as case 1,
+	which we have shown doesn't result in any net gain to boundary length.
+
+In each case, the boundary did not increase so theory holds that the boundary length cannot increase.
+:math:`\blacksquare`
+
+**Theorem**: If fewer than n students in class are initially infected,
+the whole class will never be completely infected.
+
+As shown in figure 1, the maximum adjacent edges to any position is 4.
+If less than n students are initially infected, then the maximum length the boundary can be is 4(n - 1).
+
+As shown in figure 2 and 3, edges only count towards boundary length if they are outside the original board, or if the position is not already infected.
+Therefore, length of the boundary when every position is infected is 4n.
+
+As proved in theorem 1, the length of the boundary cannot increase.
+Since 4(n - 1) < 4n, if there are fewer than n initially infected,
+the boundary length can never reach the boundary length where every position is infected.
+Therefore, the whole class will never be completely infected.
+:math:`\blacksquare`
