@@ -535,3 +535,93 @@ Next, in the base case, they show that P(0) holds even if a = 0, which contradic
 
 Then in the inductive step they use the reasoning that :math:`a^k = 1` where k is less than or equal to n.
 However, they then prove :math:`a^{n+1} = a^k` - but :math:`n+1 \ne k` because k must be equal or less than n.
+
+Problem 5
+---------
+
+Let the sequence :math:`G_0, G_1, G_2, \dots` be defined recursively as follows:
+:math:`G_0 = 0, G_1 = 1`, and :math:`G_n = 5G_{n−1} − 6G_{n−2}`, for every :math:`n \in \Bbb N, n \ge 2.
+Prove that for all :math:`n \in N, G_n = 3^n − 2^n`.
+
+.. raw:: html
+
+	<hr>
+
+The recursive data type G of non-negative integers over :math:`\Bbb N`, are defined as follows,
+
+- **Base Case**:
+  1. :math:`G_0` is 0
+  2. :math:`G_1` is 1
+
+- **Constructor Case**: if :math:`n - 1 \in G` and :math:`n - 2 \in G` then :math:`G_n = 5 \cdot (n - 1) - 6 \cdot (n - 2)`
+
+Let P(n) be the predicate, defined as follows,
+
+.. math::
+
+	P(n) = 5G_{n-1} - 6G_{n-2} = 3^n - 2^n
+
+**Theorem**: P(n) holds for all n :math:`\in \Bbb N`
+
+**Proof**. By structural induction on the definition that :math:`n \in G`, using P(n) as the induction hypothesis.
+
+**Base Case**: There are two base cases which we will demonstrate.
+
+1. P(0)
+
+   .. math::
+
+	  \begin{aligned}
+
+	  0 &= 3^0 - 2^0
+
+	  &= 1 - 1
+
+	  \end{aligned}
+
+   By convention, any real number to the power 0 is 1.
+
+2. P(1)
+
+   .. math::
+
+	   \begin{aligned}
+
+	   1 &= 3^1 - 2^1
+
+	   &= 3 - 2
+
+	   \end{aligned}
+
+**Constructor Case**: We must show P(n) holds given that P(n-1) and P(n-2) hold.
+
+.. math::
+
+	\begin{aligned}
+
+	5(3^{n-1} - 2^{n-1}) - 6(3^{n-2} - 2^{n-2}) &= 3^n - 2^n
+		\qquad && \text{(by inductive hypothesis)} \cr
+
+	5({3^n \over 3^1}) - 5({2^n \over 2^1}) - 6({3^n \over 3^2}) - 6(-{2^n \over 2^2}) &=
+		\qquad && \text{(by quotient rule)} \cr
+
+	{12 \cdot 5 \cdot 3^n \over 36} - {18 \cdot 5 \cdot 2^n) \over 36} -
+	{4 \cdot 6 \cdot 3^n \over 36} - \bigg( - {9 \cdot 6 \cdot 2^n \over 36} \bigg) &=
+		\qquad && \text{(multiply up to common factor)} \cr
+
+	{12 \cdot 5 \cdot 3^n \over 36} - {18 \cdot 5 \cdot 2^n) \over 36} -
+	{4 \cdot 6 \cdot 3^n \over 36} + {9 \cdot 6 \cdot 2^n \over 36} &=
+		\qquad && \text{(remove double negative)} \cr
+
+	{60 \cdot 3^n - 90 \cdot 2^n - 24 \cdot 3^n + 54 \cdot 2^n \over 36} &=
+		\qquad && \text{(add and simplify)} \cr
+
+	{\bcancel{36} \cdot 3^n - \bcancel{36} \cdot 2^n \over \bcancel{36}} &=
+		\qquad && \text{(remove common divisor)} \cr
+
+	3^n - 2^n &=
+
+	\end{aligned}
+
+This proves P(n) holds as required, completing the constructor case.
+By structural induction we conclude that P(n) holds of all :math:`n \in \Bbb N. \blacksquare`
