@@ -918,3 +918,143 @@ As shown in part (e), for any given move, the parity of the row number containin
 
 Therefore, no sequence of moves transforms the initial configuration into the desired configuration.
 :math:`\blacksquare`
+
+Problem 7
+---------
+
+There are two types of creature on planet Char, Z-lings and B-lings.
+Furthermore, every creature belongs to a particular generation.
+The creatures in each generation reproduce according to certain rules and then die off.
+The subsequent generation consists entirely of their offspring.
+
+The creatures of Char pair with a mate in order to reproduce.
+First, as many Z-B pairs as possible are formed.
+The remaining creatures form Z-Z pairs or B-B pairs, depending on whether there is an excess of Z-lings or of B-lings.
+If there are an odd number of creatures, then one in the majority species dies without reproducing.
+The number and type of offspring is determined by the types of the parents
+
+- If both parents are Z-lings, then they have three Z-ling offspring.
+
+- If both parents are B-lings, then they have two B-ling offspring and one Z-ling offspring.
+
+- If there is one parent of each type, then they have one offspring of each type.
+
+There are 200 Z-lings and 800 B-lings in the first generation.
+Use induction to prove that the number of Z-lings will always be at most twice the number of B-lings
+
+.. raw:: html
+
+	<hr>
+
+First we define,
+
+.. math::
+
+	z_n ::= \text{ the number of z-lings at generation n}
+
+	b_n ::= \text{ the number of b-lings at generation n}
+
+where n is any non-negative integer.
+The calculation for the number of z-lings or b-lings in the next generation is split into 3 cases,
+
+1. :math:`z_n = b_n`
+
+   .. math::
+
+       z_{n+1} = z_n
+
+       b_{n+1} = b_n
+
+2. :math:`z_n > b_n`
+
+   .. math::
+
+       z_{n+1} = 3 \cdot \left\lfloor {z_n - b_n \over 2} \right\rfloor
+
+       b_n = b_n
+
+3. :math:`z_n < b_n`
+
+   .. math::
+
+       z_{n+1} = \left\lfloor {b_n - z_n \over 2} \right\rfloor
+
+       b_{n+1} = 2 \cdot \left\lfloor {b_n - z_n \over 2} \right\rfloor
+
+**Theorem**:
+
+.. math::
+
+	\forall n \in \Bbb N. z_0 = 200, b_0 = 800. z_n \le b_n
+
+That is, the number of Z-lings is less than or equal to the number of B-lings,
+for any non-negative integer generation n, with a starting population of 200 Z-lings and 800 B-lings.
+
+**Proof**. By strong induction, letting the induction hypothesis P(n) be defined as follows,
+
+.. math::
+
+	P(n) ::= z_0 \le b_0 \text{ and } z_1 \le b_1 \text{ and } \dots \text{ and } z_n \le b_n
+
+**Base Case**: P(0) is true because :math:`200 \le 800`.
+
+**Inductive Step**: Assuming P(n) is true, we must prove P(n + 1) is also true.
+
+There are two cases to consider.
+
+If :math:`z_{n} = b_{n}` then, per the constructor, :math:`z_{n+1} = z_{n}`,
+and :math:`b_{n+1} = b_{n+1}`, so :math:`z_{n+1} \le b_{n+1}` and the theory holds in this case.
+
+If :math:`z_n < b_n` then, per the constructor,
+
+.. math::
+
+	\begin{aligned}
+
+	z_{n+1} &= \left\lfloor {b_n - z_n \over 2} \right\rfloor \cr
+
+	b_{n+1} &= 2 \cdot \left\lfloor {b_n - z_n \over 2} \right\rfloor \cr
+
+	\end{aligned}
+
+So by inductive hypothesis,
+
+.. math::
+
+	 \left\lfloor {b_n - z_n \over 2} \right\rfloor \le 2 \cdot \left\lfloor {b_n - z_n \over 2} \right\rfloor
+
+Since :math:`z_n < b_n` then :math:`b_n - z_n` must be a non-negative integer.
+
+.. math::
+
+	\begin{aligned}
+
+	i &::= \text{ a non-negative integer} \cr
+
+	\left\lfloor {i \over 2} \right\rfloor &\le 2 \cdot \left\lfloor {i \over 2} \right\rfloor \cr
+
+	\end{aligned}
+
+Dividing a non-negative integer by 2 gives a non-negative real number.
+
+.. math::
+
+	\begin{aligned}
+
+	r &::= \text{ a non-negative real number} \cr
+
+	\left\lfloor r \right\rfloor &\le 2 \cdot \left\lfloor r \right\rfloor \cr
+
+	\end{aligned}
+
+Flooring a non-negative real number gives a non-negative integer.
+
+.. math::
+
+	i \le 2 \cdot i
+
+An integer multiplied by an integer > 1 (in this case, 2) will result in a larger integer.
+This proves P(n + 1), so by the principle of induction it follows that P(n) for any non-negative integer n.
+
+If :math:`z_n \le b_n` then :math:`z_n` must be less than :math:`2 b_n`, so the theory holds.
+:math:`\blacksquare`
