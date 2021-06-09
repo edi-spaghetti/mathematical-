@@ -540,7 +540,7 @@ Problem 5
 ---------
 
 Let the sequence :math:`G_0, G_1, G_2, \dots` be defined recursively as follows:
-:math:`G_0 = 0, G_1 = 1`, and :math:`G_n = 5G_{n−1} − 6G_{n−2}`, for every :math:`n \in \Bbb N, n \ge 2.
+:math:`G_0 = 0, G_1 = 1`, and :math:`G_n = 5G_{n−1} − 6G_{n−2}`, for every :math:`n \in \Bbb N, n \ge 2`.
 Prove that for all :math:`n \in N, G_n = 3^n − 2^n`.
 
 .. raw:: html
@@ -550,7 +550,9 @@ Prove that for all :math:`n \in N, G_n = 3^n − 2^n`.
 The recursive data type G of non-negative integers over :math:`\Bbb N`, are defined as follows,
 
 - **Base Case**:
+
   1. :math:`G_0` is 0
+
   2. :math:`G_1` is 1
 
 - **Constructor Case**: if :math:`n - 1 \in G` and :math:`n - 2 \in G` then :math:`G_n = 5 \cdot (n - 1) - 6 \cdot (n - 2)`
@@ -625,3 +627,294 @@ Let P(n) be the predicate, defined as follows,
 
 This proves P(n) holds as required, completing the constructor case.
 By structural induction we conclude that P(n) holds of all :math:`n \in \Bbb N. \blacksquare`
+
+Problem 6
+---------
+
+In the 15-puzzle, there are 15 lettered tiles and a blank square arranged in a 4 × 4 grid.
+Any lettered tile adjacent to the blank square can be slid into the blank.
+For example, a sequence of two moves is illustrated below:
+
+.. list-table::
+
+	* - .. table::
+
+		+-----+-----+-----+-----+
+		|  A  |  B  |  C  |  D  |
+		+-----+-----+-----+-----+
+		|  E  |  F  |  G  |  H  |
+		+-----+-----+-----+-----+
+		|  I  |  J  |  K  |  L  |
+		+-----+-----+-----+-----+
+		|  M  |  O  |  N  |     |
+		+-----+-----+-----+-----+
+
+	  - :math:`\rightarrow`
+
+	  - .. table::
+
+		+-----+-----+-----+-----+
+		|  A  |  B  |  C  |  D  |
+		+-----+-----+-----+-----+
+		|  E  |  F  |  G  |  H  |
+		+-----+-----+-----+-----+
+		|  I  |  J  |  K  |  L  |
+		+-----+-----+-----+-----+
+		|  M  |  O  |     |  N  |
+		+-----+-----+-----+-----+
+
+	  - :math:`\rightarrow`
+
+	  - .. table::
+
+		+-----+-----+-----+-----+
+		|  A  |  B  |  C  |  D  |
+		+-----+-----+-----+-----+
+		|  E  |  F  |  G  |  H  |
+		+-----+-----+-----+-----+
+		|  I  |  J  |     |  L  |
+		+-----+-----+-----+-----+
+		|  M  |  O  |  K  |  N  |
+		+-----+-----+-----+-----+
+
+In the leftmost configuration shown above, the O and N tiles are out of order.
+Using only legal moves, is it possible to swap the N and the O, while leaving all the other tiles in their original position and the blank in the bottom right corner?
+In this problem, you will prove the answer is “no”.
+
+**Theorem**. No sequence of moves transforms the board below on the left into the board below on the right.
+
+.. list-table::
+
+	* - .. table::
+
+		+-----+-----+-----+-----+
+		|  A  |  B  |  C  |  D  |
+		+-----+-----+-----+-----+
+		|  E  |  F  |  G  |  H  |
+		+-----+-----+-----+-----+
+		|  I  |  J  |  K  |  L  |
+		+-----+-----+-----+-----+
+		|  M  |  O  |  N  |     |
+		+-----+-----+-----+-----+
+
+	  - :math:`\rightarrow`
+
+	  - .. table::
+
+		+-----+-----+-----+-----+
+		|  A  |  B  |  C  |  D  |
+		+-----+-----+-----+-----+
+		|  E  |  F  |  G  |  H  |
+		+-----+-----+-----+-----+
+		|  I  |  J  |  K  |  L  |
+		+-----+-----+-----+-----+
+		|  M  |  N  |  O  |     |
+		+-----+-----+-----+-----+
+
+(a) We define the “order” of the tiles in a board to be the sequence of tiles on the board reading from the top row to the bottom row and from left to right within a row.
+For example, in the right board depicted in the above theorem, the order of the tiles is A, B, C, D, E, etc.
+Can a row move change the order of the tiles? Prove your answer.
+
+.. raw:: html
+
+	<hr>
+
+If we take a tile in position p where :math:`p \in \{\Bbb N | 1 \le n \le n^2\}` and :math:`n = 4`,
+then we can define a row move as,
+
+1. :math:`p_1 = p_0 - 1`, move left one tile within a row
+
+2. :math:`p_1 = p_0 + 1`, move right one tile within a row
+
+By the rules of the game, a tile can only move to an empty position,
+so between positions :math:`p_0 \rightarrow p_1` there are zero tiles.
+
+This means in :math:`p_1` the tile has not moved before or after any other tiles, so the order is not changed.
+More formally, the number of pairs of letters :math:`L_1` and :math:`L_2` in which :math:`L_1` is before :math:`L_2` in the order of the tiles before the move,
+and later in the order of the tiles after the move, remains the same.
+:math:`\blacksquare`
+
+(b) How many pairs of tiles will have their relative order changed by a column move?
+More formally, for how many pairs of letters :math:`L_1` and :math:`L_2` will :math:`L_1` appear earlier in the order of the tiles than :math:`L_2` before the column move and later in the order after the column move?
+Prove your answer correct.
+
+.. raw:: html
+
+	<hr>
+
+We can define a column move as
+
+1. :math:`p_1 = p_0 - n`, move left 4 tiles (up one row within a column)
+
+2. :math:`p_1 = p_0 + n`, move right 4 tiles (down one row within a column)
+
+By the rules of the game, a tile can only move to an empty position,
+so between positions :math:`p_0 \rightarrow p_1` there are :math:`n - 1` tiles where :math:`n = 4`, so 3 tiles.
+
+When any given pair of tiles changes order there are two cases,
+
+1. :math:`L_1` was before :math:`L_2`, and is now after :math:`L_2` after the move (+1 inversion)
+
+2. :math:`L_1` was after :math:`L_2`, and is now before :math:`L_2` after the move (-1 inversion)
+
+Since there are two cases for change in number of inversions, there are 8 possibilities with 3 tiles,
+
+.. list-table::
+
+	* - tile 1
+	  - tile 2
+	  - tile 3
+	  - total change
+
+	* - -1
+	  - -1
+	  - -1
+	  - -3
+
+	* - -1
+	  - -1
+	  - +1
+	  - -1
+
+	* - -1
+	  - +1
+	  - -1
+	  - -1
+
+	* - -1
+	  - +1
+	  - +1
+	  - +1
+
+	* - +1
+	  - -1
+	  - -1
+	  - -1
+
+	* - +1
+	  - -1
+	  - +1
+	  - +1
+
+	* - +1
+	  - +1
+	  - -1
+	  - +1
+
+	* - +1
+	  - +1
+	  - +1
+	  - +3
+
+As you can see, the sum change in number of inversions is :math:`\pm 1 \text{ or } \pm 3`.
+More formally, the number of pairs of letters :math:`L_1` and :math:`L_2` in which :math:`L_1` is before :math:`L_2` in the order of the tiles before the move,
+and later in the order of the tiles after the move, increases or decreases by 1 or 3.
+:math:`\blacksquare`
+
+(c) We define an inversion to be a pair of letters :math:`L_1` and :math:`L_2` for which :math:`L_1` precedes :math:`L_2` in the alphabet,
+but :math:`L_1` appears after :math:`L_2` in the order of the tiles.
+For example, consider the following configuration:
+
+.. table::
+
+	+-----+-----+-----+-----+
+	|  A  |  B  |  C  |  E  |
+	+-----+-----+-----+-----+
+	|  D  |  H  |  G  |  F  |
+	+-----+-----+-----+-----+
+	|  I  |  J  |  K  |  L  |
+	+-----+-----+-----+-----+
+	|  M  |  N  |  O  |     |
+	+-----+-----+-----+-----+
+
+There are exactly four inversions in the above configuration: E and D, H and G, H and F, and G and F.
+What effect does a row move have on the parity of the number of inversions?
+Prove your answer.
+
+.. raw:: html
+
+	<hr>
+
+As shown in part (a) a row move does not increase or decrease the number of inversions.
+Therefore, a column move has no effect on the parity of the number of inversions.
+:math:`\blacksquare`
+
+(d) What effect does a column move have on the parity of the number of inversions?
+Prove your answer.
+
+.. raw:: html
+
+	<hr>
+
+As shown in part (b), a row move increases or decreases the number of inversions by 1 or 3.
+1 and 3 are both odd numbers, and adding any number to an odd number changes the parity.
+So a row move changes the parity of the number of inversions every time.
+:math:`\blacksquare`
+
+(e) The previous problem part implies that we must make an odd number of column moves in order to exchange just one pair of tiles (N and O, say).
+But this is problematic, because each column move also knocks the blank square up or down one row.
+So after an odd number of column moves, the blank can not possibly be back in the last row, where it belongs!
+Now we can bundle up all these observations and state an invariant, a property of the puzzle that never changes, no matter how you slide the tiles around.
+
+**Lemma**. In every configuration reachable from the position shown below,
+the parity of the number of inversions is different from the parity of the row containing the blank square.
+
+.. table::
+
+	+----+-----+-----+-----+-----+
+	|row1|  A  |  B  |  C  |  D  |
+	+----+-----+-----+-----+-----+
+	|row2|  E  |  F  |  G  |  H  |
+	+----+-----+-----+-----+-----+
+	|row3|  I  |  J  |  K  |  L  |
+	+----+-----+-----+-----+-----+
+	|row4|  M  |  O  |  N  |     |
+	+----+-----+-----+-----+-----+
+
+Prove this lemma.
+
+.. raw:: html
+
+	<hr>
+
+First, we define the row number containing the black square as,
+
+.. math::
+
+	r = \left\lceil {p_b \over n} \right\rceil
+
+where :math:`p_b` is the position of the blank square.
+
+When we do a row move, :math:`p_b \pm 1`.
+However, per the rules of the game, this is within the bounds of the grid.
+This means the row number cannot change for a row move, thus the parity of the row number cannot change for a row move.
+
+As shown in part (d), a row move does not change the number of inversions, and thus doesn't change the parity of the number of inversions.
+
+For a column move, :math:`p_b \pm n`, again, within the bounds of the grid.
+Per the ceiling calculation, increasing or decreasing by n will change r by 1.
+Since 1 is an odd number, this changes the parity of the row number for a column move.
+
+As shown in part (c) every column move changes the parity of the number of inversions.
+So any row move will flip the parity of both r and the number of inversions.
+
+Therefore, in every configuration reachable from the position shown above,
+the parity of the number of inversions is always different to the parity of r.
+:math:`\blacksquare`
+
+(f) Prove the theorem that we originally set out to prove.
+
+.. raw:: html
+
+	<hr>
+
+In the initial configuration the row number is 4, which is even.
+There is one inversion (O and N), which is odd.
+
+In the desired configuration the row number containing the blank square is 4, which is even.
+There are no inversions, i.e. 0, which is even.
+
+As shown in part (e), for any given move, the parity of the row number containing the blank square and the number of inversions will either stay the same or both will change.
+
+Therefore, no sequence of moves transforms the initial configuration into the desired configuration.
+:math:`\blacksquare`
