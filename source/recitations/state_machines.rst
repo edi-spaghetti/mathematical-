@@ -359,4 +359,60 @@ However as we can see, (5, 5) violates P(n),
 	a &= {-3 \over 5} \qquad && \text{ -3 divide 5 is not an integer}
 
 Therefore the state of (5, 5) is unreachable, so no-one can leave the temple.
-:math:`blacksquare`
+:math:`\blacksquare`
+
+**Theorem 2**. There is a finite number of reachable states in the Temple of Forever machine.
+Prove this theorem.
+(Hint: First find an invariant that suggests an upper bound on the number of reachable states.
+Be sure to prove the invariant.)
+
+.. raw:: html
+
+	<hr>
+
+**Invariant**: Let P(n) be the predicate, defined as,
+
+.. math::
+
+	P(n) ::= \lnot(i + j > 27)
+
+In other words, the total number of beads cannot be larger than the sum of beads at the start state (15 + 12 = 27).
+
+**Base Case**: P(0) is trivially true because 15 + 12 is not larger than 27.
+
+**Inductive Step**: There are two transitions to consider,
+
+1.  Exchange.
+
+	.. math::
+
+		(i - 3) + (j + 2) \le i + j
+
+		(i + j) - 1 \le i + j
+
+	So P(n) is true for exchange.
+
+2.  Swap.
+
+	.. math::
+
+		j + i \le i + j
+
+	So P(n) is true for swap.
+
+That proves P(n), so by the inductive hypothesis we know it is true for P(n + 1).
+
+Given the initial state of (15, 12), the total number of beads is 27.
+Swapping doesn't change the number of beads and gives a unique state once for that number pair.
+Exchanging decreases the number of beads by 1, and there is no way for the total number of beads to increase.
+Therefore, disregarding unreachable states, there are a finite number of states shown below,
+
+.. math::
+
+	s ::=\text{ total number of reachable states}
+
+	s <= 27 \sum^27_{i=0} i \cdot 2
+
+	s <= 756
+
+:math:`\blacksquare`
