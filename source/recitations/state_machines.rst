@@ -388,11 +388,13 @@ In other words, the total number of beads cannot be larger than the sum of beads
 
 	.. math::
 
-		(i - 3) + (j + 2) \le i + j
+		(i - 3) + (j + 2) \le 27
 
-		(i + j) - 1 \le i + j
+		(i + j) - 1 \le 27
 
-	So P(n) is true for exchange.
+		\text{by P(n) we know } i + j \le 27`
+
+	So P(n + 1) is true for exchange.
 
 2.  Swap.
 
@@ -405,7 +407,7 @@ In other words, the total number of beads cannot be larger than the sum of beads
 That proves P(n), so by the inductive hypothesis we know it is true for P(n + 1).
 
 Given the initial state of (15, 12), the total number of beads is 27.
-Swapping doesn't change the number of beads and gives an extra unique state once per number pair.
+The number of combinations for any total, t is t + 1
 Exchanging decreases the number of beads by 1, and there is no way for the total number of beads to increase.
 Therefore, disregarding unreachable states, there are a finite number of states shown below,
 
@@ -413,8 +415,8 @@ Therefore, disregarding unreachable states, there are a finite number of states 
 
 	s ::=\text{ total number of reachable states}
 
-	s <= \sum^{27}_{i=0} i \cdot 2
+	s <= \sum^{28}_{i=0} i + 1
 
-	s <= 756
+	s <= 406
 
 :math:`\blacksquare`
