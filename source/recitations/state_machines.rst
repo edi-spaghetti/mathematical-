@@ -392,7 +392,7 @@ In other words, the total number of beads cannot be larger than the sum of beads
 
 		(i + j) - 1 \le 27
 
-		\text{by P(n) we know } i + j \le 27`
+		\text{by P(n) we know } i + j \le 27
 
 	So P(n + 1) is true for exchange.
 
@@ -415,8 +415,47 @@ Therefore, disregarding unreachable states, there are a finite number of states 
 
 	s ::=\text{ total number of reachable states}
 
-	s <= \sum^{28}_{i=0} i + 1
+	s <= \sum^{27}_{i=0} i + 1
 
 	s <= 406
 
+:math:`\blacksquare`
+
+Inside the Temple of Forever, the Gong of Time rings on.
+As you may well imagine, the monks begin to recognize that no matter how many ways they try to exchange or swap their beads,
+they always seem to end up in some state they’ve already been in before!
+For one or two monks, this realization is all they need to propel them instantly into a state of enlightenment.
+
+For the overwhelming majority, however, this knowledge does nothing but weaken their resolve.
+They just get depressed. Taking note of the mental state of this second group,
+the Keeper of the Temple makes an unannounced appearance and proclaims to the group,
+“From now on, any monk who is able to visit 108 (108 being the mystical number that encompasses all of existence)
+unique states will be allowed to leave the Temple of Forever.”
+
+Do the monks have any chance of leaving the Temple of Forever?
+
+**Theorem 3**. *It is not possible to visit 108 unique states in the Temple of Forever machine.*
+
+.. raw:: html
+
+	<hr>
+
+**Proof**: By contradiction.
+
+Assuming it is possible to reach 108 states, we consider the transitions.
+As shown in theorem 2, every exchange transition decreases the total number of beads by 1.
+With a start state of (15, 12) there are 27 total beads.
+Also, per the rules, an exchange can only be done if there are more than 3 beads.
+So there are a maximum of 27 - 2 = 25 exchange transitions possible.
+
+Each swap transition creates a unique state once per pair.
+Since there are 25 exchange transitions possible there are 25 swaps that will create a unique state.
+A swap can be done at the start state so this gives an additional unique state for 26 states from swaps.
+
+Then the start-state itself is a unique state, so an additional 1.
+
+In total this gives 25 + 26 + 1 = 52 unique states.
+
+However this contradicts our proposition that 108 states are reachable,
+so we can conclude 108 are not reachable, and that the monks still have no chance to leave.
 :math:`\blacksquare`
