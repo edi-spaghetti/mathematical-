@@ -2,7 +2,7 @@ State Machines
 ==============
 
 `problems <link https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec03.pdf>`_
-`<solution link https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec03_sol.pdf>`_
+`solution <link https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec03_sol.pdf>`_
 
 Breaking a Chocolate Bar
 ------------------------
@@ -358,6 +358,8 @@ However as we can see, (5, 5) violates P(n),
 
 	a &= {-3 \over 5} \qquad && \text{ -3 divide 5 is not an integer}
 
+	\end{aligned}
+
 Therefore the state of (5, 5) is unreachable, so no-one can leave the temple.
 :math:`\blacksquare`
 
@@ -403,7 +405,7 @@ In other words, the total number of beads cannot be larger than the sum of beads
 That proves P(n), so by the inductive hypothesis we know it is true for P(n + 1).
 
 Given the initial state of (15, 12), the total number of beads is 27.
-Swapping doesn't change the number of beads and gives a unique state once for that number pair.
+Swapping doesn't change the number of beads and gives an extra unique state once per number pair.
 Exchanging decreases the number of beads by 1, and there is no way for the total number of beads to increase.
 Therefore, disregarding unreachable states, there are a finite number of states shown below,
 
@@ -411,7 +413,7 @@ Therefore, disregarding unreachable states, there are a finite number of states 
 
 	s ::=\text{ total number of reachable states}
 
-	s <= 27 \sum^27_{i=0} i \cdot 2
+	s <= \sum^{27}_{i=0} i \cdot 2
 
 	s <= 756
 
