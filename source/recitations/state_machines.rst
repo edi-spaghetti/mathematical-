@@ -169,3 +169,194 @@ From theorem 2 we showed that the number of total number of splits is equal to :
 From theorem 1 we showed that with any arbitrary split, the value remains invariant.
 This means no matter what sequence of splits is made, the total number of splits is always determined by the initial state.
 :math:`\blacksquare`
+
+
+The Temple of Forever
+---------------------
+
+Each monk entering the Temple of Forever is given a bowl with 15 red beads and 12 green beads.
+Each time the Gong of Time rings, a monk must do one of two things:
+
+1. Exchange: If he has at least 3 red beads in his bowl, then he may exchange 3 red beads for 2 green beads.
+2. Swap: He may replace each green bead in his bowl with a red bead and replace each red bead in his bowl with a green bead.
+   That is, if he starts with i red beads and j green beads, then after he performs this operation, he will have j red beads and i green beads.
+
+A monk may leave the Temple of Forever only when he has exactly 5 red beads and 5 green beads in his bowl.
+Let’s look at how we can represent this problem as a state machine.
+
+**What do the states of the machine look like?**
+
+.. raw:: html
+
+	<br>
+
+The states are pairs (i, j) where;
+
+.. math::
+
+	i = \text{ the number of red beads}
+
+	j = \text{ the number of green beads}
+
+**Start-State**: A sequence (i, j) where i = 15 and j = 12
+
+**Use the notation you developed above to represent the allowable transitions in the
+state machine.**
+
+.. raw:: html
+
+	<hr>
+
+**Transitions**:
+
+1. Exchange
+
+   .. math::
+
+       (i, j) \rightarrow (i - 3, j + 2), i \ge 3
+
+2. Swap
+
+   .. math::
+
+       (i, j) \rightarrow (j, i)
+
+**Expand the state machine diagram to the first three or four levels.
+Label the transitions according to the operation type (E for exchange or S for swap).**
+
+.. raw:: html
+
+	<hr>
+
+::
+
+	(15, 12)
+	├── (12, 14)            E
+	│   ├── (14, 12)        S
+	│   │   ├── (11, 14)    E
+	│   │   └── (12, 14)    S
+	│   └── (9, 16)         E
+	│       ├── (16, 9)     S
+	│       └── (6, 18)     E
+	└── (12, 15)            S
+	    ├── (15, 12)        S
+	    │   ├── (12, 14)    E
+	    │   └── (12, 15)    S
+	    └── (9, 17)         E
+	        ├── (17, 9)     S
+	        └── (6, 19)     E
+
+Now we’ll show that no monk can ever escape the Temple of Forever because the state :math:`(5, 5)` violates an invariant of the Temple of Forever machine.
+
+**Theorem 1**. No one ever leaves the Temple of Forever.
+
+Prove this theorem by induction.
+Begin by searching for an invariant that holds initially and is maintained by each operation,
+but would be violated by the condition required for departure.
+
+.. raw:: html
+
+	<hr>
+
+**Invariant**: let P(n) be the proposition that after n transitions,
+
+.. math::
+
+	P(n) ::= i,j,a \in \Bbb N. b \in {2,3}. i - j = 5a + b
+
+That is, the number of red beads minus number of green beads is equal to :math:`5a + b` where a is any integer and b is 2 or 3.
+
+.. note::
+
+	I didn't figure out this invariant myself, I had to check the notes.
+	Honestly, I have no idea how it could have been worked out and the notes don't explain it either.
+
+**Base Case**: P(0) is true as shown,
+
+.. math::
+
+	\begin{aligned}
+
+	15 - 12 &= 5a + b
+
+	3 &= 5 \cdot 0 + 3, \text{ where } k = 0, b = 3
+
+	\end{aligned}
+
+**Inductive Step**: Assuming P(n) is true, we must show that P(n + 1) is true.
+Per the transitions we must consider two cases;
+
+1. Exchange.
+
+   .. math::
+
+       \begin{aligned}
+
+       (i - 3) - (j + 2) &= 5a + b
+
+       (i - j) - 5 &=
+
+       &= 5(a - 1) + b
+
+       \end{aligned}
+
+   .. note::
+
+       I had to check the notes again here, because they used 5(a - 1) + b as a proof that this is true of P(n + 1), but don't explain why.
+       They also don't explain how they make the jump from :math:`(i - j) - 5` to :math:`5(a - 1) + b`.
+       It seems wrong because :math:`5(a - 1) + b \ne 5a + b`, so clearly I've missed something.
+
+2. Swap.
+
+   Here the signs change, but the numbers remain the same so,
+
+   .. math::
+
+       \begin{aligned}
+
+       j - i &= 5(-a) - b
+
+       \text{if b = 3}
+
+       &= 5(a - 1) + 2 \qquad && \text{(from the notes)}
+
+       \text{else if b = 2}
+
+       &= 5(a - 1) + 3 \qquad && \text{(from the notes)}
+
+       \end{aligned}
+
+   .. note::
+
+       I also couldn't work this one out.
+       Think I may have missed a chapter because some of these explanations seem to be coming from nowhere.
+
+Therefore P(n) implies P(n + 1).
+
+Per the rules of the temple, the state required to leave is (5, 5).
+However as we can see, (5, 5) violates P(n),
+
+.. math::
+
+	\begin{aligned}
+
+	5 - 5 &= 5a + b
+
+	\text{if b = 2}
+
+	0 &= 5a + 2
+
+	5a &= -2
+
+	a &= {-2 \over 5} \qquad && \text{ -2 divide 5 is not an integer}
+
+	\text{if b = 3}
+
+	0 &= 5a + 3
+
+	5a &= -3
+
+	a &= {-3 \over 5} \qquad && \text{ -3 divide 5 is not an integer}
+
+Therefore the state of (5, 5) is unreachable, so no-one can leave the temple.
+:math:`blacksquare`
