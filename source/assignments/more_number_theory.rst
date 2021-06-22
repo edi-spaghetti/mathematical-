@@ -139,3 +139,106 @@ We can find the upper bound is 9, because 83 is between :math:`9^2 = 81` and :ma
 
 77 is the remainder of :math:`34^{82248}` divided by 83.
 :math:`\blacksquare`
+
+
+Problem 2
+---------
+
+**(a) If** :math:`a \mid b` **, then** :math:`\forall c, a \mid bc`
+
+.. raw:: html
+
+	<hr>
+
+**Theorem**: Let P(n) be the proposition defined as so,
+
+.. math::
+
+	P(n) ::= b = 0 \text{ (mod a) }\Rightarrow bn = 0 \text{ (mod a) }
+
+That is, if a divide b with no remainder, then a also divides any multiple of b with no remainder.
+
+**Proof.** By induction.
+
+**Base Case**: We must prove P(0),
+
+.. math::
+
+	\begin{aligned}
+
+	0 \cdot b &= 0 \text{ (mod a) }
+
+	0 &= \text{ (mod a) }\qquad && \text{ zero divided by any number is zero}
+
+	\end{aligned}
+
+This proves P(0).
+
+**Inductive Step**: Assuming P(n) is true, we must prove P(n + 1),
+
+.. math::
+
+	\begin{aligned}
+
+	\big( n \cdot b + (n+1) \cdot b \big) &= 0 \text{ (mod a) }
+
+	0 + (n+1) \cdot b &= \text{ (mod a) } && \qquad \text{(by inductive hypothesis)}
+
+	nb + b &= \text{ (mod a) } && \qquad \text{(parameter expansion)}
+
+	0 + b &= \text{ (mod a) } && \qquad \text{(by P(n))}
+
+	0 &= \text{ (mod a) } && \qquad \text{(we assume a cleanly divides b)}
+
+	\end{aligned}
+
+This proves P(n+1), and so by the inductive method we can conclude the theorem is true.
+:math:`\blacksquare`
+
+**(b) If a | b and a | c, then a | sb + tc.**
+
+.. raw:: html
+
+	<hr>
+
+We can rewrite :math:`a \mid sb + tc` as,
+
+.. math::
+
+	\big( sb \text{ (mod a) } + tc \text{ (mod a) } \big) \text{ (mod a) } = 0
+
+As we showed in part (a), if :math:`a \mid b` then :math:`a \mid sb`,
+and if :math:`a \mid c` then :math:`a \mid tc`, which leaves us with,
+
+.. math::
+
+	0 + 0 \text{ (mod a) } = 0
+
+Which is trivially true.
+:math:`\blacksquare`
+
+**(c)** :math:`\forall c, a \mid b \Leftrightarrow ca \mid cb`
+
+.. raw:: html
+
+	<hr>
+
+Since a divides b, then there exists some integer d such that :math:`{b \over a} = d`.
+We can factor up :math:`{b \over a}` by c, giving us :math:`{cb \over ca} = d`.
+:math:`\blacksquare`
+
+**(d) gcd(ka, kb) = k gcd(a, b)**
+
+.. raw:: html
+
+	<hr>
+
+From Euclid's algorithm, we know :math:`gcd(a, b) = gcd(b, rem(a, b))`.
+From Division Theorem, we know :math:`a = qb + r`, where q is the quotient and r is the remainder.
+This allows to calculate the remainder for the constructor case of Euclid's algorithm as,
+:math:`r = a - qb`.
+
+When we try to find the gcd of ka and kb, however, :math:`gcd(ka, kb) = gcd(kb, rem(ka, kb)`.
+Here, the calculation for the remainder becomes :math:`r = ka - q(kb)`, which can be rewritten as,
+:math:`r = k(a - qb)`. It is the same calculation as for :math:`gcd(a, b)`, except multiplied by k.
+:math:`\blacksquare`
