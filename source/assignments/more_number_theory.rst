@@ -242,3 +242,81 @@ When we try to find the gcd of ka and kb, however, :math:`gcd(ka, kb) = gcd(kb, 
 Here, the calculation for the remainder becomes :math:`r = ka - q(kb)`, which can be rewritten as,
 :math:`r = k(a - qb)`. It is the same calculation as for :math:`gcd(a, b)`, except multiplied by k.
 :math:`\blacksquare`
+
+Problem 3.
+----------
+
+In this problem, we will investigate numbers which are squares modulo a prime number p.
+
+(a) An integer n is a square modulo p if there exists another integer x such that :math:`n ≡ x^2 \text{ (mod p)}`.
+Prove that :math:`x^2 ≡ y^2 \text{ (mod p)}` if and only if :math:`x ≡ y \text{ (mod p) or } x ≡ −y \text{ (mod p)}`.
+(Hint: :math:`x^2 − y^2 = (x + y)(x − y)`)
+
+.. raw:: html
+
+	<hr>
+
+First, define some propositions, P and Q,
+
+.. math::
+
+	\begin{aligned}
+
+	P &::= x^2 ≡ y^2 \text{ (mod p)}
+
+	Q &::= x ≡ y \text{ (mod p) or } x ≡ −y \text{ (mod p)}
+
+	\end{aligned}
+
+We can rewrite x and y mod p as a quotient of p plus a remainder.
+
+.. math::
+
+	\begin{aligned}
+
+	x &= q_1 p + m
+
+	y &= q_2 p + m
+
+	\end{aligned}
+
+Such that :math:`x^2` and :math:`y^2` are can be written as,
+
+.. math::
+
+	\begin{aligned}
+
+	x^2 &= (q_1 p + m) \cdot (q_1 p + m)
+
+	y^2 &= (q_2 p + m) \cdot (q_2 p + m)
+
+	\end{aligned}
+
+Since we're applying mod p, we can remove any factors of p,
+
+.. math::
+
+	\begin{aligned}
+
+	(\cancel{q_1 p} + m) \cdot (\cancel{q_1 p} + m) &≡ (\cancel{q_2 p} + m) \cdot (\cancel{q_2 p} + m) \text{ (mod p) }
+
+	m \cdot m &≡ m \cdot m \text{ (mod p) }
+
+	\end{aligned}
+
+This proves P implies Q where y is positive.
+When x and y are squared they are always positive. If x or y are negative the equation becomes
+
+.. math::
+
+	\begin{aligned}
+
+	(\cancel{(\pm q_1) p} + m) \cdot (\cancel{(\pm q_1) p} + m) &≡ (\cancel{(\pm q_2) p} + m) \cdot (\cancel{(\pm q_2) p} + m) \text{ (mod p) }
+
+	m \cdot m &≡ m \cdot m \text{ (mod p) }
+
+	\end{aligned}
+
+Which still factors out because they're multiples of p.
+This proves P implies Q where y is negative.
+:math:`\blacksquare`
