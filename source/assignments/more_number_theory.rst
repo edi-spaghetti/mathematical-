@@ -320,3 +320,75 @@ When x and y are squared they are always positive. If x or y are negative the eq
 Which still factors out because they're multiples of p.
 This proves P implies Q where y is negative.
 :math:`\blacksquare`
+
+**(b) There is a simple test we can perform to see if a number n is a square modulo p. It states that**
+
+*Theorem 1 (Euler’s Criterion). :*
+
+1. If n is a square modulo p then :math:`n^{{p - 1 \over 2}}` ≡ 1 (mod p).
+
+2. If n is not a square modulo p then :math:`n^{{p - 1 \over 2}}` ≡ −1 (mod p).
+
+Prove the first part of Euler’s Criterion. (Hint: Use Fermat’s theorem.)
+
+.. raw:: html
+
+	<hr>
+
+Fermat's theorem says that :math:`k^{p-1} ≡ 1 (mod p)` where p is a prime and k is not a multiple of p.
+Since n is a square modulo p it can written as :math:`n = x^2 \text{ (mod p) }`
+
+.. math::
+
+	\begin{aligned}
+
+	n^{{p - 1 \over 2}} &≡ 1 \text{ (mod p) }
+
+	(x^\cancel{2})^{{p - 1 \over \cancel{2}}} &≡ 1 \text{ (mod p) }
+
+	x^{p-1} &≡ 1 \text{ (mod p) }
+
+	\end{aligned}
+
+This gets us back to Fermat's theorem and so proves Euler's criterion.
+:math:`\blacksquare`
+
+**(c) Assume that** :math`p ≡ 3 \text{ (mod 4)}` **and** :math`n ≡ x^2 \text{ (mod p)}`.
+**Given n and p, find one possible value of x.**
+(Hint: Write p as p = 4k + 3 and use Euler’s Criterion.
+You might have to multiply two sides of an equation by n at one point.)
+
+.. raw:: html
+
+	<hr>
+
+.. math::
+
+	\begin{aligned}
+
+	p &≡ 3 \text{ (mod 4)}
+
+	4k + 3 &≡ 3 \text{ (mod 4)}
+
+	\text{ let's assume k = 0 }
+
+	p &= 4 \cdot 0 + 3 = 3
+
+	n &≡ x^2 \text{ (mod 3) }
+
+	n^{{p - 1 \over 2}} &≡ 1 \text{ (mod 3) }
+
+	(x^\cancel{2})^{{p - 1 \over \cancel{2}}} &≡ 1 \text{ (mod 3) }
+
+	x^{p-1} &≡ 1 \text{ (mod 3) }
+
+	x^2 &≡ 1 \text{ (mod 3) }
+
+	\text{ x can be any number not a multiple of 3, e.g. } \boxed{x = 2}
+
+	2^2 &≡ 1 \text{ (mod 3) }
+
+	\end{aligned}
+
+More generally, x can be any number not a multiple of 4k + 3, for any integer k.
+:math:`\blacksquare`
