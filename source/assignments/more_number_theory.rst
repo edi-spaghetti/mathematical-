@@ -392,3 +392,33 @@ You might have to multiply two sides of an equation by n at one point.)
 
 More generally, x can be any number not a multiple of 4k + 3, for any integer k.
 :math:`\blacksquare`
+
+Problem 4
+---------
+
+Prove that for any prime, p, and integer, :math:`k \ge 1,\ \phi(p^k) = p^k − p^{k−1}`, where :math:`\phi` is Euler’s function.
+(Hint: Which numbers between 0 and :math:`p^{k − 1}` are divisible by p? How many are there?)
+
+.. raw:: html
+
+	<hr>
+
+Since Euler's function is defined as the number of integers in :math:`[0..p)` that are relatively prime to p.
+The maximum possible number of integers in :math:\phi(p)` is p, because we start from 0 so :math:`\mid [0..p) \mid = p`
+
+In this question, p is a prime number so :math:`\phi(p) = p - 1`,
+because every number in :math:`[0..p)` is relatively prime to p except 0.
+
+The maximum number of possible integers in :math:`\phi(p^k)` then, is :math:`p^k`.
+Every *pth* number will be divisible by p which gives us,
+
+.. math::
+
+	\phi(p^k) = p^k - {1 \over p} \cdot \big( p^k \big)
+
+	= p^k - {p^k \over p}
+
+	= p^k - p^{k-1}
+
+This proves the original statement.
+:math:`\blacksquare`
