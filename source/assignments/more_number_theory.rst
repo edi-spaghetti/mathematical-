@@ -111,7 +111,7 @@ so we can a calculate the inverse, i, as :math:`17^{\phi(31) - 1}`;
 The inverse of 17 modulo 31 is 11.
 :math:`\blacksquare`
 
-**(d) Find the remainder of :math:`34^{82248}` divided by 83. (Hint: Euler’s theorem.)**
+**(d) Find the remainder of** :math:`\ 34^{82248}\ ` **divided by 83. (Hint: Euler’s theorem.)**
 
 First we need to check that 83 is prime, which we can do by checking each integer in :math:`[2..\lfloor \sqrt{83} \rfloor]`.
 We can find the upper bound is 9, because 83 is between :math:`9^2 = 81` and :math:`10^2 = 100`
@@ -335,7 +335,7 @@ Prove the first part of Euler’s Criterion. (Hint: Use Fermat’s theorem.)
 
 	<hr>
 
-Fermat's theorem says that :math:`k^{p-1} ≡ 1 (mod p)` where p is a prime and k is not a multiple of p.
+Fermat's theorem says that :math:`k^{p-1} ≡ 1 \text{ (mod p)}` where p is a prime and k is not a multiple of p.
 Since n is a square modulo p it can written as :math:`n = x^2 \text{ (mod p) }`
 
 .. math::
@@ -353,7 +353,7 @@ Since n is a square modulo p it can written as :math:`n = x^2 \text{ (mod p) }`
 This gets us back to Fermat's theorem and so proves Euler's criterion.
 :math:`\blacksquare`
 
-**(c) Assume that** :math`p ≡ 3 \text{ (mod 4)}` **and** :math`n ≡ x^2 \text{ (mod p)}`.
+**(c) Assume that** :math:`p ≡ 3 \text{ (mod 4)}` **and** :math:`n ≡ x^2 \text{ (mod p)}`.
 **Given n and p, find one possible value of x.**
 (Hint: Write p as p = 4k + 3 and use Euler’s Criterion.
 You might have to multiply two sides of an equation by n at one point.)
@@ -404,7 +404,7 @@ Prove that for any prime, p, and integer, :math:`k \ge 1,\ \phi(p^k) = p^k − p
 	<hr>
 
 Since Euler's function is defined as the number of integers in :math:`[0..p)` that are relatively prime to p.
-The maximum possible number of integers in :math:\phi(p)` is p, because we start from 0 so :math:`\mid [0..p) \mid = p`
+The maximum possible number of integers in :math:`\phi(p)` is p, because we start from 0 so :math:`\mid [0..p) \mid = p`
 
 In this question, p is a prime number so :math:`\phi(p) = p - 1`,
 because every number in :math:`[0..p)` is relatively prime to p except 0.
@@ -454,7 +454,7 @@ which makes it a factor of x and y.
 
 **Inductive Step**: Assuming P(n) is true, we must show P(n + 1) is true.
 Since every number on the board is a factor of x and y, any pair that we choose to make a new factor will also be a factor of x and y.
-:math:`\whitesquare`
+:math:`\square`
 
 **Theorem**: If :math:`z \mid x,y` then :math:`z \mid gcd(x, y)`
 
@@ -557,7 +557,7 @@ Therefore it is either prime itself, or is divisible by another prime larger tha
 
 	<hr>
 
-:math:`p mod 4 \ne 0` because then it is exactly divisible by 4, and so not prime.
+:math:`\text{p mod 4} \ne 0` because then it is exactly divisible by 4, and so not prime.
 Likewise, it cannot be equal to 2, because then,
 
 .. math::
@@ -577,6 +577,8 @@ Thus the hypothesis stands.
 **(c) Prove that if n ≡ 3 (mod 4), then n has a prime factor p ≡ 3 (mod 4).**
 
 .. raw:: html
+
+	<hr>
 
 By modulus arithmetic, we know that :math:`ab ≡ (a \text{ mod c} \cdot b \text{ mod c}) \text{ mod c}`,
 for any integer a,b and c.
@@ -603,9 +605,9 @@ Suppose the prime factors mod 4 were all equal to 1, then the final mod 4 would 
 
 	\begin{aligned}
 
-	(1_1 \cdot 1_2 \cdot \dots 1_k) \text{ mod 4} \bcancel{&≡} 3
+	(1_1 \cdot 1_2 \cdot \dots 1_k) \text{ mod 4} &\cancel{≡} 3
 
-	1 \text{ mod 4} \bcancel{&≡} 3
+	1 \text{ mod 4} &\cancel{≡} 3
 
 	\end{aligned}
 
@@ -617,9 +619,9 @@ Similarly, if 2 was a prime factor, and the rest ones we would get,
 
 	\begin{aligned}
 
-	(2 \cdot 1_1 \cdot \dots 1_k) \text{ mod 4} \bcancel{&≡} 3
+	(2 \cdot 1_1 \cdot \dots 1_k) \text{ mod 4} &\cancel{≡} 3
 
-	2 \text{ mod 4} \bcancel{&≡} 3
+	2 \text{ mod 4} &\cancel{≡} 3
 
 	\end{aligned}
 
