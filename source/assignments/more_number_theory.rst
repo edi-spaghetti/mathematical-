@@ -530,3 +530,123 @@ As an example, here are the steps for applying the strategy to (90, 45)
 4. Add 1 to the set
 
 5. Resulting set :math:`\mid \{ 1, 3, 5, 9, 15 \} \mid = 5` which is odd, so choose to go first.
+
+Problem 6
+---------
+
+**In one of the previous problems, you calculated square roots of numbers modulo primes equivalent to 3 modulo 4.**
+**In this problem you will prove that there are an infinite number of such primes!**
+
+**(a) As a warm-up, prove that there are an infinite number of prime numbers.**
+(Hint: Suppose that the set F of all prime numbers is finite, that is  and
+define :math:`n = p_1, p_2 \dots p_{k + 1}`.)
+
+.. raw:: html
+
+	<hr>
+
+Suppose there are a finite number of prime numbers, :math:`F = \{p_1, p_2, \dots , p_k\}`.
+Then define the product of these numbers plus 1, :math:`n = p_1 \cdot p_2 \cdot \dots \cdot p_k + 1`
+By definition of their being prime, n is not divisible by any prime in F because they would have to be able to divide 1, which is impossible.
+Therefore it is either prime itself, or is divisible by another prime larger than :math:`p_k`, which is a contradiction.
+:math:`\blacksquare`
+
+**(b) Prove that if p is an odd prime, then p ≡ 1 (mod 4) or p ≡ 3 (mod 4).**
+
+.. raw:: html
+
+	<hr>
+
+:math:`p mod 4 \ne 0` because then it is exactly divisible by 4, and so not prime.
+Likewise, it cannot be equal to 2, because then,
+
+.. math::
+
+	p = 4b + 2
+
+Since 4b is a multiple of 4 it is even. Adding two also gives us an even number,
+so p must be divisible by 2. It is trivial to show the only even prime is 2,
+so we can conclude it is the only prime mod 4 that gives 2.
+
+2, itself, is not an odd prime so the hypothesis stands.
+
+This then eliminates 2 of the 4 options for any odd prime mod 4, leaving only 1 and 3.
+Thus the hypothesis stands.
+:math:`\blacksquare`
+
+**(c) Prove that if n ≡ 3 (mod 4), then n has a prime factor p ≡ 3 (mod 4).**
+
+.. raw:: html
+
+By modulus arithmetic, we know that :math:`ab ≡ (a \text{ mod c} \cdot b \text{ mod c}) \text{ mod c}`,
+for any integer a,b and c.
+
+Therefore if we take the prime factors of n we get :math:`n = p^{n_1}_1 \cdot p^{n_2}_2 \cdot \dots p^{n_k}_k`
+Since we know n mod 4 is 3, we know n mod it's prime factors is also 3.
+
+Therefore,
+
+.. math::
+
+	\begin{aligned}
+
+	p^{n_1}_1 \cdot p^{n_2}_2 \cdot \dots p^{n_k}_k &≡ 3 \text{ (mod 4)}
+
+	\Big( (p^{n_1}_1 \text{ mod 4}) \cdot (p^{n_2}_2 \text{ mod 4}) \cdot \dots (p^{n_k}_k \text{ mod 4}) \Big) \text{ mod 4} &≡
+
+	\end{aligned}
+
+As we showed in part (b) prime numbers mod 4 must be equal to 1, 2, or 3.
+Suppose the prime factors mod 4 were all equal to 1, then the final mod 4 would be,
+
+.. math::
+
+	\begin{aligned}
+
+	(1_1 \cdot 1_2 \cdot \dots 1_k) \text{ mod 4} \bcancel{&≡} 3
+
+	1 \text{ mod 4} \bcancel{&≡} 3
+
+	\end{aligned}
+
+so :math:`p_1` to :math:`p_k` mod 4 cannot all be 1.
+
+Similarly, if 2 was a prime factor, and the rest ones we would get,
+
+.. math::
+
+	\begin{aligned}
+
+	(2 \cdot 1_1 \cdot \dots 1_k) \text{ mod 4} \bcancel{&≡} 3
+
+	2 \text{ mod 4} \bcancel{&≡} 3
+
+	\end{aligned}
+
+And if we have more than two 2s in the prime factor then n becomes divisible by 4,
+which would result in :math:`n ≡ 0 \text{ mod 4}`, so there can't be more than two 2s.
+
+The only option left is for at least one of the prime factors mod 4 to be equal to 3.
+:math:`\blacksquare`
+
+**(d) Let F be the set of all primes p such that p ≡ 3 (mod 4).**
+**Prove by contradiction that F has an infinite number of primes.**
+
+.. raw:: html
+
+	<hr>
+
+Suppose F is finite, so we get :math:`F = \{p_1, p_2, \dots , p_k\}`.
+Now define an integer n as a product of F such that :math:`n = 4 \cdot p_1 \cdot p_2 \cdot \dots \cdot p_k - 1`
+
+We know by modulus arithmetic that n mod 4 = 3
+But since we're assuming F is finite, n cannot be prime.
+Every number is a product of primes, and as we showed in part (c),
+if a number mod 4 equals 3, at least one of its prime factors mod 4 is equal to 3.
+
+So, there must exist :math:`p_i \in F. p_i \mid n` where i in [0..k].
+
+But :math:`p_i` cannot divide n, because it would have to divide -1, which is impossible.
+So the only other option is that n itself is prime, which is a contradiction because then it is a prime larger than :math:`p_k`.
+So that proves there are infinite primes in F.
+:math:`\blacksquare`
