@@ -422,3 +422,111 @@ Every *pth* number will be divisible by p which gives us,
 
 This proves the original statement.
 :math:`\blacksquare`
+
+Problem 5
+---------
+
+Here is a very, very fun game. We start with two distinct, positive integers written on a blackboard.
+Call them x and y. You and I now take turns. (I’ll let you decide who goes first.)
+On each player’s turn, he or she must write a new positive integer on the board that is a common divisor of two numbers that are already there.
+If a player can not play, then he or she loses.
+
+For example, suppose that 12 and 15 are on the board initially.
+Your first play can be 3 or 1. Then I play 3 or 1, whichever one you did not play.
+Then you can not play, so you lose.
+
+**(a) Show that every number on the board at the end of the game is either x, y, or a positive divisor of gcd(x, y).**
+
+.. raw:: html
+
+	<hr>
+
+**Corollary 1**: For any step, n, the number added, z, is a factor of x and y.
+
+**Base Case**: P(0) is trivially true, because in the start state x and y are the only numbers on the board,
+so when we add a new number z, there exists quantifiers, q, such that,
+
+.. math::
+
+	z = q_1 x \land q_2 y
+
+which makes it a factor of x and y.
+
+**Inductive Step**: Assuming P(n) is true, we must show P(n + 1) is true.
+Since every number on the board is a factor of x and y, any pair that we choose to make a new factor will also be a factor of x and y.
+:math:`\whitesquare`
+
+**Theorem**: If :math:`z \mid x,y` then :math:`z \mid gcd(x, y)`
+
+**Proof**:
+
+By Euclid's algorithm, we know the gcd(x, y) is a linear combination of x and y.
+
+.. math::
+
+	gcd(x, y) = sx + ty
+
+We also know any number that divides x and y, also divides a linear combination of x and y,
+by `common divisor divides integer combination <link https://proofwiki.org/wiki/Common_Divisor_Divides_Integer_Combination>`_
+
+So any number on the board is either x and y (since they start on the board),
+or is a common divisor of x and y, so therefore a divisor of gcd(x, y).
+:math:`\blacksquare`
+
+**(b) Show that every positive divisor of gcd(x, y) is on the board at the end of the game.**
+
+.. raw:: html
+
+	<hr>
+
+In part (a) we showed that every common divisor of x and y also divides gcd(x, y).
+We must show that there does not exist a positive integer that divides gcd(x, y) that does not also divide x and y.
+
+Suppose we have integer c, that is a common divisor of x and y but doesn't divide gcd(x, y).
+Since c divides x and y, it is a linear combination of x and y
+
+.. math::
+
+	c = sx + ty
+
+But as we showed in part (a) the gcd is also a linear combination of x and y.
+And since the gcd is by definition the greatest common divisor c < gcd(x, y), and so therefore :math:`c \mid gcd(x, y)`.
+:math:`\blacksquare`
+
+**(c) Describe a strategy that lets you win this game every time.**
+
+.. raw:: html
+
+	<hr>
+
+If I start, there must be an odd number of total moves for me to win.
+If you start, there must be an even number of total moves for me to win.
+
+Games with odd numbers of moves exist, and so do games with even numbers of moves.
+So a strategy to win every game is to check the parity of total moves and choose to go first or second accordingly.
+
+This can be done starting with an empty set and adding to it;
+
+1. The greatest common divisor of x and y (unless equal to x or y)
+
+2. Each of the prime factors of the gcd(x, y)
+
+3. Each of the unique combinations of prime factors of gcd(x, y)
+
+4. Add 1, since it divides everything
+
+5. If the parity of the resulting set is even, choose to go second, else choose to go first.
+
+As an example, here are the steps for applying the strategy to (90, 45)
+
+0. Initialise empty set
+
+1. gcd(90, 45) = 45, but we already have 45 as a starting value, so skip this step.
+
+2. Prime factors of 45 are :math:`3 \cdot 3 \cdot 5`, so add 3 and 5
+
+3. Unique combinations of prime factors are :math:`3 \cdot 3 = 9` and :math:`3 \cdot 5 = 15`, so add 9 and 15
+
+4. Add 1 to the set
+
+5. Resulting set :math:`\mid \{ 1, 3, 5, 9, 15 \} \mid = 5` which is odd, so choose to go first.
