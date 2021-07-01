@@ -13,3 +13,4 @@ The important thing is not just getting the right answer, but being able to stru
 	logic
 	induction
 	state_machines
+	greatest_common_divisor
