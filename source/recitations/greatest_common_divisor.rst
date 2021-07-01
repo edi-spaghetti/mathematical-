@@ -103,3 +103,65 @@ However, the rules state that the frog can only jump clockwise.
 Since there are 50 stones in total, each set of 19 jumps moved the frog 1 stone counter-clockwise.
 So to move 49 stones counter-clockwise (which is the same as 1 stone clockwise) the frog needs :math:`19 \cdot 49 = 931` jumps.
 :math:`\blacksquare`
+
+The Fibonacci numbers
+---------------------
+
+**The Fibonacci numbers are defined as follows:**
+
+.. math::
+
+	F_0 = 0 \qquad F_1 = 1 \qquad F_n = F_{n−1} + F_{n−2} \text{ (for n ≥ 2).}
+
+**Give an inductive proof that the Fibonacci numbers** :math:`\ F_n\ ` **and** :math:`\ F_{n+1}\ ` **are relatively prime for all** :math:`\ n \ge 0`.
+
+.. raw:: html
+
+	<hr>
+
+Let P(n) be the predicate, defined as follows,
+
+.. math::
+
+	\forall n \in \Bbb N. gcd(F_n, F_{n+1}) = 1
+
+that is, for all integers greater than or equal to 0, the fibonacci number at :math:`F_n` is relatively prime to the fibonacci number at :math:`F_{n+1}`.
+
+**Theorem** P(n) holds for all n :math:`\in \Bbb N`
+
+**Proof**: By induction.
+
+**Base Case**: P(0) is trivially true,
+
+.. math::
+
+	F_0 = 0
+
+	F_1 = 1
+
+	gcd(0, 1) = 1
+
+**Inductive Step**: We must show P(n+1) holds, given P(n) holds.
+
+Suppose :math:`F_{n+1}` and :math:`F_{n+2}` are not relatively prime.
+Then there exists a common divisor, d, such that :math:`d > 1`.
+Since it's a common divisor, it also divides a linear combination,
+
+.. math::
+
+	\begin{aligned}
+
+	d & \mid F_{n+2} - F_{n+1}
+
+	& \mid (F_{n+1} + \cancel{F_n}) - (\cancel{F_n} + F_{n-1})
+
+	& \mid F_{n+1} - F_{n-1}
+
+	& \mid F_n \qquad && \text{ proof?}
+
+	\end{aligned}
+
+But by the inductive hypothesis :math:`gcd(F_n, F_{n+1}) = 1`, so d cannot divide :math:`F_n` if d is greater than 1.
+This is a contradiction, so we can conclude that :math:`F_{n+1}` and :math:`F_{n+2}` are relatively prime,
+and thus by induction P(n) is true for all n.
+:math:`\blacksquare`
