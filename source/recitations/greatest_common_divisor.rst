@@ -165,3 +165,112 @@ But by the inductive hypothesis :math:`gcd(F_n, F_{n+1}) = 1`, so d cannot divid
 This is a contradiction, so we can conclude that :math:`F_{n+1}` and :math:`F_{n+2}` are relatively prime,
 and thus by induction P(n) is true for all n.
 :math:`\blacksquare`
+
+Power of 3
+----------
+
+Let N be a number whose decimal expansion consists of :math:`3^n` identical digits.
+Show by induction that :math:`3^n \mid N`. For example:
+
+.. math::
+
+	3^2 \mid \underbrace{777777777}_{3^2\ =\ 9 \text{ digits}}
+
+.. raw:: html
+
+	<hr>
+
+**Corollary**: :math:`3 \mid N`
+
+The decimal representation of N is a sequence of digits, a, of length :math:`3^n`,
+
+.. math::
+
+	\begin{aligned}
+
+	N_{a,n} = \sum_{i=0}^{3^n - 1} a_{3^n - i} \cdot 10^i
+
+	\end{aligned}
+
+Since :math:`10 \text{ mod 3 } = 1`, and any power of 10 mod 3 also equals 1,
+We can conclude that for any :math:`a_i \in N`,
+
+.. math::
+
+	\begin{aligned}
+
+	a_i \cdot 10^i &≡ \text{ (mod 3) }
+
+	a_i \cdot 1 &≡ \text{ (mod 3) }
+
+	a_i &≡ \text{ (mod 3) }
+
+	\end{aligned}
+
+So each item in the sequence N (mod 3) is equal to :math:`a_i`.
+In our case, each item :math:`a_i` is the same integer, so,
+
+.. math::
+
+	\begin{aligned}
+
+	{a \cdot 3^n \over 3} &≡ 0 \text{ (mod 3) }
+
+	3 (a \cdot 3^{n-1}) &≡ 0 \text{ (mod 3) }
+
+	\end{aligned}
+
+So we can conclude N is divisible by 3 for any value of a and n :math:`\square`.
+
+**Theorem**: :math:`\forall n \in \Bbb N_+. \forall a \in [1..9]. 3^n \mid N_{a,n}`.
+
+That is, for all n greater than 0, and any single digit a (except 0), :math:`3^n` divides :math:`N_{a,n}` as defined in the question.
+
+**Base Case**: P(0) can be calculated as follows,
+
+.. math::
+
+	\begin{aligned}
+
+	3^0 &\mid \sum_{i=0}^{3^0 - 1} a \cdot 10^i
+
+	1 &\mid \sum_{i=0}^0 a \cdot 10^i
+
+	1 &\mid 0 \qquad &&\text{0 terms to sum, so total is 0}
+
+	\end{aligned}
+
+Since zero is divisible by anything, this proves the base case.
+
+**Inductive Step**: We must show P(n+1) holds given than P(n) holds.
+
+.. math::
+
+	\begin{aligned}
+
+	N_{a,n+1} &= \sum_{i=0}^{3^n - 1} a_{3^n - i} \cdot 10^i + \sum_{j=3^n}^{3^{n+1} - 1} a_{3^{n+1}} \cdot 10^j \cr
+
+	\exists b \in \Bbb N_+,
+
+	&= 3^n \cdot b + \sum_{j=3^n}^{3^{n+1} - 1} a_{3^{n+1}} \cdot 10^j
+		\qquad && \text{ (by inductive hypothesis)} \cr
+
+	\exists c \in \Bbb N_+,
+
+	&= 3^n \cdot b + 3 \cdot c
+		\qquad && (3^{n+1} - 3^n = 3) \cr
+
+	\exists d \in \Bbb N_+,
+
+	&= 3^{n+1} \cdot d
+
+	\end{aligned}
+
+That is, we know the first term (reduced to b) is divisible by :math:`3^n` from the inductive hypothesis.
+The second term (reduced to c) is divisible by 3, because there are a multiple of 3 terms to sum from :math:`3^n \text{ to } 3^{n+1}`)
+
+So in total, the terms added together (reduced to d) are divisible by :math:`3^{n+1}`.
+This proves P(n+1).
+
+By induction, P(n) is true for for all :math:`n \ge 0`.
+:math:`\blacksquare`
