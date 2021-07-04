@@ -151,3 +151,99 @@ Anyway,
 	31^5 \ (mod\ 72) = 7
 
 Which is the same answer we got from the pulveriser. Hurray!
+
+2.  **Now ask your recitation instructor for a message to encrypt and send to another team using their public key.**
+
+	The messages m correspond to statements from the codebook below:
+
+	2 = Greetings and salutations!
+
+	3 = Wassup, yo?
+
+	4 = You guys are slow!
+
+	5 = All your base are belong to us.
+
+	6 = Someone on our team thinks someone on your team is kinda cute.
+
+	7 = You are the weakest link. Goodbye
+
+.. raw:: html
+
+	<hr>
+
+My wife chose 6. Coincidence? Maybe...
+
+3. **Encode the message you were given using another team’s public key.**
+
+.. raw:: html
+
+	<hr>
+
+.. math::
+
+	\begin{aligned}
+
+	m &= 6
+
+	m` &= rem(m^e, n)
+
+	&= rem(6^31, 91)
+
+	6^2 = 36,\ &mod\ 91 = 36
+
+	6^4 = 1296,\ &mod\ 91 = 22
+
+	6^8 = 1679616,\ &mod\ 91 = 29
+
+	&= 6^{8+8+8+4+2+1} \ (mod\ 91)
+
+	&= 29^3 \cdot 22 \cdot 36 \cdot 6 \ (mod\ 91)
+
+	&= 1 \cdot 22 \cdot 36 \cdot 6 \ (mod\ 91)
+
+	&= 4752 \ (mod\ 91)
+
+	&= 20
+
+	\end{aligned}
+
+4. **Now decrypt the message sent to you and verify that you received what the other team sent!**
+
+.. raw:: html
+
+	<hr>
+
+Since I don't have any classmates, I'll just decode my own message :')
+
+.. math::
+
+	\begin{aligned}
+
+	m &= rem((m`)^d, n)
+
+	&= rem(20^7, 91)
+
+	20^2 = 400,\ &mod\ 91 = 36
+
+	20^4 = 160000,\ &mod\ 91 = 22
+
+	&= 20^{4+2+1} \ (mod\ 91)
+
+	&= 22 \cdot 36 \cdot 20 \ (mod\ 91)
+
+	&= 15840 \ (mod\ 91)
+
+	&= 6
+
+	\end{aligned}
+
+Huzzah! Someone on my team thinks someone on my team is kinda cute ;)
+
+5. **Explain how you could read messages encrypted with RSA if you could quickly factor large numbers.**
+
+.. raw:: html
+
+	<hr>
+
+If you can factor n back into p and q, you can work out the rest following the steps we've just gone through.
