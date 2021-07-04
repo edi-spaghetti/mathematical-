@@ -39,12 +39,10 @@ if 'win' in sys.platform.lower():
     graphviz_dot = r'C:\Program Files\Graphviz\bin\dot.exe'
 elif 'linux' in sys.platform.lower():
     graphviz_dot = '/usr/bin/dot'
+else:
+    raise SystemError(f'Graphviz not supported on {sys.platform}')
 
-import subprocess
-gviz = subprocess.check_output(['dpkg', '-L', 'graphviz'])
-print(gviz)
-print(subprocess.check_output(['dpkg', '-L', 'dot']))
-print(subprocess.check_output(['tree', gviz]))
+print(f'graphviz installed: {os.path.exists(graphviz_dot)}')
 
 
 # Add any paths that contain templates here, relative to this directory.
