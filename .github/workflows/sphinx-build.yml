@@ -17,8 +17,6 @@ jobs:
           python-version: '3.6'
       - run: pip install sphinx
       - run: sudo apt install graphviz
-      - run: export GRAPHVIZ_DOT=`which graphviz`
-      - run: echo $GRAPHVIZ_DOT
 
       # setup git
       - run: git config --global user.email "epfspencer@yahoo.com"

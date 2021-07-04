@@ -35,11 +35,16 @@ extensions = [
     'sphinx.ext.graphviz',
 ]
 
-print(sys.platform)
 if 'win' in sys.platform.lower():
     graphviz_dot = r'C:\Program Files\Graphviz\bin\dot.exe'
 elif 'linux' in sys.platform.lower():
-    graphviz_dot = os.environ.get('GRAPHVIZ_DOT')
+    graphviz_dot = '/usr/bin/dot'
+
+import subprocess
+gviz = subprocess.check_output(['dpkg', '-L', 'graphviz'])
+print(gviz)
+print(subprocess.check_output(['dpkg', '-L', 'dot']))
+print(subprocess.check_output(['tree', gviz]))
 
 
 # Add any paths that contain templates here, relative to this directory.
