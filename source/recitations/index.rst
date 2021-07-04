@@ -14,4 +14,5 @@ The important thing is not just getting the right answer, but being able to stru
 	induction
 	state_machines
 	greatest_common_divisor
+	exponentiation_modular_arithmetic_RSA
 	graph_basics
