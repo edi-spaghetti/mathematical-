@@ -2,7 +2,7 @@ name: Build Sphinx Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, 2-setup-graphviz]
 
 jobs:
   build:
@@ -16,6 +16,8 @@ jobs:
         with:
           python-version: '3.6'
       - run: pip install sphinx
+      - run: sudo apt install graphviz
+      - run: export GRAPHVIZ_DOT=`which graphviz`
 
       # setup git
       - run: git config --global user.email "epfspencer@yahoo.com"

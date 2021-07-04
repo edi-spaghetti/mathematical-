@@ -10,8 +10,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
+import os
+import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
 
@@ -31,8 +31,15 @@ release = '6.042'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    'sphinx.ext.graphviz',
 ]
+
+if 'win' in sys.platform().lower():
+    graphviz_dot = r'C:\Program Files\Graphviz\bin\dot.exe'
+elif 'linux' in sys.platform().lower():
+    graphviz_dot = os.environ.get('GRAPHVIZ_DOT')
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
