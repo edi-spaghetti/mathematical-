@@ -2,7 +2,7 @@ name: Build Sphinx Pages
 
 on:
   push:
-    branches: [main, 2-setup-graphviz]
+    branches: [main]
 
 jobs:
   build:

@@ -35,14 +35,14 @@ extensions = [
     'sphinx.ext.graphviz',
 ]
 
+# use the graphviz dot installation appropriate to system
+# all paths are default
 if 'win' in sys.platform.lower():
     graphviz_dot = r'C:\Program Files\Graphviz\bin\dot.exe'
 elif 'linux' in sys.platform.lower():
     graphviz_dot = '/usr/bin/dot'
 else:
     raise SystemError(f'Graphviz not supported on {sys.platform}')
-
-print(f'graphviz installed: {os.path.exists(graphviz_dot)}')
 
 
 # Add any paths that contain templates here, relative to this directory.
