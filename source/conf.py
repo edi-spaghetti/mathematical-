@@ -35,9 +35,10 @@ extensions = [
     'sphinx.ext.graphviz',
 ]
 
-if 'win' in sys.platform().lower():
+print(sys.platform)
+if 'win' in sys.platform.lower():
     graphviz_dot = r'C:\Program Files\Graphviz\bin\dot.exe'
-elif 'linux' in sys.platform().lower():
+elif 'linux' in sys.platform.lower():
     graphviz_dot = os.environ.get('GRAPHVIZ_DOT')
 
 
