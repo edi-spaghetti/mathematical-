@@ -75,3 +75,41 @@ Therefore, there exists at least one colour left that can be used to colour :mat
 
 So G is *(w+1)-colourable*.
 :math:`\blacksquare`
+
+Problem 2
+---------
+
+A **planar graph** is a graph that can be drawn without any edges crossing.
+
+1. **First, show that any subgraph of a planar graph is planar.**
+
+.. raw:: html
+
+	<hr>
+
+A planar graph, :math:`G = (V, E)` has n nodes, and e edges (none of which cross).
+Removing one node, :math:`v_n`, gives us a graph :math:`G' = (V', E')`.
+Since :math:`E'` is a sub-set of E, and none of the edges in E cross, then none of the edges in :math:`E'` cross over either.
+:math:`\square`
+
+2. **Also, any planar graph has a node of degree at most 5.**
+**Now, prove by induction that any planar graph can be colored in at most 6 colors.**
+
+.. raw:: html
+
+	<hr>
+
+**Theorem**: Let P(n) be the predicate that any n-node planar graph, G, is colourable in 6 or less colours.
+
+**Base Case**: P(1) is true, because a 1-node graph is actually 1-colourable, which is less than 6 colours.
+
+**Inductive Step**: We must prove P(n+1) is true, assuming P(n) is true.
+For P(n+1) we have an (n+1)-node graph, G.
+Removing a node, :math:`v_{n+1}` leaves us with an n-node graph :math:`G'`
+By the inductive hypothesis we know an n-node graph is 6 colourable.
+
+In G, :math:`v_{n+1}` is adjacent to at most 5 nodes (by nature of it being a planar graph).
+This leaves us with at least 1 colour to use on :math:`v_{n+1}` for a maximum of 6 colours.
+
+By induction we can conclude any n-node planar graph is at most 6-colourable.
+:math:`\blacksquare`
