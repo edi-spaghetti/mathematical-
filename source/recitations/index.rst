@@ -16,3 +16,4 @@ The important thing is not just getting the right answer, but being able to stru
 	greatest_common_divisor
 	exponentiation_modular_arithmetic_RSA
 	graph_basics
+	stable_marriage_problem
