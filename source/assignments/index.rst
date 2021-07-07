@@ -11,3 +11,4 @@ If you spot something I've done wrong, please let me know!
 	propositions_and_proofs
 	number_theory
 	more_number_theory
+	graph_theory
