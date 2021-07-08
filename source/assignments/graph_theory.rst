@@ -61,7 +61,7 @@ This then creates our :math:`\ G' = (V, M_1 \cup M_2)`,
 But then, how can this graph be bipartite if E is connected by no edges?
 No matter how we partition the nodes, E will never connect to a node in the other partition.
 
-So G is not always bi-partite.
+So :math:`G'` is not always bi-partite.
 
 .. note::
 
