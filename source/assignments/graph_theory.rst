@@ -21,52 +21,57 @@ Problem 1
 
 The definition for bi-partite is that nodes can be partitioned into two subsets of nodes,
 :math:`V_L` and :math:`V_R`, where :math:`V = V_L \cup V_R`,
-so that all edges connect a node in :math:`V_L` to a node in :math:`V_R` (or vice versa).
+so that every edge has one node in :math:`V_L` and the other node in :math:`V_R` (or vice versa).
 
-Suppose this is our graph, :math:`G = (V, E)`
+By definition, a matching produces a bipartite graph, because no two edges are incident to a common vertex.
+Suppose we remove all the edges from :math:`G'` that belong to :math:`M_2`, to give us a bipartite graph :math:`G* = (V, M_1)`.
 
-.. graph:: G
-	:align: center
+Then, for each edge :math:`m \in M_2`, we add it to :math:`G*`, with the following cases,
 
-	A -- B
-	A -- D
-	C -- B
-	C -- D
-	E -- D
+**Case 1**: :math:`m \in M_1`.
+Since the edge already exists, and edges are uniquely added to a set, m is ignored.
+The bipartite graph is unchanged, so it remains bipartite.
 
-Now let two matchings of G be defined as,
+**Case 2** :math:`m \ni M_1`.
+This breaks down into two subcases.
 
-.. math::
+**Sub-Case 1**: :math:`m = \langle v_a — v_b \rangle. v_a \in V_L, v_b \in V_R`.
+That is, the edge is not in :math:`M_1`, and connects a node in :math:`V_L` to a node in :math:`V_R`.
+This fits the condition for being bipartite, and so the resulting graph is also bipartite.
 
-	M_1 = \{A—B, C—D\}
+**Sub-Case 2**: :math:`m = \langle v_a — v_b \rangle. v_a,v_b \in V_L \text{ or } v_a,v_b \in V_R`.
+That is, the edge does not connect nodes in different partitions, it connects nodes in the same partition.
+But then, this means the graph is not bipartite, because not all edges connects nodes in opposite partitions.
 
-	M_2 = \{A—D, C—D\}
+So :math:`G'` is not always bipartite.
 
-Note in both cases, we can't have :math:`E—D` because both matchings already have D connected to other nodes.
-By the question, no two edges in M are incident on a common vertex.
-
-This then creates our :math:`\ G' = (V, M_1 \cup M_2)`,
-
-.. math::
+An example of this would be the following graph,
 
 .. graph:: G
 	:align: center
 
 	A -- B
-	A -- D
-	C -- B
-	C -- D
-	E
+	B -- C
+	B -- D
 
-But then, how can this graph be bipartite if E is connected by no edges?
-No matter how we partition the nodes, E will never connect to a node in the other partition.
+Where,
 
-So :math:`G'` is not always bi-partite.
+.. math::
 
-.. note::
+	M_1 = \{ A — B \}
 
-	Either I've misunderstood something or there's something wrong with this question.
-	Regardless, I don't know how else to answer it with the information provided.
+	M_2 = \{ B — D \}
+
+A union of these two matchings, then, gives us,
+
+.. graph:: "G'"
+	:align: center
+
+	A -- B
+	B -- D
+	C
+
+Which is not bipartite, because B is present in both edges.
 
 
 Problem 2
