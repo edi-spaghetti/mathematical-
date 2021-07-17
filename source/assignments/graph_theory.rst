@@ -372,3 +372,23 @@ b)  **Consider the following proof of the False Claim:**
 
 	This means the base case has not been proved because we don't know what k is.
 	If we were assume it was :math:`n-1`, then P(1) would have to prove the graph is 0-colourable, which is impossible.
+
+Problem 5
+---------
+
+**Prove or disprove the following claim: for some** :math:`\ n \ge 3\ ` **(n boys and n girls, for a total of 2n people),**
+**there exists a set of boys’ and girls’ preferences such that every dating arrangement is stable.**
+
+.. raw:: html
+
+	<hr>
+
+For any set of preferences, there exists at least one unstable matching.
+
+Suppose we have a set of preferences, there exists at least one matching where a boy is matched with a girl
+such that the boy is not the girl's least favourite, and the girl is not the boy's least favourite.
+
+Within the same set of preferences, there also exists a matching between the boy with his least favourite and the girl with her least favourite.
+The boy and the girl then form a rogue couple because they like each other more than their least favourites.
+
+This matching, then, is not stable, which contradicts the claim that every dating arrangement is stable.
