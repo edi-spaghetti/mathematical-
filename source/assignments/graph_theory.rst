@@ -302,3 +302,73 @@ That is to say, if u is adjacent to v in G, then :math:`f(u)` is adjacent to :ma
 This means the number of edges does not increase or decrease while performing the isomorphism.
 
 Since the number of edges does not change, it follows that the max degree must also remain the same.
+
+Problem 4
+---------
+
+**Recall that a coloring of a simple graph is an assignment of a color to each vertex such that no two adjacent vertices have the same color.**
+**A k-coloring is a coloring that uses at most k colors.**
+
+**False Claim. Let** :math:`\ G\ ` **be a (simple) graph with maximum degree at most** :math:`\ k\ `.
+**If** :math:`\ G\ ` **also has a vertex of degree less than** :math:`\ k\ ` **, then** :math:`\ G\ ` **is k-colorable.**
+
+a)  **Give a counterexample to the False Claim when k = 2.**
+
+	.. raw:: html
+
+		<hr>
+
+	.. graph:: counterexample
+
+	    A [style=filled color=blue]
+	    B [style=filled color=red]
+	    C [style=filled color=green]
+	    D [style=filled color=blue]
+
+	    A -- B
+	    A -- C
+	    C -- D
+	    B -- C
+
+	As you can see, maximum degree is 2, and D has a degree less than 2,
+	but because we have a cycle A-B-C, the graph is not 2-colourable
+
+b)  **Consider the following proof of the False Claim:**
+
+	**Proof. Proof by induction on the number n of vertices:**
+
+	**Induction hypothesis: P(n) is defined to be: Let G be a graph with n vertices and maximum degree at most k.**
+	**If G also has a vertex of degree less than k, then G is k-colorable.**
+
+	**Base case: (n=1) G has only one vertex and so is 1-colorable. So P(1) holds.**
+
+	**Inductive step: We may assume** :math:`\ P(n)`.
+	**To prove** :math:`\ P(n + 1)` **, let** :math:`\ G_{n+1}\ ` **be a graph with** :math:`\ n + 1\ ` **vertices and maximum degree at most k.**
+	**Also, suppose** :math:`\ G_{n+1}\ ` **has a vertex, v, of degree less than k.**
+	**We need only prove that** :math:`\ G_{n+1}\ ` **is k-colorable.**
+
+	**To do this, first remove the vertex** :math:`\ v\ ` **to produce a graph,** :math:`\ G_n\ ` **, with n vertices.**
+	**Removing v reduces the degree of all vertices adjacent to v by 1.**
+	**So in** :math:`\ G_n\ ` **, each of these vertices has degree less than k.**
+	**Also the maximum degree of** :math:`\ G_n\ ` **remains at most k.**
+	**So** :math:`\ G_n\ ` **satisfies the conditions of the induction hypothesis P(n).**
+	**We conclude that** :math:`\ G_n\ ` **is k-colorable.**
+
+	**Now a k-coloring of** :math:`\ G_n\ ` **gives a coloring of all the vertices of** :math:`\ G_{n+1}` **, except for v.**
+	**Since v has degree less than k, there will be fewer than k colors assigned to the nodes adjacent to v.**
+	**So among the k possible colors, there will be a color not used to color these adjacent nodes,**
+	**and this color can be assigned to v to form a k-coloring of** :math:`\ G_{n+1}`.
+	:math:`\square`
+
+
+	**Identify the exact sentence where the proof goes wrong**
+
+	.. raw:: html
+
+		<hr>
+
+	In :math:`P(n)`, k is assumed but not defined. For an n-node graph, k scales with n, such that k is at most :math:`n-1`,
+	because each node can be adjacent to at most :math:`n-1` other nodes (since loops are not allowed in simple graphs).
+
+	This means the base case has not been proved because we don't know what k is.
+	If we were assume it was :math:`n-1`, then P(1) would have to prove the graph is 0-colourable, which is impossible.
