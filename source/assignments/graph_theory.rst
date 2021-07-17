@@ -19,59 +19,80 @@ Problem 1
 
 	<hr>
 
-The definition for bi-partite is that nodes can be partitioned into two subsets of nodes,
-:math:`V_L` and :math:`V_R`, where :math:`V = V_L \cup V_R`,
-so that every edge has one node in :math:`V_L` and the other node in :math:`V_R` (or vice versa).
+Suppose we have two subsets of nodes, :math:`V_L` and :math:`V_R`, where :math:`V = V_L \cup V_R`.
+:math:`G'` is bipartite if every node can be added to either :math:`V_L` or :math:`V_R` without sharing an edge with an existing node in that set.
 
 By definition, a matching produces a bipartite graph, because no two edges are incident to a common vertex.
-Suppose we remove all the edges from :math:`G'` that belong to :math:`M_2`, to give us a bipartite graph :math:`G* = (V, M_1)`.
+A graph produced from a matching also has a maximum degree of 1, for the same reason.
 
-Then, for each edge :math:`m \in M_2`, we add it to :math:`G*`, with the following cases,
+If :math:`G'` has a degree of 1, then it is trivially bipartite.
+So we must show that :math:`G'` is bipartite if it has a degree higher than 1.
 
-**Case 1**: :math:`m \in M_1`.
-Since the edge already exists, and edges are uniquely added to a set, m is ignored.
-The bipartite graph is unchanged, so it remains bipartite.
+**Lemma 1**: :math:`G'` has a maximum degree of 2.
 
-**Case 2** :math:`m \ni M_1`.
-This breaks down into two subcases.
+**Proof**: By contradiction.
+Suppose we have a node, v, in :math:`G'` incident to edges :math:`e_t` where :math:`\ t > 2`.
+By definition of a matching, the vertex (and the edge it is matched with) can appear once and only once per matching.
+We also know the edges in :math:`G'` are a union of exactly two matchings.
 
-**Sub-Case 1**: :math:`m = \langle v_a — v_b \rangle. v_a \in V_L, v_b \in V_R`.
-That is, the edge is not in :math:`M_1`, and connects a node in :math:`V_L` to a node in :math:`V_R`.
-This fits the condition for being bipartite, and so the resulting graph is also bipartite.
+So, if t is greater than 2, :math:`e_1` and :math:`e_2` could come from :math:`M_1` and :math:`M_2` respectively,
+but :math:`e_3` could not come from either, which is a contradiction.
 
-**Sub-Case 2**: :math:`m = \langle v_a — v_b \rangle. v_a,v_b \in V_L \text{ or } v_a,v_b \in V_R`.
-That is, the edge does not connect nodes in different partitions, it connects nodes in the same partition.
-But then, this means the graph is not bipartite, because not all edges connects nodes in opposite partitions.
+So we can conclude a graph produced from two matchings will have, at most, degree of 2.
+:math:`\square`
 
-So :math:`G'` is not always bipartite.
+Next, let's consider the connected component of any node in :math:`G'`.
+Suppose we have a node, v, connected by the shortest number of edges to another node, u.
+We start by adding v to :math:`V_L`, and for every node in the same component we recursively add every adjacent node to the opposite partition.
+This means the number of edges from v to any node in :math:`V_L` will be even, and the number of edges from v to any node in :math:`V_R` will be odd.
 
-An example of this would be the following graph,
+A path is bipartite, because each node is present only once, and there are no cycles.
+So each node can be grouped by the opposite of its neighbours.
 
-.. graph:: G
-	:align: center
+Suppose two adjacent nodes, w and x are both connected to v, forming a cycle :math:`v—...w—x—...v`.
 
-	A -- B
-	B -- C
-	B -- D
+If the parity of :math:`v—..w` and :math:`v—...x` is different,
+then by the above, w and x are in opposite partitions, so the cycle is bipartite.
 
-Where,
+.. note::
 
-.. math::
+	The sum of numbers of opposite parity is odd, plus 1 (for the edge :math:`w—x`),
+	meaning this is a cycle of even length.
 
-	M_1 = \{ A — B \}
+If the parity of :math:`v—..w` and :math:`v—...x` is the same, then w and x would be in the same partition.
+But since they share an edge they can't be added to the same partition, and so the graph cannot be bipartite.
 
-	M_2 = \{ B — D \}
+.. note::
 
-A union of these two matchings, then, gives us,
+	The sum of any two numbers of the same parity is always even.
 
-.. graph:: "G'"
-	:align: center
+Since v and w are adjacent, the parity of the number of edges in the the cycle :math:`v—...w—x—...v` is odd.
+So we must prove that :math:`G'` cannot have any cycles of odd length.
 
-	A -- B
-	B -- D
-	C
+**Lemma 2**: :math:`G'` cannot have any cycles of odd length
 
-Which is not bipartite, because B is present in both edges.
+**Proof**: By contradiction.
+Assume :math:`G'` has a cycle of length i, where i is an odd number.
+Suppose we walk around the cycle. Since the edges in :math:`G'` are a union of matchings,
+each step must travel along an edge, e, such that :math:`e_j` and :math:`e_{j+1}` are from the opposite matching,
+for some integer :math:`j \in \Bbb Z`.
+
+This is because matchings cannot contain edges connected to a node more than once.
+So if a node has more than one edge, they must come from different matchings.
+
+.. note::
+
+	By lemma 1, we know there are at most 2 edges for every node in :math:`G'`.
+	So edges are from either :math:`M_1` or :math:`M_2`.
+
+This means, for any :math:`k,m \in \Bbb Z`, if :math:`\ k\ mod\ i\ ` and :math:`\ m\  mod\ i\ ` are both even, then they must come from the same matching.
+However, since i is odd, :math:`\ 0\ mod\ i\ ` and :math:`\ i-1\ mod\ i\ ` are both even, which would put two adjacent edges in the same matching.
+This is a contradiction, so we can assume there are no cycles of odd length in :math:`G'`
+:math:`\square`
+
+By lemma 2, we know :math:`G'` can only be comprised of paths and even cycles, which as we showed, both result in a bipartite graph.
+Therefore, :math:`G'` is bipartite.
+:math:`\blacksquare!`
 
 
 Problem 2
