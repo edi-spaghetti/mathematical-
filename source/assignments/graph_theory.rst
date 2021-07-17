@@ -196,3 +196,109 @@ There are n existing nodes, so we can calculate the number of edges as,
 
 This proves :math:`P(n+1)`, and so by induction we can assume the hypothesis is true for all :math:`n \in N_+`.
 :math:`\blacksquare`
+
+Problem 3
+---------
+
+**Two graphs are isomorphic if they are the same up to a relabeling of their vertices (see Definition 5.1.3 in the book).**
+**A property of a graph is said to be preserved under isomorphism if whenever G has that property,**
+**every graph isomorphic to G also has that property.**
+**For example, the property of having five vertices is preserved under isomorphism:**
+**if G has five vertices then every graph isomorphic to G also has five vertices.**
+
+**Some properties of a simple graph, G, are described below.**
+**Which of these properties is preserved under isomorphism?**
+
+1.  **G has an even number of vertices.**
+
+	.. raw:: html
+
+		<hr>
+
+	Preserved, because isomorphism is a bijection between sets of vertices, so the number of vertices cannot change.
+	If the graph has an even number before applying to function, it will have an even number after applying.
+
+2.  **None of the vertices of G is an even integer.**
+
+	.. raw:: html
+
+		<hr>
+
+	Not preserved, because the graph isomorphism could be to simply add one, making it odd.
+
+3.  G has a vertex of degree 3.
+
+	.. raw:: html
+
+		<hr>
+
+	Preserved, because the function applied to each vertex is also applied to each vertex adjacent to it.
+
+4. G has exactly one vertex of degree 3.
+
+	.. raw:: html
+
+		<hr>
+
+	Preserved, for the same reason as in question 3
+
+**Determine which among the four graphs pictured in the Figures are isomorphic.**
+**If two of these graphs are isomorphic, describe an isomorphism between them.**
+**If they are not, give a property that is preserved under isomorphism such that one graph has the property, but the other does not.**
+**For at least one of the properties you choose, prove that it is indeed preserved under isomorphism (you only need prove one of them).**
+
+.. image:: ../images/assignment-4-problem-3-part-b.png
+	:align: center
+
+Graphs a and c are isomorphic.
+
+Here is an isomorphism from a to c:
+
+.. math::
+
+	f(1) = 1
+
+	f(2) = 2
+
+	f(3) = 3
+
+	f(4) = 8
+
+	f(5) = 9
+
+	f(6) = 10
+
+	f(7) = 4
+
+	f(8) = 5
+
+	f(9) = 6
+
+	f(10) = 7
+
+To make this a bit more visual, I've labelled these with colours:
+
+.. image:: ../images/assignment-4-problem-3-part-b-coloured.png
+	:align: center
+
+Graph b is not isomorphic to any other, because it has a max degree of 4, but the others all have a max degree of 3.
+
+Graph d is not isomorphic to any other because it has a cycle of length 4, but neither a nor b have a cycle of length 4.
+(We already showed b is not isomorphic to d because of the max degree).
+
+
+The formal definition of isomorphism between two graphs G and H is a bijection :math:`\ f\ :\ V(G) \rightarrow V(H)` such that,
+
+.. math::
+
+	\langle u — v \rangle \in E(G) \Leftrightarrow \langle f(u) — f(v) \in E(H) \rangle
+
+for all :math:`u, v \in V(G)`
+
+This means an isomorphic function is applied to any given node in G to get the corresponding node in H.
+It also means the edge between any two nodes in G is also preserved in H.
+
+That is to say, if u is adjacent to v in G, then :math:`f(u)` is adjacent to :math:`f(v)` in H.
+This means the number of edges does not increase or decrease while performing the isomorphism.
+
+Since the number of edges does not change, it follows that the max degree must also remain the same.
