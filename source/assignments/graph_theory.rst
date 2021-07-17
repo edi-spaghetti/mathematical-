@@ -392,3 +392,52 @@ Within the same set of preferences, there also exists a matching between the boy
 The boy and the girl then form a rogue couple because they like each other more than their least favourites.
 
 This matching, then, is not stable, which contradicts the claim that every dating arrangement is stable.
+
+Problem 6
+---------
+
+**Let** :math:`\ (s_1, s_2, \dots, s_n)\ ` **be an arbitrarily distributed sequence of the number** :math:`\ 1, 2, \dots, n − 1, n`.
+**For instance, for** :math:`n = 5`, **one arbitrary sequence could be** :math:`(5, 3, 4, 2, 1)`.
+
+Define the graph :math:`G = (V,E)` **as follows:**
+
+1.  :math:`V = \{v1, v2, \dots, v_n\}`
+
+2. :math:`e = (v_i, v_j ) \in E` **if either:**
+
+	**(a)** :math:`\ j = i + 1, \text{ for } 1 \le i \le n − 1`
+
+	**(b)** :math:`\ i = s_k, \text{ and } j = s_{k+1} \text{ for } 1 \le k \le n − 1`
+
+(a) **Prove that this graph is 4-colorable for any** :math:`\ (s1, s2, \dots, s_n)`.
+
+	**Hint: First show that a line graph is 2-colorable.**
+	**Note that a line graph is defined as follows:**
+	**The n-node graph containing n − 1 edges in sequence is known as the line graph** :math:`\ L_n`.
+
+	Considering case (a) only, results in a line graph :math:`L_n`.
+	:math:`s_1` and :math:`s_n` have a degree of 1, while all nodes in :math:`(s_2, \dots, s_{n-1})` have a degree of 2.
+
+	Since this forms a path, it is 2-colourable, because nodes are either odd or even, which forms two groups.
+
+	When we consider case (b), the graph G has a degree of at most 4.
+	For any given item in the sequence, :math:`s_i`, if :math:`s_i - 1` is greater than 0, and earlier in the sequence,
+	then :math:`s_i` will be connected to :math:`s_i - 1`.
+	If i is greater than 1, then :math:`s_{i-1}` will also be connected, because :math:`s_i` is not the first item of the sequence.
+	By symmetry, edges are also added if :math:`s_i + 1` is less than :math:`s_i`, or if :math:`i+1 \le n` (i.e. we haven't reached the end of the sequence)
+
+	In other words, up to 2 edges are added each for numerical and sequential ordering.
+
+	So when we added edges by sequential ordering, there are at most 3 existing edges.
+	Up to 2 from the numerical ordering, and 1 from :math:`v_{s_k}`.
+	Therefore we need at most 1 more colour to colour :math:`v_{s_{k+1}}`, making 4 colours.
+
+(b) **Suppose** :math:`\ (s_1, s_2, \dots, s_n) = (1, a_1, 3, a_2, 5, a_3, ...)\ ` **where** :math:`\ a_1, a_2\ ` **is an arbitrary distributed sequence of the even numbers in** :math:`\ 1, \dots, n − 1`.
+	**Prove that the resulting graph is 2-colorable.**
+
+	By case (b) we add one edge by sequential ordering, resulting in a line graph.
+
+	Then for each number in numerical order, it must be an odd number of places away in the sequence (due to how the sequence is structured).
+	Therefore the edge added by numerical ordering creates a loop of even length (odd + 1 = even).
+
+	As we've shown in problem 1, a graph with only cycles of an even length is bipartite, and therefore 2-colourable.
