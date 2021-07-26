@@ -19,3 +19,4 @@ The important thing is not just getting the right answer, but being able to stru
 	stable_marriage_problem
 	build_up_problem
 	travelling_salesperson
+	networks
