@@ -1,3 +1,5 @@
+.. _graph-theory:
+
 Graph Theory
 ============
 
