@@ -5,24 +5,28 @@ More Graph Theory
 Problem 1
 ---------
 
-Recall that a tree is a connected acyclic graph.
-In particular, a single vertex is a tree.
-We define a Splitting Binary Tree, or SBTree for short, as either the lone vertex, or a tree with the following properties:
+.. admonition:: Introduction
 
-	1. exactly one node of degree 2 (called the root).
+	Recall that a tree is a connected acyclic graph.
+	In particular, a single vertex is a tree.
+	We define a Splitting Binary Tree, or SBTree for short, as either the lone vertex, or a tree with the following properties:
 
-	2. every other node is of degree 3 or 1 (called internal nodes and leaves, respectively).
+		1. exactly one node of degree 2 (called the root).
 
-For the case of one single vertex (see above), that vertex is considered to be a leaf.
+		2. every other node is of degree 3 or 1 (called internal nodes and leaves, respectively).
+
+	For the case of one single vertex (see above), that vertex is considered to be a leaf.
 
 
-**(a) Show if an SBTree has more than one vertex, then the induced subgraph obtained by removing the unique root consists of two disconnected SBTrees.**
-**You may assume that by removing the root you obtain two separate connected components,**
-**so all you need to prove is that those two components are SBTrees.**
+a)
+^^
 
-.. raw:: html
+.. admonition:: Question
 
-	<hr>
+	Show if an SBTree has more than one vertex, then the induced subgraph obtained by removing the unique root consists of two disconnected SBTrees.
+	You may assume that by removing the root you obtain two separate connected components,
+	so all you need to prove is that those two components are SBTrees.
+
 
 An SBTree is a recursive structure that has one transition, split.
 Split can only be applied to nodes with at most one edge.
@@ -88,14 +92,14 @@ the total number of edges in that branch will increase by 2 (maintaining parity)
 and the other branch will not increase (also maintaining parity).
 This, after any number of transitions, each branch is also an SBTree.
 
+b)
+^^
 
-**(b) Prove that two SBTrees with the same number of leaves must also have the same total number of nodes.**
-**Hint: As a conjecture, guess an expression for the total number of nodes in terms of the number of leaves N (l).**
-**Then use induction to prove that it holds for all trees with the same l**
+.. admonition:: Question
 
-.. raw:: html
-
-	<hr>
+	Prove that two SBTrees with the same number of leaves must also have the same total number of nodes.
+	Hint: As a conjecture, guess an expression for the total number of nodes in terms of the number of leaves N (l).
+	Then use induction to prove that it holds for all trees with the same l
 
 For any SBTree, T, the total number of nodes is equal to twice the total number of leaves minus 1,
 where total number of leaves is no less than 1. We define P(L) then as;
