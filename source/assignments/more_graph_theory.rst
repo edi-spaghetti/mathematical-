@@ -290,3 +290,78 @@ and have :math:`133 + 7 = 140` steps to return with 2 minutes spare to defuse.
 Since we have a :math:`20 \times 7` hamiltonian grid, and :math;`20 \cdot 7 = 140`,
 they have exactly enough time to visit every node once and return to the start to defuse the bomb.
 :math:`\blacksquare`
+
+Problem 3
+---------
+
+.. admonition:: Introduction
+
+	An :math:`n-node` graph is said to be tangled if there is an edge leaving every set of :math:`\lceil {n \over 3} \rceil` or fewer vertices.
+	As a special case, the graph consisting of a single node is considered tangled.
+
+a)
+^^
+
+.. admonition:: Question
+
+	Find the error in the proof of the following claim.
+
+
+.. admonition:: Claim
+
+	Every non-empty, tangled graph is connected.
+
+	**Proof**. The proof is by strong induction on the number of vertices in the graph.
+	Let :math:`P(n)` be the proposition that if an :math:`n-node` graph is tangled,
+	then it is connected.
+
+	In the base case, :math:`P(1)` is true because the graph consisting of a single node is defined to be tangled and is trivially connected.
+
+	In the inductive step, for :math:`n \ge 1` assume :math:`P(1), \dots , P(n)` to prove :math:`P(n + 1)`.
+	That is, we want to prove that if an :math:`(n + 1)-node` graph is tangled, then it is connected.
+
+	Let :math:`G` be a tangled, :math:`(n + 1)-node` graph.
+	Arbitrarily partition G into two pieces so that the first piece contains exactly :math:`\lceil {n \over 3} \rceil` vertices,
+	and the second piece contains all remaining vertices.
+
+	Note that since :math:`n \ge 1`, the graph :math:`G` has a least two vertices,
+	and so both pieces contain at least one vertex.
+
+	By induction, each of these two pieces is connected.
+	Since the graph G is tangled, there is an edge leaving the first piece, joining it to the second piece.
+	Therefore, the entire graph is connected.
+
+	This shows that :math:`P(1), \dots , P(n)` imply :math:`P(n + 1)`, and the claim is proved by strong induction.
+	:math:`\square`
+
+The error is with the statement *'By induction each of these two pieces is connected'*.
+We cannot assume that every subgraph of a tangled graph is also tangled, and by extension cannot infer that they are connected.
+
+b)
+^^
+
+.. admonition:: Question
+
+	Draw a tangled graph that is not connected.
+
+The following is a :math:`6-node` tangled graph,
+
+.. image:: ../images/tangled-not-connected.png
+	:align: center
+
+To be tangled it must have an edge leaving any set of :math:`\lceil {6 \over 3} \rceil = 2` or fewer nodes.
+Since the minimum degree on each node is 1, any set of 1 nodes will have an edge leaving it.
+
+Within the graph there are two components, each with 3 nodes connected.
+For any set of 2 nodes within a component, the third node in the component has an edge leaving the set.
+See below, the red edge gives it the property of being tangled.
+
+.. image:: ../images/tangled-set-2-of-component.png
+	:align: center
+
+For any set of nodes between components (i.e. one node per component), there will also be edges leaving the set.
+
+.. image:: ../images/tangled-set-2-between-components.png
+	:align: center
+
+However there are no edges between the components, so it is not connected.
