@@ -254,3 +254,39 @@ and any value of M, the :math:`N \times M` grid is Hamiltonian.
 
 By symmetry the same is true if M is even and greater than 1.
 :math:`\blacksquare`
+
+2.
+""
+
+.. admonition:: Question
+
+	Explain why your proof breaks down when N and M are odd.
+
+If N and M are both odd, then the assumption above about :math:`P(n+1)` is no longer true.
+That is, the pattern becomes this,
+
+.. image:: ../images/hamiltonian-odd-N.png
+	:align: center
+
+This is invalid because there is no connection between :math:`(N+1, M)` and :math:`(2, N)`.
+:math:`\blacksquare`
+
+Any other pattern would also run into a similar issue, trust me :)
+:math:`\blacksquare`
+
+3.
+""
+
+.. admonition:: Question
+
+	Would they survive? Does it depend on where the bomb is placed?
+
+Yes, they would survive, and it does not matter where the bomb is placed.
+Since at least one dimension of the :math:`20 \times 7` grid is even, by part 1 the grid is hamiltonian.
+That means every node can be visited once (and only once) on a round trip from the starting location.
+
+By the rules of the exercise, they start at the location of the bomb,
+and have :math:`133 + 7 = 140` steps to return with 2 minutes spare to defuse.
+Since we have a :math:`20 \times 7` hamiltonian grid, and :math;`20 \cdot 7 = 140`,
+they have exactly enough time to visit every node once and return to the start to defuse the bomb.
+:math:`\blacksquare`
