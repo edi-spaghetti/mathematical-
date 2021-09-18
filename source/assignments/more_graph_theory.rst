@@ -132,3 +132,57 @@ This works out as,
 
 This proves the constructor case. By structural induction this proves P(L) for any SBTree.
 :math:`\blacksquare`
+
+
+Problem 2
+---------
+
+.. admonition:: Introduction
+
+	In ”Die Hard: The Afterlife”, the ghosts of Bruce and Sam have been sent by the evil Simon
+	on another mission to save midtown Manhattan. They have been told that there is a bomb
+	on a street corner that lies in Midtown Manhattan, which Simon defines as extending from
+	41st Street to 59th Street and from 3rd Avenue to 9th Avenue. Additionally, the code that
+	they need to defuse the bomb is on another street corner. Simon, in a good mood, also tosses
+	them two carrots:
+
+	 - He will have a helicopter initially lower them to the street corner where the bomb is.
+	 - He promises that the code is placed only on a corner of a numbered street and a
+	   numbered avenue, so they don’t have to search Broadway.
+
+	The map of midtown Manhattan is an example of an :math:`N \times M` (undirected) grid.
+	In particular, midtown Manhattan is a :math:`19 \times 7` grid.
+	Bruce and Sam need to check all :math:`19 \cdot 7 = 133` street corners for the code in 133 steps or less.
+
+a)
+^^
+
+.. admonition:: Question
+
+	Show that they cannot do it – that is, more generally, show that if both N and M are odd,
+	then the :math:`N \times M` grid is not Hamiltonian.
+
+First we will show that any :math:`N \times M` grid is bipartite.
+We can do this by considering the fact that any step in the graph must either be horizontally or vertically,
+since it is a 2-dimensional grid - there are no loops backs or diagonals.
+
+Therefore, any step vertically must have a counterpart step vertically in the opposite direction to return to the same avenue.
+By symmetry the same is true for horizontal steps.
+
+This means for any cycle, there will be an even number (since any number mutiplied by 2 is even) number of steps.
+As we showed in :ref:`graph theory <graph-theory>` problem 1, a graph is bipartite if and only if it is comprised of paths and even cycles.
+As we've just shown an :math:`N \times M` grid has only even cycles, this means that it is also bipartite.
+
+Next we must show that if both N and M are odd, the grid is not Hamiltonian.
+Each step along a Hamiltonian path must travel to a new node, and since the graph is bipartite,
+this means each node will be the opposite colour to the previous one.
+
+However, if N and M are both odd, this means the total number of nodes is odd.
+Therefore if the node we started as was coloured blue, the last node we arrive at will also be blue.
+But since the graph is bipartite then cannot be a connection between the first and last node.
+
+Therefore to arrive back at the first node we must revisit at least one of the nodes,
+which contradicts the properties of a Hamiltonian graph.
+
+Therefore if N and M are both odd, the :math:`N \times M` grid is not Hamiltonian.
+:math:`\blacksquare`
