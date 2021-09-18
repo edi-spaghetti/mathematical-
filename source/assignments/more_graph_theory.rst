@@ -190,3 +190,67 @@ which contradicts the properties of a Hamiltonian graph.
 
 Therefore if N and M are both odd, the :math:`N \times M` grid is not Hamiltonian.
 :math:`\blacksquare`
+
+b)
+^^
+
+.. admonition:: Intro
+
+	Suppose Simon defined Midtown in the more standard way as extending from 40th Street to 59th Street
+	and from 3rd Avenue to 9th Avenue (that is suppose Midtown Manhattan was a 20 × 7 grid),
+	and gave them another 7 minutes.
+
+1.
+""
+
+.. admonition:: Question
+
+	Show that if either N is even and :math:`M > 1` or M is even and :math:`N > 1`,
+	then the :math:`N \times M` grid is Hamiltonian.
+
+**Proof** By Induction
+
+Let P(n) be the predicate, where n is any positive integer greater than 1,
+such that :math:`N = 2n`, and M is any any positive integer greater than 1.
+We will show that any combination of :math:`N \times M` grid is Hamiltonian.
+
+**Base Case**: n = 1
+
+This is trivially Hamiltonian as illustrated below,
+
+.. image:: ../images/hamiltonian-2xM.png
+	:align: center
+
+As you can see, the path can travel down one side and back up the other for any value of M.
+This completes a cycle visiting each node, and so it is Hamiltonian.
+
+**Inductive Step**:
+
+Next we must show that :math:`P(n + 1)` is true, given that :math:`P(n)` is true.
+
+We assume that the grid for :math:`P(n)` is arranged as follows,
+
+.. image:: ../images/hamiltonian-NxM.png
+	:align: center
+
+Note that this pattern would not be possible where M = 2, but by symmetry,
+if M = 2 an :math:`N \times 2` grid has the same properties as a :math:`2 \times M` grid,
+which as we showed in the base case is Hamiltonian.
+
+Note also the subsection from the :math:`2^{nd}` to the :math:`M^{th}` row is also
+a :math:`2 \times M - 1` grid, and similar to the base case is also Hamiltonian,
+so the pattern holds for any value of M.
+
+Notice that any time we increase n by 1, the :math:`N \times M` grid increases in size by 2 (so that N remains an even number).
+Therefore, for :math:`P(n+1)` the pattern is as follows,
+
+.. image:: ../images/hamiltonian-N+1xM.png
+	:align: center
+
+This creates a path through all new nodes, plus the existing nodes in the :math:`P(n)` grid.
+Thus the theory holds for :math:`P(n+1)`.
+So by induction we can conclude that for an even N greater 1 one,
+and any value of M, the :math:`N \times M` grid is Hamiltonian.
+
+By symmetry the same is true if M is even and greater than 1.
+:math:`\blacksquare`
