@@ -365,3 +365,34 @@ For any set of nodes between components (i.e. one node per component), there wil
 	:align: center
 
 However there are no edges between the components, so it is not connected.
+
+c)
+^^
+
+.. admonition:: Question
+
+	An :math:`n-node` graph is said to be **mangled** if there is an edge leaving every set of :math:`\lceil {n \over 2} \rceil` or fewer vertices.
+	Again, as a special case, the graph consisting of a single node is considered mangled.
+	Prove the following claim. *Hint: Prove by contradiction.*
+
+.. admonition:: Claim
+
+	Every non-empty, mangled graph is connected.
+
+**Proof**: By contradiction
+
+Let :math:`G` be a non-empty, mangled graph that is not connected.
+Since :math:`G` is mangled, every node must have a degree of at least 1 in order to meet the requirement that every set of 1 node (the smallest set) has an edge leaving it.
+Since :math:`G` is not connected, then it can be grouped into two components, :math:`G'\ and\ G''`, such that there is no connection between the them.
+
+Since :math:`G` is mangled, we know the size of both components must be greater than :math:`\lceil {n \over 2} \rceil`,
+in order for there to be an edge leaving the largest possible set size to meet the criteria of being mangled,
+but also that edge must connect to a node in the same component, to meet the criteria of not being connected to each other.
+
+However, by simple arithmetic we also know that :math:`\lceil {n \over 2} \rceil \ge {|G| \over 2}`.
+That is, both components need to be larger than the largest set size, but the largest set size is at least half the total size of the graph.
+(They can't both be larger than half the size of the total).
+
+This is a contradiction, so we can conclude that the edge leaving any given largest set must connect to a node in the other component, thus connecting the graph.
+Therefore every non-empty, mangled graph is connected.
+:math:`\blacksquare`
