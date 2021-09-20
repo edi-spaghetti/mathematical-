@@ -396,3 +396,66 @@ That is, both components need to be larger than the largest set size, but the la
 This is a contradiction, so we can conclude that the edge leaving any given largest set must connect to a node in the other component, thus connecting the graph.
 Therefore every non-empty, mangled graph is connected.
 :math:`\blacksquare`
+
+Problem 4
+---------
+
+a)
+^^
+
+.. admonition:: Question
+
+	Suppose that G is a simple, connected graph of n nodes.
+	Show that G has exactly :math:`n − 1` edges iff G is a tree.
+
+First we will show the forward relation.
+
+**Proof**: By induction.
+
+Let :math:`P(n)` be the predicate that if G has exactly :math:`n - 1` nodes then it is a tree,
+where n is the number of nodes in G
+
+**Base Case**: P(1) is true because a graph of 1 node has 0 edges, and :math:`1 - 1 = 0`.
+
+**Inductive Step**: Assuming P(n) is true, let's consider an :math:`(n+1)-node` tree, T.
+We know that any graph with at least 2 nodes has at least 2 leaves, so we can choose one of these leaves, :math:`l`.
+If we remove :math:`l` and the edge associated with it (by definition a leaf has only 1 edge),
+we are left with an :math:`n-node` graph, :math:`T'`.
+
+Since we removed a leaf we know :math:`T'` remains connected,
+and we also know that any connected subgraph of a tree is also a tree.
+:math:`T'` is, then, an :math:`n-node` tree, which by induction has :math:`n - 1` edges.
+
+So we can conclude T has :math:`(n - 1) + 1` edges (:math:`n-1` from :math:`T'`, and 1 from :math:`l`).
+:math:`(n - 1) + 1 = n` which proves the inductive hypothesis for :math:`P(n+1)`.
+:math:`\square`
+
+Next we must show the reverse is also true, that is if a connected graph has :math:`n - 1` edges then it is a tree.
+
+**Proof**: By contradiction.
+
+Consider a connected graph, :math:`G`, that has :math:`n - 1` edges but is not a tree.
+Since it is connected, then there must exist a path from any given node to any other node in the graph.
+Since it is not a tree, then it must contain a cycle.
+
+We also know that the minimum number of edges for an :math:`n-node` graph to be connected in :math:`n - 1`.
+That is, removing an edge from it would make it disconnected.
+
+However, as we concluded above, there is a cycle in G.
+This means there exists two nodes, :math:`u` and :math:`v`, that are part of a cycle.
+However, since they're part of a cycle, we can remove an edge in the cycle and :math:`u` will still be connected to :math:`v` in the other direction of the cycle.
+
+.. image:: ../images/trees-cycle-contradiction.png
+	:align: center
+
+As illustrated, we can remove an edge from path :math:`p_0` and :math:`u` will still be connected :math:`v` by path :math:`p_1`
+
+This contradicts :math:`n - 1` edges being the minimum number of edges for an :math:`n-node` graph to be connected,
+so we can conclude there are no cycles.
+
+Since there are no cycles, and the graph is connected, then it is a tree.
+:math:`\square`
+
+Thus we have shown the question stated, G has exactly :math:`n − 1` edges iff G is a tree,
+holds in both logical directions directions, and so the theory holds.
+:math:`\blacksquare`
