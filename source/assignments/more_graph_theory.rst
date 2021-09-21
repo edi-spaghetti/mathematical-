@@ -459,3 +459,34 @@ Since there are no cycles, and the graph is connected, then it is a tree.
 Thus we have shown the question stated, G has exactly :math:`n − 1` edges iff G is a tree,
 holds in both logical directions directions, and so the theory holds.
 :math:`\blacksquare`
+
+b)
+^^
+
+.. admonition:: Question
+
+	Prove by induction that any connected graph has a spanning tree.
+
+Let P(n) be our predicate where if :math:`G` is an :math:`n-node` connected graph, then it has a spanning tree.
+
+**Proof**: By induction.
+
+**Base Case**: :math:`P(1)` is trivially true because a single node is considered connected, and also a tree.
+
+**Inductive Step**: Given :math:`P(n)` is true, we must show :math:`P(n+1)` is true.
+
+Suppose we remove one node, :math:`v`, and any adjacent edges, from :math:`G` such that we are left with a connected subgraph, :math:`G'`.
+We know such a node exists because if we consider :math:`v`'s neighbour, :math:`u`, then there are only two options (note: they are not mutually exclusive);
+
+1. :math:`u` is part of a cycle :math:`v — u \dots — v`.
+   But then removing the edge :math:`v — u` means any nodes can travel the other direction of the cycle and still connect to :math:`u`
+2. :math:`u` is part of path, which by definition must have at least two ends, one of which is :math:`v`
+
+By the inductive hypothesis we know :math:`G'` has a spanning tree, :math:`T'`.
+
+When we add :math:`v` back to :math:`G'` it must have at least one edge, since :math:`G` is connected,
+between :math:`v` and a node in :math:`T'`.
+
+This makes :math:`v` a leaf of a new spanning tree, :math:`T`.
+This proves :math:`P(n+1)` and so the theorem is true.
+:math:`\blacksquare`
