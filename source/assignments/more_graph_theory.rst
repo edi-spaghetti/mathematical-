@@ -490,3 +490,121 @@ between :math:`v` and a node in :math:`T'`.
 This makes :math:`v` a leaf of a new spanning tree, :math:`T`.
 This proves :math:`P(n+1)` and so the theorem is true.
 :math:`\blacksquare`
+
+Problem 5
+---------
+
+.. admonition:: Introduction
+
+	The adjacency matrix of a graph is given below.
+
+	.. math::
+
+		\left\lbrack \begin{matrix}
+		0 & 1 & 1 & 1 & 0 & 1 \\
+		1 & 0 & 0 & 1 & 1 & 1 \\
+		1 & 0 & 0 & 1 & 1 & 1 \\
+		1 & 1 & 1 & 0 & 1 & 0 \\
+		0 & 1 & 1 & 1 & 0 & 1 \\
+		1 & 1 & 1 & 0 & 1 & 0
+		\end{matrix} \right\rbrack
+
+a)
+^^
+
+.. admonition:: Question
+
+	Draw the graph defined by this adjacency matrix.
+	Label the vertices of your graph :math:`1, 2, \dots , 6` so that vertex i corresponds to row and column i of the matrix.
+
+Given the above labelling of verices;
+
+.. graph:: adjacency
+
+    1 -- 2
+    1 -- 3
+    1 -- 4
+    1 -- 6
+
+    2 -- 4
+    2 -- 5
+    2 -- 6
+
+    3 -- 4
+    3 -- 5
+    3 -- 6
+
+    4 -- 5
+
+    5 -- 6
+
+b)
+^^
+
+.. admonition:: Question
+
+	In a graph, we define the distance between to vertices to be the length of the shortest path between them.
+	We define the diameter of a graph to be the largest distance between any two nodes.
+	What is the diameter of this graph? Explain why
+
+The diameter of this graph is 2.
+Given the above connections we can count the shortest path between any two nodes;
+
+.. math::
+
+	\left\lbrack \begin{matrix}
+	0 & 1 & 1 & 1 & 2 & 1 \\
+	x & 0 & 2 & 1 & 1 & 1 \\
+	x & x & 0 & 1 & 1 & 1 \\
+	x & x & x & 0 & 1 & 2 \\
+	x & x & x & x & 0 & 1 \\
+	x & x & x & x & x & 0
+	\end{matrix} \right\rbrack
+
+As you can see, every node is adjacent to every other node except :math:`\{1, 5\}, \{2, 3\}, \{4, 6\}`.
+However, in every case, if a node is not adjacent, then one of the nodes adjacent is adjacent - making the path length 2.
+
+c)
+^^
+
+.. admonition:: Question
+
+	Find a cycle in this graph of maximum length and explain why it has maximum length.
+
+A cycle of maximum length is : math:`1, 6, 5, 3, 4, 2, 1` which has a length of 6.
+It is maximum length because it contains every node in the graph, so it cannot possibly be longer.
+Since it traverses every node in the graph, this is also called a hamiltonian cycle.
+
+d)
+^^
+
+.. admonition:: Question
+
+	Give a coloring of the vertices that uses the minimum number of colors.
+	Prove that this a minimum coloring.
+
+.. graph:: colouring
+
+    1, 5[color=indianred style=filled]
+    2[color=lightblue style=filled]
+    3[color=palegreen style=filled]
+    4, 6[color=peachpuff style=filled]
+
+    1 -- 2
+    1 -- 3
+    1 -- 4
+    1 -- 6
+
+    2 -- 4
+    2 -- 5
+    2 -- 6
+
+    3 -- 4
+    3 -- 5
+    3 -- 6
+
+    4 -- 5
+
+    5 -- 6
+
+4 is the minimum number of colours because every node has a degree of 4.
