@@ -548,21 +548,15 @@ b)
 	What is the diameter of this graph? Explain why
 
 The diameter of this graph is 2.
-Given the above connections we can count the shortest path between any two nodes;
 
-.. math::
+It cannot be shorter than 2 because the following edges do not exist,
+:math:`\{1, 5\}, \{2, 3\}, \{4, 6\}`, so there must be a path of at least 2 to connect these nodes.
 
-	\left\lbrack \begin{matrix}
-	0 & 1 & 1 & 1 & 2 & 1 \\
-	x & 0 & 2 & 1 & 1 & 1 \\
-	x & x & 0 & 1 & 1 & 1 \\
-	x & x & x & 0 & 1 & 2 \\
-	x & x & x & x & 0 & 1 \\
-	x & x & x & x & x & 0
-	\end{matrix} \right\rbrack
-
-As you can see, every node is adjacent to every other node except :math:`\{1, 5\}, \{2, 3\}, \{4, 6\}`.
-However, in every case, if a node is not adjacent, then one of the nodes adjacent is adjacent - making the path length 2.
+It cannot be longer than 2 because every node has a degree of 4,
+so including the node itself that makes 5 nodes.
+There are only 6 nodes in the graph, so for any given node,
+the only possible longer path is to the :math:`6^{th}` node,
+which would be of length 2.
 
 c)
 ^^
