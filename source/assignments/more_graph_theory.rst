@@ -602,3 +602,52 @@ d)
     5 -- 6
 
 4 is the minimum number of colours because every node has a degree of 4.
+
+Problem 6
+---------
+
+.. admonition:: Introduction
+
+	Let G be a graph.
+	In this problem we show every vertex of odd degree is connected to at least one other vertex of odd degree in G.
+
+a)
+^^
+
+.. admonition:: Question
+
+	Let v be an odd degree node.
+	Consider the longest walk starting at v that does not repeat any edges (though it may omit some).
+	Let w be the final node of that walk. Show that :math:`w \ne v`.
+
+Suppose we choose any node, :math:`x`,  along the path of :math:`(v— \dots —x— \dots —v)`, where :math:`x \ne v`.
+The node x may be crossed any number of times, but each time it does so,
+there is an edge going in to the node, and an edge leading out of the node,
+meaning the number of edges is even.
+
+With this principle we know for any node starting a cycle, e.g. :math:`(x— \dots —x)`,
+the degree of that node is even.
+
+By our criteria, :math:`v` is an odd degree node so cannot end the walk where we started,
+because that would make :math:`v` have even degree, so :math:`w` cannot be :math:`v`
+
+However, suppose there is another edge leading out of :math:`v` to give it even degree that we haven't crossed yet.
+But then, that contradicts our assumption that this is the longest walk,
+because there would be another edge to cross, making the walk longer.
+So the hypothesis still stands.
+
+b)
+^^
+
+.. admonition:: Question
+
+	Show that w must also have odd degree
+
+Similar to the last part of the previous question,
+suppose we arrive at :math:`w` at the end of the longest walk.
+We may have crossed :math:`w` any number of times already, across a multiple of 2 edges,
+But suppose we arrive at the end of the longest walk and there is another edge leading out that we haven't crossed yet.
+
+But then that contradicts the assumption that this is the longest walk,
+because we could travel along that edge to the node it is connected to.
+So :math:`w` must have odd degree.
