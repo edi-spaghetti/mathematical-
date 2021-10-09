@@ -28,22 +28,27 @@ Below are a summary of the equivalence classes:
 
 .. math::
 
-	\lbrack 0 \rbrack = \{ \dots (x-1)n, xn, (x+1)n, \dots \} \cup  \{ \dots (y-1)n, yn, (y+1)n, \dots \}
+	\begin{aligned}
 
-	\lbrack 1 \rbrack = \{ \dots , (x-1)n + 1, xn + 1, (x+1)n + 1, \dots \}
+	\lbrack 0 \rbrack &= \{ \dots (x-1)n, xn, (x+1)n, \dots \} \cup \{ \dots (y-1)n, yn, (y+1)n, \dots \}
 
-	\lbrack 1 \rbrack = \{ \dots ((x-2)n + 1, yn), ((x-1)n + 1, yn), (xn + 1, yn), ((x+1)n + 1, yn), ((x+2)n + 1, yn) \dots \}
+	\lbrack 1 \rbrack &= \{ \dots , (x-1)n + 1, xn + 1, (x+1)n + 1, \dots \} \cup \{ \dots (y-1)n + 1, yn + 1, (y+1)n + 1, \dots \}
 
-	...
+	&...
 
-	\lbrack n-1 \rbrack = \{ \dots ((x-2)n + (n - 1), yn), ((x-1)n + (n - 1), yn), (xn + (n - 1), yn), ((x+1)n + (n - 1), yn), ((x+2)n + (n - 1), yn) \dots \}
+	\lbrack n-1 \rbrack &= \{ \dots (x-1)n + (n - 1), xn + (n - 1), (x+1)n + (n - 1) \dots \} \cup \{ \dots (y-1)n + (n - 1), yn + (n - 1), (y+1)n + (n - 1), \dots \}
+
+	\end{aligned}
 
 b)
 ^^
 
 .. admonition:: Question
 
-	:math:`R := \{(x, y) \in P \times P\ s.t. \text{x is taller than y\}`
+	.. math::
+
+		R := \{ (x, y) \in P \times P\ s.t.\ \text{x is taller than y}\}
+
 	where **P** is the set of all people in the world today
 
 This is not an equivalence class because a person cannot be taller than themselves,
@@ -58,10 +63,10 @@ c)
 
 		R := \{ (x, y) \in \Bbb Z \times \Bbb Z\ s.t.\ gcd(x, y) = 1 \}
 
-reflexive is true because :math:`gcd(x, x) = 1` and gcd(y, y) = 1
-symmetry is true because if :math:`gcd(x, y) = 1` then :math:`gcd(y, x) = 1`,
+Reflexive is true because :math:`gcd(x, x) = 1` and gcd(y, y) = 1.
+Symmetry is true because if :math:`gcd(x, y) = 1` then :math:`gcd(y, x) = 1`,
 since while applying Euclid's algorithm the larger term will be swapped to find a remainder.
-transitivity is not true, however, because 6 is relatively prime to 7, and 7 is relatively prime to 9, but :math:`gcd(6, 9) = 3`.
+Transitivity is not true, however, because 6 is relatively prime to 7, and 7 is relatively prime to 9, but :math:`gcd(6, 9) = 3`.
 
 d)
 ^^
@@ -73,7 +78,8 @@ d)
 	and there is a path :math:`x, v_1, \dots , v_k, y` from x to y along the edges of G.
 
 Reflexivity holds because by convention a path of length 0 exists from a node to itself.
-Symmetry holds because if there is a path from x to y, then there is a path from y to x.
+Symmetry holds because if there is a path from x to y, then there is a path from y to x,
+assuming this is a simple graph and not a directed one.
 Transitivity holds because if there is a path for x to y, and a path from y to x, there there is at least a path from x to z via y.
 
 
@@ -142,13 +148,13 @@ Problem 3
 
 	In this problem we study partial orders (posets).
 	Recall that a weak partial order :math:`\preceq` on a set X is reflexive (:math:`x \preceq x`),
-	anti-symmetric (:math:`x \preceq y \land y \preceq x \Rightarrow x = y`),
-	and transitive (:math:`x \preceq y \land y \preceq z \Rightarrow x \preceq z`).
+	anti-symmetric :math:`(x \preceq y \land y \preceq x \Rightarrow x = y)`,
+	and transitive :math:`(x \preceq y \land y \preceq z \Rightarrow x \preceq z)`.
 	Note that it may be the case that neither :math:`x \preceq y` nor :math:`y \preceq x`.
 	A chain is a list of *distinct* elements :math:`x_1, \dots , x_i` in X for which :math:`x_1 \preceq x_2 \preceq \dots \preceq x_i`.
 
 	An antichain is a subset S of X such that for all distinct :math:`x, y \in S`,
-	neither x \preceq y` nor :math:`y \preceq x`.
+	neither :math:`x \preceq y` nor :math:`y \preceq x`.
 
 
 	The aim of this problem is to show that any sequence of :math:`(n − 1)(m − 1) + 1` integers
@@ -198,12 +204,12 @@ Consider the integers in the sequence, the first integer is able to start a chai
 If the second integer is larger than the first, then it is added to a new chain, such that we now have 2 anti-chains.
 This process continues until we reach the :math:`((n - 1)(m - 1) + 1)^{th}` integer, by which point one of two things can happen;
 
-1.  The :math:`((n - 1)(m - 1) + 1)^{th}` can be added to an existing chain.
+1.  The :math:`(n - 1)(m - 1) + 1^{th}` can be added to an existing chain.
 	In this case we have :math:`(n - 1)(m - 1) + 1` integers in :math:`(m - 1)` anti-chains.
 	Therefore at least one of those anti-chains has a length of at least :math:`(n - 1) + 1 = n`,
 	forming a non-decreasing sub-sequence of length n.
 
-2.  The :math:`((n - 1)(m - 1) + 1)^{th}` is less than the last item of every existing chain.
+2.  The :math:`(n - 1)(m - 1) + 1^{th}` is less than the last item of every existing chain.
 	Therefore the last item of every existing chain and the :math:`((n - 1)(m - 1) + 1)^{th}` form a decreasing sub-sequence
 	of length :math:`(m - 1) + 1 = m`.
 
@@ -268,9 +274,9 @@ The reasoner net, as described, should look like this where :math:`i = 2, N = 2^
 	  - CML
 	* - :math:`1 + 2 log_2 N`
 	  - :math:`2 \times 2`
-	  - :math:`3N + (N + 1) log_2 N`
-	  - where :math:`N = 2^n`, :math:`\sqrt N` if n is even, or :math:`\sqrt{{N \over 2}}` is n is odd
-	  - :math:`1 + 2 log(N)`
+	  - :math:`N + 3N log_2 N`
+	  - :math:`\sqrt N` if n is even, or :math:`\sqrt{{N \over 2}}` is n is odd
+	  - :math:`1 + 2 log_2 N`
 	  - same as congestion
 
 The diameter is defined as the length of the short path between input and ouput that are furtherst apart.
@@ -279,7 +285,15 @@ Since the Benes network has more switches, it has a longer path, so the diameter
 The switch size is the same for both butterfly and Benes networks
 
 The number of switches required is the sum of the number of switches required for each network type,
-which is :math:`N(1 + log_2 N) + 2N log_2 N`
+which can then be simplied by simple algebra as follows,
+
+.. math::
+
+	N(1 + log_2 N) + 2N log_2 N
+
+	N + N log_2 N + 2N log_2 N
+
+	N + 2N log_2 N
 
 Congestion is defined as the largest number of paths that pass through a single switch.
 A Benes network has a congestion of 1, but a butterfly network has a greater congestion, so this is the value used.
@@ -301,8 +315,8 @@ Problem 5
 
 	- For the butterfly network, there is a unique path from each input to each output,
 	  so the congestion is the maximum number of messages passing through a vertex for any matching of inputs to outputs.
-    - If v is a vertex at level i of the butterfly network,
-      there is a path from exactly :math:`2^i` input vertices to v and a path from v to exactly :math:`2^{n−i}` output vertices.
+	- If v is a vertex at level i of the butterfly network,
+	  there is a path from exactly :math:`2^i` input vertices to v and a path from v to exactly :math:`2^{n−i}` output vertices.
 	- At which level of the butterfly network must the congestion be worst?
 	  What is the congestion at the node whose binary representation is all 0s at that level of the network?
 
