@@ -21,3 +21,4 @@ The important thing is not just getting the right answer, but being able to stru
 	travelling_salesperson
 	networks
 	relations
+	doubles
