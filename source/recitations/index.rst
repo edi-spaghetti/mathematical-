@@ -22,3 +22,4 @@ The important thing is not just getting the right answer, but being able to stru
 	networks
 	relations
 	doubles
+	asymptotics
