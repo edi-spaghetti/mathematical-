@@ -72,7 +72,7 @@ can be calculated as follows,
 
 	\begin{aligned}
 
-	c_k &= {\sum^{k}_{i=1} (i - 1) + {x \over 2} + (i - 1) + {1 \over 2} \over 2k}
+	c_k &= {\sum\limits_{i=1}^{k} (i - 1) + {x \over 2} + (i - 1) + {1 \over 2} \over 2k}
 
 	&= {k \cdot \big( {x + 1 \over 2} \big) + [0, 1, 2, \dots, k - 1] \over 2k}
 
@@ -171,3 +171,188 @@ because the bounds will evaluate to an even number, y.
 
 If x is anything else, however, then there are two stable values for k,
 :math:`\lbrack y, z \rbrack`, where :math:`x - 1 < y < x - {1 \over 2}` and :math:`z = y + {1 \over 2}`.
+
+Double Sums
+-----------
+
+.. admonition:: Intro
+
+	Sometimes we have to evaluate sums of sums, otherwise known as double summations.
+	It’s good to know how to tame these beasts!
+	Here’s an example of a double summation:
+
+	.. math::
+
+		\sum\limits_{i=1}^{n} \sum\limits_{j=1}^{i} j
+
+	It looks ferocious...all those sharp teeth!
+	But actually, this double summation is just a sheep in wolf’s clothing:
+	to evaluate it, we can just evaluate the inner sum, replace it with a closed form we already know,
+	and then evaluate the outer sum which no longer has a summation inside it.
+
+.. admonition:: Question
+
+	Evaluate the summation. (Hint: :math:`\sum (a + b) = \sum a + \sum b`.)
+
+.. math::
+
+	\begin{aligned}
+
+	\sum\limits_{i=1}^{n} {i(i+1) \over 2} \qquad & \text{ replace inner sum with closed form} \cr
+
+	\sum\limits_{i=1}^{n} {i^2 + i \over 2} \qquad & \text{ multiply out parentheses } \cr
+
+	{1 \over 2} \cdot \sum\limits_{i=1}^{n} i^2 + i \qquad & \text{ multiply by common factor} \cr
+
+	{1 \over 2} \cdot \big( \sum\limits_{i=1}^{n} i^2 + \sum\limits_{i=1}^{n} i \big) \qquad & \text{ separate summations} \cr
+
+	{1 \over 2} \cdot \big( {n^3 \over 3} + {n^2 \over 2} + {n \over 6} + {n(n+1) \over 2} \big ) \qquad & \text{ replace with known closed forms} \cr
+
+	{1 \over 2} \cdot \big( {n^3 \over 3} + {n^2 \over 2} + {n \over 6} + {n^2 \over 2} + {n \over 2} \big) \qquad & \text{ multiply out inner parenthesis} \cr
+
+	{1 \over 2} \cdot \big( {2n^3 \over 6} + {3n^2 \over 6} + {n \over 6} + {3n^2 \over 6} + {3n \over 6} \big) \qquad & \text{ multiply up to common factor} \cr
+
+	{1 \over 2} \cdot \big( {2n^3 + 6n^2 + 4n \over 6} \big) \qquad & \text{ add fractions} \cr
+
+	{1 \over 2} \cdot \big( {n^3 + 3n^2 + 2n \over 3} \big) \qquad & \text{ simplify} \cr
+
+	\end{aligned}
+
+.. admonition:: Intro
+
+	Unfortunately, not all summations are so docile.
+	Fortunately, we have ways to deal with this.
+	There’s a special trick that is often extremely useful for sums, and that is to exchange the order of summation.
+	We’ll go through an example here.
+	For the remainder of the problem we’ll wrestle with the sum of the harmonic numbers:
+
+	.. math::
+
+		\sum\limits_{k=1}^{n} H_k
+
+	At first glance, it looks like just a single summation, but do not be deceived.
+
+.. admonition:: Question
+
+	First, write it as a double summation.
+
+.. math::
+
+	\sum\limits_{k=1}^{n} \sum\limits_{j=1}^{k} {1 \over j}
+
+.. admonition:: Question
+
+	Now try to gain some intuition for exactly what you’re up against by integrating the summation in its less threatening single-summation form.
+	You may use :math:`H_k \approx \ln k`.
+
+The given solution is;
+
+.. math::
+
+	\sum\limits^{n}_{k=1} \ln k = \int^{n}_{k=1} \ln n = n \ln n - n + 1
+
+However, if we use :math:`n = 3`
+
+	\sum\limits^{3}_{k=1} \ln k = \ln 1 + \ln 2 + \ln 3 = 0 + 0.69... + 1.09... = 1.79...
+
+	n \ln n - n + 1 = 3 \ln 3 - 3 + 1 = 1.29...
+
+So I don't understand how they got their solution, and their solution appears to be incorrect anyway.
+It's obviously wrong because :math:`H_1 = 1`, but :math:`\ln 1 = 0`, which is nowhere near approximately correct.
+
+
+.. admonition:: Question
+
+	Finally, we’ll look for an exact answer.
+	If we think about the pairs (k, j) over which we are summing, they form a triangle in the table below.
+	The values in the cells of the table correspond to the terms in the double summation.
+	The first two rows have been filled in for you.
+	Complete the remaining three rows to see the pattern.
+
+.. list-table:: Sample list table
+	:widths: 10 10 10 10 10 10 10
+	:header-rows: 1
+	:stub-columns: 1
+
+	* - :math:`{j \over k}`
+	  - 1
+	  - 2
+	  - 3
+	  - 4
+	  - ...
+	  - n
+	* - 1
+	  - 1
+	  -
+	  -
+	  -
+	  -
+	  -
+	* - 2
+	  - 1
+	  - :math:`{1 \over 2}`
+	  -
+	  -
+	  -
+	  -
+	* - 3
+	  - 1
+	  - :math:`{1 \over 2}`
+	  - :math:`{1 \over 3}`
+	  -
+	  -
+	  -
+	* - 4
+	  - 1
+	  - :math:`{1 \over 2}`
+	  - :math:`{1 \over 3}`
+	  - :math:`{1 \over 4}`
+	  -
+	  -
+	* - ...
+	  -
+	  -
+	  -
+	  -
+	  -
+	  -
+	* - n
+	  - 1
+	  - :math:`{1 \over 2}`
+	  - :math:`{1 \over 3}`
+	  - :math:`{1 \over 4}`
+	  -
+	  - :math:`{1 \over n}`
+
+.. admonition:: Question
+
+	The summation above is summing each row and then adding the row sums.
+	But we can tame this beast if, instead, we first sum the columns and then add the column sums.
+	Use the table to rewrite the double summation.
+	The inner summation should sum over k, and the outer summation should sum over j.
+
+.. math::
+
+	\sum\limits^{n}_{j=1} \sum\limits^{n}_{k=j} {1 \over j}
+
+.. admonition:: Question
+
+	Now simplify the summation to derive a closed form in terms of *n* and :math:`H_n`.
+
+.. math::
+
+	\begin{aligned}
+
+	\sum\limits^{n}_{j=1} \sum\limits^{n}_{k=j} {1 \over j} &= \sum\limits^{n}_{j=1} {1 \over j} \cdot \sum\limits^{n}_{k=j} 1 \cr
+
+	&= \sum\limits^{n}_{j=1} {1 \over j} \cdot (n - j + 1) \cr
+
+	&= \sum\limits^{n}_{j=1} {n + 1 \over j} - 1 \cr
+
+	&= \sum\limits^{n}_{j=1} {n \over j} + \left ( \sum\limits^{n}_{j=1} {1 \over j} \right ) - n \cr
+
+	&= n(H_n) + H_n - n \cr
+
+	&= (n + 1)H_n - n \cr
+
+	\end{aligned}
