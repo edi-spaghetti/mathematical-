@@ -118,3 +118,84 @@ So by multiplying the limits we get,
 	\lim_{x \rightarrow \infty} {f(x) \over g(x)} \cdot \lim_{x \rightarrow \infty} {g(x) \over h(x)} = k \cdot j
 
 Since both k and j are finite, then so is kj.
+
+More Asymptotic Notation
+------------------------
+
+.. admonition:: 1
+
+	Show that
+
+	.. math::
+
+		(an)^{{b \over n}} \backsim 1
+
+	where :math:`a, b` are positive constants and :math:`\backsim` denotes aymptotic equality.
+	Hint: :math:`an = a2^{\log_2 n}`.
+
+.. math::
+
+	\begin{aligned}
+
+	(an)^{{b \over n}} &= (a^b)^{1 \over n} \cdot 2^{{b \log_2 n \over n}}
+
+	&= (a^b)^0 \cdot 2^0
+
+	&= 1 \cdot 1
+
+	&= 1
+
+	\end{aligned}
+
+.. admonition:: 2
+
+	You may assume that if :math:`f(n) \ge 1` and :math:`g(n) \ge 1` for all n,
+	then :math`f \backsim g \Rightarrow f^{1 \over n} \backsim g^{1 \over n}`.
+	Show that
+
+	.. math::
+
+		\sqrt [n] {n!} = \Theta(n)
+
+By stirling's formula we know,
+
+.. math::
+
+	\lim_{n \rightarrow \infty} \sqrt [n] {n!} \backsim \sqrt [n] {({n \over e})^n \cdot \sqrt {2 \pi n} \cdot e^{\varepsilon(n)}}
+
+where :math:`\varepsilon (n)` equates to zero at the limit
+
+.. math::
+
+	\lim_{n \rightarrow \infty} {1 \over 12n+1} \le \varepsilon (n) \le {1 \over 12n}
+
+	\lim_{n \rightarrow \infty} 0 \le \varepsilon (n) \le {1 \over 12n}
+
+	\varepsilon (n) \backsim 0
+
+So we can continue evaluating :math:`n!`
+
+.. math::
+
+	\backsim \sqrt [n] { ({n \over e})^n \cdot \sqrt {2 \pi n} \cdot e^0 }
+
+	\backsim \left ( ({n \over e})^n \cdot (2 \pi n)^{1 \over 2} \cdot 1 \right )^{1 \over n}
+
+	\backsim  \left ( ({n \over e})^{\cancel{n}} \right )^\cancel{{1 \over n}} \cdot \left ( (2 \pi n)^{1 \over 2} \right )^{1 \over n}
+
+	\backsim  {n \over e} \cdot \left ( (2 \pi n)^{1 \over 2} \right )^0
+
+	\backsim  {n \over e} \cdot 1
+
+	\backsim {n \over e}
+
+	\backsim \infty
+
+By definition :math:`\sqrt [n] {n!} = \Theta (n)` if
+
+.. math::
+
+	\lim_{n \rightarrow \infty} 0 < | {\sqrt [n] {n!} \over n}| < \infty
+
+As shown above :math:`\sqrt [n] {n!}` trends towards infinity,
+and since :math:`{\infty \over \infty} = 1` and 1 is between zero and infinity so :math:`\Theta (n)` holds.
