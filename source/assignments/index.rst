@@ -14,3 +14,4 @@ If you spot something I've done wrong, please let me know!
 	graph_theory
 	more_graph_theory
 	relations
+	sums_and_asymptotics
