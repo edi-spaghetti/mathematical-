@@ -347,3 +347,110 @@ We can apply this first to the innner sum, then work outwards;
 	&= 2^{n^3 + n^2 \over 2} \cdot 3^{n^3 + n^2 \over 2}
 
 	\end{aligned}
+
+
+Problem 3
+---------
+
+.. admonition:: (a)
+
+	Use integration to find upper and lower bounds that differ by at most 0.1 for the following sum.
+	(You may need to add the first few terms explicitly and then use integrals to bound the sum of the remaining terms.)
+
+	.. math::
+
+		\sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2}
+
+First we can find the limit as the function approaches infinity;
+
+.. math::
+
+	\lim\limits_{n \rightarrow \infty} {1 \over (2n + 1)^2} = 0
+
+Since the function is decreasing and converges at zero, we can apply the following bounds,
+
+.. math::
+
+	f(\infty) + \int_1^\infty f(x)\delta x \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le f(1) + \int_1^\infty f(x)\delta x
+
+We know :math:`f(\infty)` approaches zero so this term is insignificant.
+We can also trivially solve :math:`f(1) = {1 \over 9}`.
+We can then solve the integral to get our bounds,
+
+.. math::
+
+	\begin{aligned}
+
+	\int_1^\infty {1 \over (2x + 1)^2} \delta x & \qquad \text{requires u-substitution}
+		\cr
+
+	u = 2x + 1 & \qquad \delta u = 2 \delta x
+		\cr
+
+	&= {1 \over 2} \left( \int_9^\infty u^{-2} \delta u \right)
+		\cr
+
+	&= {1 \over 2} \left( {-1 \over u} \Bigm|_9^\infty \right)
+		\cr
+
+	&= {1 \over 2}\left( {-1 \over \infty} - {-1 \over 9} \right)
+		\cr
+
+	&= {1 \over 2} \left( {1 \over 9} \right)
+		\cr
+
+	&= {1 \over 18}
+
+	\end{aligned}
+
+So our bounds are,
+
+.. math::
+
+	{1 \over 18} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {1 \over 18} + {1 \over 9}
+
+However, since the bounds differ by :math:`1 \over 9`, this is not accurate enough.
+We can reduce the error by increasing the lower bound;
+
+.. math::
+
+	f(1) + \int_2^\infty f(x)\delta x \le f(1) + \sum\limits_{i=2}^{\infty} {1 \over (2i + 1)^2} \le f(1) + f(2) + \int_2^\infty f(x)\delta x
+
+Again, we can calculate the integral to determine our error,
+
+.. math::
+
+	\begin{aligned}
+
+	\int_2^\infty f(x)\delta x &= \int_2^\infty {1 \over (2x + 1)^2} \delta x
+		\cr
+
+	u = 2x + 1 & \qquad \delta u = 2 \delta x
+		\cr
+
+	&= {1 \over 2} \left( \int_25^\infty u^{-2} \delta u \right)
+		\cr
+
+	&= {1 \over 2} \left( {-1 \over u} \Bigm|_25^\infty \right)
+		\cr
+
+	&= {1 \over 2}\left( {-1 \over \infty} - {-1 \over 25} \right)
+		\cr
+
+	&= {1 \over 2} \left( {1 \over 25} \right)
+		\cr
+
+	&= {1 \over 50}
+
+	\end{aligned}
+
+This gives us the following bounds,
+
+.. math::
+
+	{1 \over 9} + {1 \over 50} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {1 \over 9} + {1 \over 25} + {1 \over 50}
+		\cr
+
+	{59 \over 450} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {59 \over 450} + {1 \over 25}
+
+This gives us an error of only :math:`{1 \over 25}` and so solves the question.
