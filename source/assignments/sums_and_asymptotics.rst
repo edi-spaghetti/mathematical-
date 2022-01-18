@@ -454,3 +454,35 @@ This gives us the following bounds,
 	{59 \over 450} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {59 \over 450} + {1 \over 25}
 
 This gives us an error of only :math:`{1 \over 25}` and so solves the question.
+
+.. admonition:: (b)
+
+	Assume :math:`n` is an integer larger than 1.
+	Which of the following inequalities, if any, hold?
+	You may find the graph helpful.
+
+	.. image:: ../images/assignment-7-problem-3b.png
+		:align: center
+
+	1. :math:`\sum\limits_{i=1}^n \ln(i+1) \le \int_0^n \ln(x+2)\delta x`
+
+	2. :math:`\sum\limits_{i=1}^n \ln(i+1) \le \ln 2 + \int_1^n \ln(x+1)\delta x`
+
+The first inequality is true, because :math:`\ln(x + 2)` defines the left Riemann sum of the summed terms,
+and since this function is increasing, that defines the upper bound.
+
+The second inequality is false, because :math:`\ln(x+1)` defines the right Riemann sum of the summed terms,
+and since this function is increasing that defines the lower bound.
+This can be easily verified by calculating where :math:`n=2`.
+
+.. math::
+
+	\begin{aligned}
+
+	\sum\limits_{i=1}^2 \ln(i+1) &\cancel{\le} \ln 2 + \int_1^2 \ln(x+1)\delta x
+
+	1.79... &\cancel{\le} 0.69... + (3 \ln 3 - 3) - (2 \ln 2 - 2)
+
+	1.79... &\cancel{\le} 1.60...
+
+	\end{aligned}
