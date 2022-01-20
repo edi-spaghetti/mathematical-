@@ -486,3 +486,77 @@ This can be easily verified by calculating where :math:`n=2`.
 	1.79... &\cancel{\le} 1.60...
 
 	\end{aligned}
+
+Problem 4
+---------
+
+.. admonition:: Bug
+
+	There is a bug on the edge of a 1-meter rug.
+	The bug wants to cross to the other side of the rug.
+	It crawls at 1 cm per second.
+	However, at the end of each second, a malicious first-grader named Mildred Anderson stretches the rug by 1 meter.
+	Assume that her action is instantaneous and the rug stretches uniformly.
+	Thus, here’s what happens in the first few seconds:
+
+	- The bug walks 1 cm in the first second, so 99 cm remain ahead.
+	- Mildred stretches the rug by 1 meter, which doubles its length.
+	  So now there are 2 cm behind the bug and 198 cm ahead.
+	- The bug walks another 1 cm in the next second, leaving 3 cm behind and 197 cm ahead.
+	- Then Mildred strikes, stretching the rug from 2 meters to 3 meters.
+	  So there are now :math:`3 \cdot {3 \over 2} = 4.5` cm behind the bug and :math:`197 \cdot {3 \over 2} = 295.5` cm ahead.
+	- The bug walks another 1 cm in the third second, and so on.
+
+	Your job is to determine this poor bug’s fate.
+
+After the bug walks for the first time, it has travelled :math:`{1 \over 100}` of the rug.
+After it gets stretched by 1 metre, the bug has now travelled :math:`{2 \over 200}` of the rug,
+but as a proportion of the rug travelled, the fraction remains the same, simplifying down to :math:`{1 \over 100}`.
+
+The second time around, the bug travels :math:`{1 \over 200}` of the rug,
+since it travels at a constant 1cm per iteration, and the rug is now 200cm long.
+If we add this to the distance already travelled we get :math:`{1 \over 100} + {1 \over 200} = {3 \over 200}`.
+
+The sum for the distance travelled after n steps can be written like this,
+
+.. math::
+
+	\sum\limits_{i=1}^n {1 \over 100i}
+
+Since the :math:`{1 \over 100}` is a constant, this can be extracted, so we get;
+
+.. math::
+
+	{1 \over 100} \cdot \sum\limits_{i=1}^n {1 \over i}
+
+	{1 \over 100} \cdot H_n
+
+There is no closed form for the Harmonic Sum, however, since it is a decreasing sum, we can apply integration bounds to it,
+
+.. math::
+
+	{1 \over n} + \int_1^n ({1 \over n}) \le H_n \le {1 \over 1} + \int_1^n ({1 \over n})
+
+Solving the integral we get :math:`\ln n`, which we can add back to equation to get the following bounds,
+
+.. math::
+
+	{1 \over 100} \cdot \left( {1 \over n} + \ln n \right)
+		\le \sum\limits_{i=1}^n {1 \over 100i}
+		\le {1 \over 100} \cdot \left( 1 + \ln n \right)
+
+When the sum is greater than 1, it represents the bug finally reaching the end of the rug.
+
+We can solve this for the upper limit,
+
+.. math::
+
+	1 = {1 \over 100} \left( 1 + \ln n \right)
+
+	100 = 1 + \ln n
+
+	99 = \ln n
+
+	n = e^{99}
+
+That is to say, it will take no more than :math:`e^{99}` steps for the bug to reach the end of the rug (!).
