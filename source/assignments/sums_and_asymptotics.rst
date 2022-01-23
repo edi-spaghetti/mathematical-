@@ -560,3 +560,202 @@ We can solve this for the upper limit,
 	n = e^{99}
 
 That is to say, it will take no more than :math:`e^{99}` steps for the bug to reach the end of the rug (!).
+
+Problem 5
+---------
+
+.. admonition:: Question
+
+	For each of the following six pairs of functions f and g (parts (i) through (vi)),
+	state which of these order-of-growth relations hold (more than one may hold, or none may hold):
+
+	.. math::
+
+		f = o(g) \qquad f = O(g) \qquad f = \omega(g) \qquad f = \Omega(g) \qquad \Theta(g) \qquad f \thicksim g
+
+.. admonition:: (a)
+
+	.. math::
+
+		f(n) = \log_2 n \qquad g(n) = \log_10 n
+
+From our log properties we know that :math:`\log_x a = {\ln a \over \ln x}`, so
+
+.. math::
+
+	\begin{aligned}
+
+	\lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| &= \lim_{x \rightarrow \infty} \left| {{\ln \infty \over \ln 2} \over { \ln \infty \over \ln 10}} \right|
+		\cr
+
+	&= \lim_{x \rightarrow \infty} \left| {\ln 10 \cdot \ln \infty \over \ln 2 \cdot \ln \infty} \right|
+		\cr
+
+	&= {\ln 10 \over \ln 2} \cdot \lim_{x \rightarrow \infty} \left| {\ln \infty \over \ln \infty} \right|
+		\cr
+
+	&= \log_2 10 \cdot 1
+		\cr
+
+	&= 3.321..
+
+	\end{aligned}
+
+(i) For :math:`f = o(g)` to be true we must prove,
+
+.. math::
+
+	f = o(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| = 0
+
+Since the limit does not equal zero, :math:`f = o(g)` does not hold.
+
+(ii) For :math:`f = O(g)` to be true we must prove,
+
+.. math::
+
+	f = O(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| < \infty
+
+Since the limit is :math:`\log_2 10`, which is less than infinity, so :math:`f = O(g)` holds.
+
+(iii) For :math:`f = \omega(g)` to be true we must prove,
+
+.. math::
+
+	f = \omega(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| = \infty
+
+The limit does not equal infinity, so :math:`f = \omega(g)` does not hold.
+
+(iv) For :math:`f = \Omega(g)` to be true, we must prove,
+
+.. math::
+
+	f = \Omega(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| > 0
+
+Since :math:`\log_2 10 > 0`, :math:`f = \Omega(g)` is true.
+
+(v) For :math:`f = \Theta(g)` to be true we must prove,
+
+.. math::
+
+	f = \Theta(g) \Rightarrow 0 < \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| < \infty
+
+Since :math:`0 < \log_2 10 < \infty`, then :math:`f = \Theta(g)` holds.
+
+(vi) For :math:`f \thicksim g` to be true, we must prove,
+
+.. math::
+
+	f \thicksim g \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| = 1
+
+Since :math:`\log_2 10` does not equal 1, this is not true.
+
+.. admonition:: (b)
+
+	.. math::
+
+		f(n) = 2^n \qquad g(n) = 10^n
+
+First we calculate the limit,
+
+.. math::
+
+	\begin{aligned}
+
+	\lim_{x \rightarrow \infty} \left| {2^x \over 10^x} \right| &= \lim_{x \rightarrow \infty} \left| {\cancel{2^x} \over \cancel{2^x} \cdot 5^x} \right|
+
+	&= 0
+
+	\end{aligned}
+
+(i) :math:`f = o(g)` holds, because the limit is equal to zero.
+
+(ii) :math:`f = O(g)` holds too, because zero is less than infinity.
+
+(iii) :math:`f = \omega(g)` does not hold, because the limit is not infinity.
+
+(iv) :math:`f = \Omega(g)` does not hold, because the limit is zero, (as opposed to greater than zero).
+
+(v) :math:`f = \Theta(g)` does not hold because :math:`0 < limit < \infty` is not true when the limit is zero.
+
+(vi) :math:`f \thicksim g` does not hold because the limit does not equal 1.
+
+.. admonition:: (c)
+
+	.. math::
+
+		f(n) = 0 \qquad g(n) = 17
+
+First we calculate the limit,
+
+.. math::
+
+	\lim_{x \rightarrow \infty} \left| {0 \over 17} \right| = 0
+
+(i) :math:`f = o(g)` holds, which makes sense because 17 is larger than zero.
+
+(ii) :math:`f = O(g)` holds, which also makes sense because 17 is larger than zero by a fixed amount.
+
+(iii) :math:`f = \omega(g)` does not hold, because zero cannot not be larger than 17.
+
+(iv) :math:`f = \Omega(g)` does not hold either for the same reason.
+
+(v) :math:`f = \Theta(g)` does not hold, because f is zero for any value of n, so f cannot grow at a fixed rate relative to g, because f does not grow.
+
+(vi) :math:`f \thicksim g` does not hold, because f does not grow exactly as fast as g.
+
+.. admonition:: (d)
+
+	.. math::
+
+		f(n) = 1 + cos({\pi n \over 2}) \qquad g(n) = 1 + sin({\pi n \over 2})
+
+First we must take the limit. However, since :math:`sin({\pi x \over 2})` oscillates between -1 and 1,
+the limit does not exist, so we must take the limit superior.
+
+.. math::
+
+	\begin{aligned}
+
+	\limsup_{x \rightarrow \infty} \left| {1 + cos({\pi n \over 2}) \over 1 + sin({\pi n \over 2})} \right| &= \limsup_{z \rightarrow \infty} \left| {1 + 1 \over 1 + 1} \right|
+
+	&= 1
+
+	\end{aligned}
+
+(i) :math:`f = o(g)` is not true, since the limit is not zero.
+
+(ii) :math:`f = O(g)` is true, since the limit is less than :math:`\infty`.
+
+(iii) :math:`f = \omega(g)` is not true, since the limit is not equal to :math:`\infty`.
+
+(iv) :math:`f = \Omega(g)` is true, because the limit is greater than zero.
+
+(v) :math:`f = \Theta(g)` is true, because the limit is between zero and infinity.
+
+(vi) :math:`f \thicksim g` is true because the limit is exactly 1.
+
+.. admonition:: (e)
+
+	.. math::
+
+		f(n) = 1.0000000001^n \qquad g(n) = n^{10000000000}
+
+Since we know any exponential grows faster than any polynomial, we know the reverse,
+
+.. math::
+
+	\lim_{n \rightarrow \infty} \left| {a^n \over n^b} \right| = \infty
+
+where a and b are both greater than 1, which is true in our case.
+
+(i) :math:`f = o(g)` is not true, because the limit is not zero.
+
+(ii) :math:`f = O(g)` is also not true, because the limit is :math:`\infty`, which is not less than infinity.
+
+(iii) :math:`f = \omega(g)` is true, because the limit is equal to infinity.
+
+(iv) :math:`f = \Omega(g)` is also true because infinity is greater than zero.
+
+(v) :math:`f = \Theta(g)` is not true because the limit is not between zero and infinity.
+
+(vi) :math:`f \thicksim g` is not true because the limit is not equal to 1.
