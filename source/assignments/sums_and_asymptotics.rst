@@ -759,3 +759,181 @@ where a and b are both greater than 1, which is true in our case.
 (v) :math:`f = \Theta(g)` is not true because the limit is not between zero and infinity.
 
 (vi) :math:`f \thicksim g` is not true because the limit is not equal to 1.
+
+Problem 6
+---------
+
+.. admonition:: Question
+
+	This problem continue the study of asymptotics of factorials.
+
+.. admonition:: (a)
+
+	Either prover or disprove each of the following statements.
+
+If we let :math:`f(x) = x!` and :math:`g(x) = (x+1)!` then we can calculate the limit
+
+.. math::
+
+	\begin{aligned}
+
+	\lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| &=
+		\lim_{x \rightarrow \infty} \left|
+		{(\cancel{1} \cdot \cancel{2} \cdot \dots \cdot \cancel{n}) \over
+		(\cancel{1} \cdot \cancel{2} \cdot \dots \cdot \cancel{n} \cdot (n+1))} \right|
+
+	&= \lim_{x \rightarrow \infty} \left| {1 \over (n+1)} \right|
+
+	&= 0
+
+	\end{aligned}
+
+(i) :math:`n! = O((n+1)!)`
+
+	We must prove the inequality,
+
+	.. math::
+
+		f = O(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| < \infty
+
+	Since zero is less than infinity, it holds.
+
+(ii) :math:`n! = \Omega((n+1)!)`
+
+	 We must prove the inequality,
+
+	 .. math::
+
+	     f = \Omega(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| > 0
+
+     Since the limit *is* zero, this inequality does not hold.
+
+(iii) :math:`n! = \Theta((n+1)!)`
+
+	  We must prove the inequality,
+
+	  .. math::
+
+	      f = \Theta(g) \Rightarrow 0 < \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| < \infty
+
+	  Again, the limit is zero, and the inequality requires it be strictly greater than, so it does not hold.
+
+(iv) :math:`n! = \omega((n+1)!)`
+
+	 We must show,
+
+	 .. math::
+
+	     f = \omega((n+1)!) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| = \infty
+
+	 Zero is not infinity, so this does not hold.
+
+(v) :math:`n! = o((n+1)!)`
+
+	For this to be true, we must show,
+
+	.. math::
+
+		f = o((n+1)!) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| = 0
+
+	which is true, the limit is zero, so this one holds.
+
+.. admonition:: (b)
+
+	Show that :math:`n! = \omega \left( ({n \over 3})^{n+e} \right)`
+
+First we must calculate the limit,
+
+.. math::
+
+	\begin{aligned}
+
+	\lim_{n \rightarrow \infty} \left| {n! \over ({n \over 3})^{n+e}} \right|
+		&= \lim_{n \rightarrow \infty} \left| {3^{n+e} \cdot n! \over n^{n+e}} \right|
+
+	&= \lim_{n \rightarrow \infty} \left| {3^{n+e} \over n^e} \cdot {n! \over n^n} \right|
+
+	\end{aligned}
+
+Note that :math:`n!` and :math:`n^n` both trend towards infinity, so :math:`{n! \over n^n}` is indeterminate.
+However, we can make the observation that :math:`0 \le {n! \over n^n}`.
+
+Next, by looking at each term in the equation we can see,
+
+.. math::
+
+	{n! \over n^n} = {n \over n} \cdot {(n - 1) \over n} \cdot \dots \cdot {2 \over n} \cdot {1 \over n}
+
+Note that :math:`n \over n = 1` and each term after that :math:`\le 1`, so
+
+.. math::
+
+	{n! \over n^n} \le 1 \cdot 1 \cdot \dots \cdot 1 \cdot {1 \over n}
+
+Therefore,
+
+.. math::
+
+	0 \le {n! \over n^n} \le {1 \over n}
+
+If we take the limit, we find
+
+.. math::
+
+	\begin{aligned}
+
+	\lim_{n \rightarrow \infty} 0 \le &\lim_{n \rightarrow \infty} {n! \over n^n} \le \lim_{n \rightarrow \infty} {1 \over n}
+
+	0 \le &\lim_{n \rightarrow \infty} {n! \over n^n} \le 0
+
+	&\lim_{n \rightarrow \infty} {n! \over n^n} = 0 &&\qquad \text{by Squeeze Theorem}
+
+	\end{aligned}
+
+Plugging that back in to our equation above we get,
+
+.. math::
+
+	\lim_{n \rightarrow \infty} \left| {3^{n+e} \over n^e} \right| \cdot 0 \qquad \text{by Product Rule}
+
+Therefore,
+
+.. math::
+
+	\lim_{n \rightarrow \infty} \left| ({n \over 3})^{n+e} \right| = 0
+
+Now we can prove the original question,
+
+.. math::
+
+	n! = \omega \left( ({n \over 3})^{n+e} \right) \Rightarrow \lim_{n \rightarrow \infty} \left| {n! \over ({n \over 3})^{n+e}} \right| = \infty
+
+However, as we showed above the limit is zero, so :math:`n! \cancel{=} \omega \left( ({n \over 3})^{n+e} \right)`.
+
+.. admonition:: (c)
+
+	Show that :math:`n! = \Omega(2^n)`
+
+We must show,
+
+.. math::
+
+	n! = \Omega(2^n) \Rightarrow \lim_{n \rightarrow \infty} \left| {n! \over 2^n} \right| > 0
+
+First, we explore the limit,
+
+.. math::
+
+	\begin{aligned}
+
+	\lim_{n \rightarrow \infty} \left| {n! \over 2^n} \right|
+		&= \lim_{n \rightarrow \infty} \left| {n \cdot (n-1) \cdot (n-2) \cdot \dots \cdot 2 \cdot 1 \over 2 \cdot 2 \cdot 2 \cdot \dots \cdot 2 \cdot 2} \right|
+
+	&= \lim_{n \rightarrow \infty} \left| {n \over 2} \cdot \underbrace{{n-1 \over 2} \cdot {n-2 \over 2} \cdot \dots \cdot {2 \over 2}}_{\ge 1} \cdot {1 \over 2} \right|
+
+	&> \lim_{n \rightarrow \infty} \left| {n \over 4} \right|
+
+	\end{aligned}
+
+Since the limit of :math:`n \over 4` is greater than zero, we know the limit of the original equation is greater than zero.
+Therefore :math:`n! = \Omega(2^n)` holds.
