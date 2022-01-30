@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Asymptotic Notation &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Assignments" href="../assignments/index.html" />
+    <link rel="prev" title="Doubles" href="doubles.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="asymptotic-notation">
+<h1>Asymptotic Notation<a class="headerlink" href="#asymptotic-notation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Which of these symbols:</p>
+<div class="math notranslate nohighlight">
+\[(\Theta, O, \Omega, o, \omega)\]</div>
+<p>Apply the following equations? List all that apply.</p>
+</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\2n + \log n &amp;= \boxed{ \Theta, O, \Omega} (n)\\Proof: \lim_{n \rightarrow \infty} {2n + \log n \over n} &amp;= {2n \over n} + {\log n \over n} = 2 + 0 = 2 \cr\\\log n &amp;= \boxed{ O, o } (n)\\Proof: \lim_{n \rightarrow \infty} {\log n \over n} &amp;= 0 \cr\\\sqrt{n} &amp;= \boxed{ \Omega, \omega } (\log^300 n)\\Proof: \lim_{n \rightarrow \infty} {\sqrt{n} \over \log^{300} n} &amp;= \infty \cr\\n2^n &amp;= \boxed{ \Omega, \omega } (n)\\Proof: \lim_{n \rightarrow \infty} {n2^n \over n} &amp;= \infty \cr\\n^7 &amp;= \boxed{ O, o } (1.01^n)\\Proof: \lim_{n \rightarrow \infty} {n^7 \over 1.01^n} &amp;= 0 \cr\\\end{aligned}\end{aligned}\end{align} \]</div>
+</section>
+<section id="asymptotic-equivalence">
+<h1>Asymptotic Equivalence<a class="headerlink" href="#asymptotic-equivalence" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-intro admonition">
+<p class="admonition-title">Intro</p>
+<p>Suppose <span class="math notranslate nohighlight">\(f, g: \Bbb Z+ \rightarrow \Bbb Z+\)</span> and <span class="math notranslate nohighlight">\(f \backsim g\)</span>.</p>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">1</p>
+<p>Prove that <span class="math notranslate nohighlight">\(2f \backsim 2g\)</span></p>
+</div>
+<p><span class="math notranslate nohighlight">\(f \backsim g\)</span> implies <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over g(x)} = 1\)</span>.
+If we compare f and g we get,</p>
+<div class="math notranslate nohighlight">
+\[{ \bcancel{2}f(x) \over \bcancel{2}g(x)} = {f(x) \over g(x)} = 1\]</div>
+<div class="admonition- admonition">
+<p class="admonition-title">2</p>
+<p>Prove that <span class="math notranslate nohighlight">\(f^2 \backsim g^2\)</span>.</p>
+</div>
+<div class="math notranslate nohighlight">
+\[\lim_{x \rightarrow \infty} {f(x)^2 \over g(x)^2} = {f(x) \over g(x)} \cdot {f(x) \over g(x)} = 1 \cdot 1 = 1\]</div>
+<div class="admonition- admonition">
+<p class="admonition-title">3</p>
+<p>Give examples of f and g such that <span class="math notranslate nohighlight">\(2^f \cancel{\backsim} 2^g\)</span>.</p>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">4</p>
+<p>Show that <span class="math notranslate nohighlight">\(\backsim\)</span> is an equivalence relation</p>
+</div>
+<p>It is reflexive, because <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over f(x)} = 1\)</span>, as long as <span class="math notranslate nohighlight">\(f(x) \ne 0\)</span>.</p>
+<p>It is transitive, because if <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over g(x)} = 1\)</span> and <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {g(x) \over h(x)} = 1\)</span>,
+then we can multiply the limits to get,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{x \rightarrow \infty} {f(x) \over h(x)} = \lim_{x \rightarrow \infty} {f(x) \over g(x)} \cdot {g(x) \over h(x)} = 1 \cdot 1 = 1\]</div>
+<p>It is symmetric, because if <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over g(x)} = 1\)</span>,
+then the following is also true <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {g(x) \over f(x)} = 1\)</span> by limit laws of quotients,
+as long as <span class="math notranslate nohighlight">\(f(x) \ne 0\)</span> and <span class="math notranslate nohighlight">\(g(x) \ne 0\)</span>.</p>
+<p>Those are the properties required of equivalence relations, so <span class="math notranslate nohighlight">\(\backsim\)</span> is an equivalence relation.</p>
+<div class="admonition- admonition">
+<p class="admonition-title">5</p>
+<p>Show that <span class="math notranslate nohighlight">\(\Theta\)</span> is an equivalence relation</p>
+</div>
+<p>In order for the following to be true,</p>
+<div class="math notranslate nohighlight">
+\[0 &lt; \lim_{x \rightarrow \infty} {f(x) \over g(x)} &lt; \infty\]</div>
+<p>Then we know <span class="math notranslate nohighlight">\(f(x)\)</span> can’t be zero, because <span class="math notranslate nohighlight">\(\forall x \in \Bbb R. {0 \over x}= 0\)</span>.
+Since we know it’s not zero, then it must be reflexive because <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over f(x)} = 1\)</span>,
+which is between zero and infinity.</p>
+<p>It is symmetric because if <span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> then <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over g(x)} = k\)</span>
+where k is some constant between zero and infinity. <span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over g(x)} = {1 \over k}\)</span>
+then proves the symmetry.</p>
+<p>It is transitive, because if <span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> and <span class="math notranslate nohighlight">\(g = \Theta(h)\)</span> then
+<span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {f(x) \over g(x)} = k\)</span> where <span class="math notranslate nohighlight">\(0 &lt; k &lt; \infty\)</span> and
+<span class="math notranslate nohighlight">\(\lim_{x \rightarrow \infty} {g(x) \over h(x)} = j\)</span> where <span class="math notranslate nohighlight">\(0 &lt; j &lt; \infty\)</span>.
+So by multiplying the limits we get,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{x \rightarrow \infty} {f(x) \over g(x)} \cdot \lim_{x \rightarrow \infty} {g(x) \over h(x)} = k \cdot j\]</div>
+<p>Since both k and j are finite, then so is kj.</p>
+</section>
+<section id="more-asymptotic-notation">
+<h1>More Asymptotic Notation<a class="headerlink" href="#more-asymptotic-notation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition- admonition">
+<p class="admonition-title">1</p>
+<p>Show that</p>
+<div class="math notranslate nohighlight">
+\[(an)^{{b \over n}} \backsim 1\]</div>
+<p>where <span class="math notranslate nohighlight">\(a, b\)</span> are positive constants and <span class="math notranslate nohighlight">\(\backsim\)</span> denotes aymptotic equality.
+Hint: <span class="math notranslate nohighlight">\(an = a2^{\log_2 n}\)</span>.</p>
+</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\(an)^{{b \over n}} &amp;= (a^b)^{1 \over n} \cdot 2^{{b \log_2 n \over n}}\\&amp;= (a^b)^0 \cdot 2^0\\&amp;= 1 \cdot 1\\&amp;= 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<div class="admonition- admonition">
+<p class="admonition-title">2</p>
+<p>You may assume that if <span class="math notranslate nohighlight">\(f(n) \ge 1\)</span> and <span class="math notranslate nohighlight">\(g(n) \ge 1\)</span> for all n,
+then :math`f backsim g Rightarrow f^{1 over n} backsim g^{1 over n}`.
+Show that</p>
+<div class="math notranslate nohighlight">
+\[\sqrt [n] {n!} = \Theta(n)\]</div>
+</div>
+<p>By stirling’s formula we know,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty} \sqrt [n] {n!} \backsim \sqrt [n] {({n \over e})^n \cdot \sqrt {2 \pi n} \cdot e^{\varepsilon(n)}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\varepsilon (n)\)</span> equates to zero at the limit</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\lim_{n \rightarrow \infty} {1 \over 12n+1} \le \varepsilon (n) \le {1 \over 12n}\\\lim_{n \rightarrow \infty} 0 \le \varepsilon (n) \le {1 \over 12n}\\\varepsilon (n) \backsim 0\end{aligned}\end{align} \]</div>
+<p>So we can continue evaluating <span class="math notranslate nohighlight">\(n!\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\backsim \sqrt [n] { ({n \over e})^n \cdot \sqrt {2 \pi n} \cdot e^0 }\\\backsim \left ( ({n \over e})^n \cdot (2 \pi n)^{1 \over 2} \cdot 1 \right )^{1 \over n}\\\backsim  \left ( ({n \over e})^{\cancel{n}} \right )^\cancel{{1 \over n}} \cdot \left ( (2 \pi n)^{1 \over 2} \right )^{1 \over n}\\\backsim  {n \over e} \cdot \left ( (2 \pi n)^{1 \over 2} \right )^0\\\backsim  {n \over e} \cdot 1\\\backsim {n \over e}\\\backsim \infty\end{aligned}\end{align} \]</div>
+<p>By definition <span class="math notranslate nohighlight">\(\sqrt [n] {n!} = \Theta (n)\)</span> if</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty} 0 &lt; | {\sqrt [n] {n!} \over n}| &lt; \infty\]</div>
+<p>As shown above <span class="math notranslate nohighlight">\(\sqrt [n] {n!}\)</span> trends towards infinity,
+and since <span class="math notranslate nohighlight">\({\infty \over \infty} = 1\)</span> and 1 is between zero and infinity so <span class="math notranslate nohighlight">\(\Theta (n)\)</span> holds.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="doubles.html" title="previous chapter">Doubles</a></li>
+      <li>Next: <a href="../assignments/index.html" title="next chapter">Assignments</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/asymptotics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,1552 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Number Theory &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="More Number Theory" href="more_number_theory.html" />
+    <link rel="prev" title="Propositions and Proofs" href="propositions_and_proofs.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="number-theory">
+<h1>Number Theory<a class="headerlink" href="#number-theory" title="Permalink to this headline">¶</a></h1>
+<section id="problem-1">
+<h2>Problem 1<a class="headerlink" href="#problem-1" title="Permalink to this headline">¶</a></h2>
+<p>Define a <em>3-chain</em> to be a (not necessarily contiguous) subsequence of three integers,
+which is either monotonically increasing or monotonically decreasing.
+We will show here that any sequence of five distinct integers will contain a <em>3-chain</em>.
+Write the sequence as <span class="math notranslate nohighlight">\(a_1, a_2, a_3, a_4, a_5\)</span>.
+Note that a monotonically increasing sequences is one in which each term is greater than or equal to the previous term.
+Similarly, a monotonically decreasing sequence is one in which each term is less than or equal to the previous term.
+Lastly, a subsequence is a sequence derived from the original sequence by deleting some elements without changing the location of the remaining elements.</p>
+<ol class="loweralpha simple">
+<li><p>Assume that <span class="math notranslate nohighlight">\(a_1 &lt; a_2\)</span>. Show that if there is no <em>3-chain</em> in our sequence,
+then <span class="math notranslate nohighlight">\(a_3\)</span> must be less than <span class="math notranslate nohighlight">\(a_1\)</span>. (Hint: consider <span class="math notranslate nohighlight">\(a_4\)</span>!)</p></li>
+</ol>
+<p>Since the integers are distinct, we know <span class="math notranslate nohighlight">\(a_x \ne a_y\)</span> for any item x and y in the sequence.</p>
+<p>If <span class="math notranslate nohighlight">\(a_3\)</span> is greater than <span class="math notranslate nohighlight">\(a_2\)</span> then we have a monotonically increasing <em>3-chain</em> of <span class="math notranslate nohighlight">\((a_1,a_2,a_3)\)</span> already,
+so <span class="math notranslate nohighlight">\(a_3\)</span> cannot be greater than <span class="math notranslate nohighlight">\(a_2\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(a_3\)</span> is between <span class="math notranslate nohighlight">\(a_1\)</span> and <span class="math notranslate nohighlight">\(a_2\)</span> then <span class="math notranslate nohighlight">\(a_4\)</span> has two options.</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>if <span class="math notranslate nohighlight">\(a_3 &lt; a_4\)</span> then <span class="math notranslate nohighlight">\(a_1 &lt; a_3 &lt; a_4\)</span> which is a monotonically increasing <em>3-chain</em>,</dt><dd><p>so <span class="math notranslate nohighlight">\(a_4\)</span> cannot be greater than <span class="math notranslate nohighlight">\(a_3\)</span>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>if <span class="math notranslate nohighlight">\(a_3 &gt; a_4\)</span> then <span class="math notranslate nohighlight">\(a_2 &gt; a_3 &gt; a_4\)</span> which is a monotonically decreasing <em>3-chain</em>,</dt><dd><p>so <span class="math notranslate nohighlight">\(a_4\)</span> cannot be less than <span class="math notranslate nohighlight">\(a_3\)</span></p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>Therefore, <span class="math notranslate nohighlight">\(a_3\)</span> cannot be greater than <span class="math notranslate nohighlight">\(a_1\)</span>.</p>
+<ol class="loweralpha simple" start="2">
+<li><p>Using the previous part, show that if <span class="math notranslate nohighlight">\(a_1 &lt; a_2\)</span> and there is no <em>3-chain</em> in our sequence,
+then <span class="math notranslate nohighlight">\(a_3 &lt; a_4 &lt; a_2\)</span>.</p></li>
+</ol>
+<p>If <span class="math notranslate nohighlight">\(a_4\)</span> is greater than <span class="math notranslate nohighlight">\(a_2\)</span>, then we have a monotonically increasing <em>3-chain</em> of <span class="math notranslate nohighlight">\((a_1,a_2,a_4)\)</span> already,
+so <span class="math notranslate nohighlight">\(a_4\)</span> cannot be greater than <span class="math notranslate nohighlight">\(a_2\)</span>.</p>
+<p>From part (a) we already established <span class="math notranslate nohighlight">\(a_3 &lt; a_2\)</span>, so if <span class="math notranslate nohighlight">\(a_4\)</span> is less than <span class="math notranslate nohighlight">\(a_3\)</span>,
+then we have a monotonically decreasing <em>3-chain</em> of <span class="math notranslate nohighlight">\((a_2,a_3,a_4)\)</span>, so <span class="math notranslate nohighlight">\(a_4\)</span> cannot be less than <span class="math notranslate nohighlight">\(a_3\)</span>.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(a_4\)</span> must be between <span class="math notranslate nohighlight">\(a_2\)</span> and <span class="math notranslate nohighlight">\(a_3\)</span>.</p>
+<ol class="loweralpha simple" start="3">
+<li><p>Assuming that <span class="math notranslate nohighlight">\(a_1 &lt; a_2 \text{ and } a_3 &lt; a_4 &lt; a_2\)</span>,
+show that any value of <span class="math notranslate nohighlight">\(a_5\)</span> must result in a <em>3-chain</em>.</p></li>
+</ol>
+<p>From part (a) and part (b) we established <span class="math notranslate nohighlight">\(a_2\)</span> and <span class="math notranslate nohighlight">\(a_3\)</span> are the highest and lowest numbers respectively.</p>
+<p>If <span class="math notranslate nohighlight">\(a_4\)</span> is greater than <span class="math notranslate nohighlight">\(a_1\)</span> then <span class="math notranslate nohighlight">\(a_5\)</span> has two options;</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(a_5 &gt; a_4\)</span> then <span class="math notranslate nohighlight">\((a_3,a_4,a_5)\)</span> is a monotonically increasing <em>3-chain</em></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(a_5 &lt; a_4\)</span> then <span class="math notranslate nohighlight">\((a_2,a_4,a_5)\)</span> is a monotonically decreasing <em>3-chain</em></p></li>
+</ol>
+<p>If <span class="math notranslate nohighlight">\(a_4\)</span> is less than <span class="math notranslate nohighlight">\(a_1\)</span> then <span class="math notranslate nohighlight">\(a_5\)</span>, again, has two options;</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(a_5 &gt; a_4\)</span> then <span class="math notranslate nohighlight">\((a_3,a_4,a_5)\)</span> is a monotonically increasing <em>3-chain</em></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(a_5 &lt; a_4\)</span> then <span class="math notranslate nohighlight">\((a_2,a_4,a_5)\)</span> is a monotonically decreasing <em>3-chain</em></p></li>
+</ol>
+<p>In every case we have a <em>3-chain</em>, therefore any value of <span class="math notranslate nohighlight">\(a_5\)</span> results in a <em>3-chain</em></p>
+<ol class="loweralpha simple" start="4">
+<li><p>Using the previous parts, prove by contradiction that any sequence of five distinct integers must contain a <em>3-chain</em>.</p></li>
+</ol>
+<p><strong>Theorem</strong>: Any sequence of five distinct integers must contain a <em>3-chain</em></p>
+<p><strong>Proof</strong>: By contradiction.
+We shall try to prove the proposition that there exists a sequence of five distinct integers that does not contain a <em>3-chain</em>.</p>
+<p>The question establishes the integers in the sequence are distinct, so we don’t need to consider <span class="math notranslate nohighlight">\(a_x = a_y\)</span>.
+This is a necessity, because if <span class="math notranslate nohighlight">\(a_x = a_y\)</span> then there is always a <em>3-chain</em>.
+This is because no matter if <span class="math notranslate nohighlight">\(a_z\)</span> is higher, lower or equal, it will create the third item in the chain.</p>
+<p>As we saw in (a) (b) and (c) there is always a <em>3-chain</em> if <span class="math notranslate nohighlight">\(a_1 &lt; a_2\)</span>.
+So if our proposition holds then <span class="math notranslate nohighlight">\(a_1 &gt; a_2\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(a_1 &gt; a_2\)</span> then no subsequent number can be less than <span class="math notranslate nohighlight">\(a_2\)</span>
+because it would complete a monotonically decreasing <em>3-chain</em> of <span class="math notranslate nohighlight">\((a_1, a_2, a_n)\)</span></p>
+<p>If <span class="math notranslate nohighlight">\(a_3 &lt; a_1\)</span> then <span class="math notranslate nohighlight">\(a_4\)</span> has 2 options:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(a_4 &gt; a_3\)</span>, but then we get <span class="math notranslate nohighlight">\((a_2, a_3, a_4)\)</span> increasing</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_4 &lt; a_3\)</span>, but then we get <span class="math notranslate nohighlight">\((a_1, a_3, a_4)\)</span> decreasing</p></li>
+</ol>
+<p>So <span class="math notranslate nohighlight">\(a_3 &gt; a_1\)</span>.
+This means <span class="math notranslate nohighlight">\(a_4 &lt; a_3\)</span> because otherwise we’d get <span class="math notranslate nohighlight">\((a_1, a_3, a_4)\)</span> increasing.</p>
+<p>So <span class="math notranslate nohighlight">\(a_4 &lt; a_3\)</span> and <span class="math notranslate nohighlight">\(a_2 &lt; a_4 &lt; a_3\)</span>.</p>
+<p>This leaves 2 options for <span class="math notranslate nohighlight">\(a_5\)</span>;</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(a_5 &gt; a_4\)</span>, but then we get <span class="math notranslate nohighlight">\((a_2, a_4, a_5)\)</span> increasing.</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_5 &lt; a_4\)</span>, but then  we get <span class="math notranslate nohighlight">\((a_3, a_4, a_5)\)</span> decreasing.</p></li>
+</ol>
+<p>This gives us a <em>3-chain</em> in all cases, which contradicts our proposition.
+So the theory must be true - any sequence of five distinct integers must contain a <em>3-chain</em>.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="problem-2">
+<h2>Problem 2<a class="headerlink" href="#problem-2" title="Permalink to this headline">¶</a></h2>
+<p>Prove by either the Well Ordering Principle or induction that for all nonnegative integers, n:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=0}^n i^3 = \bigg( {n(n+1) \over 2} \bigg)^2\]</div>
+<p><strong>Proof</strong>. By induction.</p>
+<p>Let P(n) be the predicate defined like so,</p>
+<div class="math notranslate nohighlight">
+\[P(n)\ ::=\ \forall n \in \Bbb Z^+. n^3 = \bigg( {n(n+1) \over 2} \bigg)^2\]</div>
+<p><strong>Theorem</strong>: <span class="math notranslate nohighlight">\(P(n) \Rightarrow P(n + 1)\)</span></p>
+<p><strong>Base Case</strong>: P(0) is true, because both sides equal 0 when n = 0</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\0^3 &amp;= \bigg( {0(0+1) \over 2} \bigg)^2 \cr\\0^3 &amp;= \bigg( {0 \cdot 1 \over 2} \bigg)^2 \cr\\0^3 &amp;= \bigg( {0 \over 2} \bigg)^2 \cr\\0^3 &amp;= 0^2 \cr\\0 &amp;= 0\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p><strong>Inductive Step</strong>: Assuming P(n) is true, we prove P(n + 1) is true;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\0^3 + 1^3 + 2^3 + \dots + (n + 1)^3 &amp;= \bigg( {n(n + 1) \over 2} \bigg)^2 + (n + 1)^3
+        \qquad &amp;&amp; \text{(by inductive step)} \cr\\&amp;= { n^4 + 2n^3 + n^2 \over 4} + n^3 + 3n^2 + 3n + 1
+        \qquad &amp;&amp; \text{(bracket expansion)} \cr\\&amp;= { n^4 + 2n^3 + n^2 \over 4} + {4n^3 + 12n^2 + 12n + 4 \over 4 }
+        \qquad &amp;&amp; \text{(multiply up to common denominator)} \cr\\&amp;= { n^4 + 6n^3 + 13n^2 + 12n + 4 \over 4 }
+        \qquad &amp;&amp; \text{(add numerators)} \cr\\&amp;= { (n + 1)(n^3 + 5n^2 + 8n + 4) \over 4 }
+        \qquad &amp;&amp; \text{(factor out n + 1)} \cr\\&amp;= { (n + 1)(n + 2)(n^2 + 3n + 2) \over 4 }
+        \qquad &amp;&amp; \text{(factor out n + 2)} \cr\\&amp;= { (n + 1)(n + 2)(n + 1)(n + 2) \over 4 }
+        \qquad &amp;&amp; \text{(factor out another n + 1)} \cr\\&amp;= { \big( (n + 1)(n + 2) \big)^2 \over 2^2 }
+        \qquad &amp;&amp; \text{(simplify power of fraction)} \cr\\&amp;= \bigg( { (n + 1)(n + 2) \over 2 } \bigg)^2
+        \qquad &amp;&amp; \text{(simplify power of fraction again)} \cr\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This proves P(n + 1), so by the principle of induction it follows that P(n) is true for all non-negative integers n.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="problem-3">
+<h2>Problem 3<a class="headerlink" href="#problem-3" title="Permalink to this headline">¶</a></h2>
+<p>During 6.042, the students are sitting in an n × n grid.
+A sudden outbreak of beaver flu (a rare variant of bird flu that lasts forever;
+symptoms include yearning for problem sets and craving for ice cream study sessions)
+causes some students to get infected.
+Here is an example where n = 6 and infected students are marked x.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>x</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>x</p></td>
+<td><p>o</p></td>
+</tr>
+<tr class="row-even"><td><p>o</p></td>
+<td><p>x</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+</tr>
+<tr class="row-odd"><td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+</tr>
+<tr class="row-even"><td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+</tr>
+<tr class="row-odd"><td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>x</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+</tr>
+<tr class="row-even"><td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>o</p></td>
+<td><p>x</p></td>
+<td><p>o</p></td>
+<td><p>x</p></td>
+</tr>
+</tbody>
+</table>
+<p>Now the infection begins to spread every minute (in discrete time-steps).
+Two students are considered adjacent if they share an edge
+(i.e., front, back, left or right, but NOT diagonal);
+thus, each student is adjacent to 2, 3 or 4 others.
+A student is infected in the next time step if either
+-  the student was previously infected (since beaver flu lasts forever), or
+- the student is adjacent to at least two already-infected students.
+In the example, the infection spreads as shown below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+<td><p>x</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td><p>x</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+<p>In this example, over the next few time-steps, all the students in class become infected.</p>
+<p><em>Theorem. If fewer than n students in class are initially infected, the whole class will never
+be completely infected.</em></p>
+<p>Prove this theorem.</p>
+<p>First, we look at how the infection can be spread.
+We used x to represent an infected position, and other letters to represent adjacent positions.
+For any given infected position there are 4 possible adjacent positions to infect;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td></td>
+<td><p>a</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>b</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td><p>c</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><p>fig. 1</p></td>
+</tr>
+</tbody>
+</table>
+<p>In figure 1, we can see the four positions: above (a), right (b), bottom (c) and left (d).
+For consistency I’ll label all example edges clockwise from the top.</p>
+<p>These form the boundary of infection spread from any given time step.
+Note that for the purposes of counting the length of the boundary,
+an edge is considered <em>from</em> an infected position <em>to</em> a vacant one.
+So overlapping edges count twice, occupied positions don’t count,
+and positions are considered vacant even if they are off the board.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td></td>
+<td><p>a</p></td>
+<td></td>
+<td><p>e</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>b h</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td><p>c</p></td>
+<td></td>
+<td><p>g</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td></td>
+<td><p>a</p></td>
+<td><p>b</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>f</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>c</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td><p>e</p></td>
+<td><p>d</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><p>fig. 2</p></td>
+<td><p>fig. 3</p></td>
+</tr>
+</tbody>
+</table>
+<p>As you can see from figure 2, the position at (2, 2) has two edges (b and h),
+one from the left x, and one from the right x - making the total length of the boundary 8.
+Also note edges d and f spread outside the original board where n=3.</p>
+<p>In figure 3 you can see the infected positions at (1, 2) and (2, 2) are adjacent,
+so there are only 6 edges in the boundary in total.</p>
+<p><strong>Theorem 1</strong>: The boundary length never increases.</p>
+<p><strong>Proof</strong>: By cases.</p>
+<p>Let’s look at how the boundary changes when infection spreads.
+Per the rules, a position only becomes infected if there are 2 or more adjacent infected positions.
+Since there are maximum four adjacent positions, this means there are three different possibilities;
+2, 3 or 4 adjacent infected positions.</p>
+<p><em>Case 1</em>: 2 adjacent infected positions</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td></td>
+<td><p>a</p></td>
+<td></td>
+<td><p>e</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>b h</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td><p>c</p></td>
+<td></td>
+<td><p>g</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td></td>
+<td><p>a</p></td>
+<td><p>i</p></td>
+<td><p>e</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td></td>
+<td><p>c</p></td>
+<td><p>j</p></td>
+<td><p>g</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><p>fig. 4a</p></td>
+<td><p>fig. 4b</p></td>
+</tr>
+</tbody>
+</table>
+<p>In figure 4a there are 8 edges in the boundary (a-h).
+One time step later, in figure 4b, 2 edges (b and h) have been removed, and 2 have been added (i and j).
+This gives us no net change in boundary length, there are still 8 edges,
+so the boundary has not increased.</p>
+<p><em>Case 2</em>: 3 adjacent infected positions</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>i</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td></td>
+<td><p>a l</p></td>
+<td><p>x</p></td>
+<td><p>e j</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>bhk</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td></td>
+<td><p>c</p></td>
+<td></td>
+<td><p>g</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>i</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td></td>
+<td><p>a l</p></td>
+<td><p>x</p></td>
+<td><p>e j</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td></td>
+<td><p>c</p></td>
+<td><p>m</p></td>
+<td><p>g</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><p>fig. 5a</p></td>
+<td><p>fig. 5b</p></td>
+</tr>
+</tbody>
+</table>
+<p>In figure 5a there are 12 edges in the boundary (a-k).
+On time step later in figure 5b, we lose 3 (b, h and k), but gain 1 (m).
+This gives us a net loss of 2 edges, so the boundary has not increased.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>positions (1, 1) and (3, 1) also have overlapping edges, so would spread the infection on the time step.
+However, they are just variations on case 1, so I didn’t consider them in figure 5b,
+because we have already demonstrated 2 adjacent infections results in no net gain of boundary length.</p>
+</div>
+<p><em>Case 3</em>: 4 adjacent infected positions</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 21%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>i</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td></td>
+<td><p>a l</p></td>
+<td><p>x</p></td>
+<td><p>e j</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>bhkm</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td></td>
+<td><p>c p</p></td>
+<td><p>x</p></td>
+<td><p>g n</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>o</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>i</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td></td>
+<td><p>a l</p></td>
+<td><p>x</p></td>
+<td><p>e j</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>d</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>x</p></td>
+<td><p>f</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td></td>
+<td><p>c p</p></td>
+<td><p>x</p></td>
+<td><p>g n</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+<td><p>o</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><p>fig. 6a</p></td>
+<td><p>fig. 6b</p></td>
+</tr>
+</tbody>
+</table>
+<p>In figure 6a there are 16 edges in the boundary (a-p).
+In figure 6b (on time step later) we lose 4 edges (b, h, k and m) and gain no new edges.
+This gives us a net loss of 4 edges, so again, the boundary length has not increased.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As before, the overlapping edges in (1, 1), (3, 1), (1, 3) and (3, 3) are the same as case 1,
+which we have shown doesn’t result in any net gain to boundary length.</p>
+</div>
+<p>In each case, the boundary did not increase so theory holds that the boundary length cannot increase.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p><strong>Theorem</strong>: If fewer than n students in class are initially infected,
+the whole class will never be completely infected.</p>
+<p>As shown in figure 1, the maximum adjacent edges to any position is 4.
+If less than n students are initially infected, then the maximum length the boundary can be is 4(n - 1).</p>
+<p>As shown in figure 2 and 3, edges only count towards boundary length if they are outside the original board, or if the position is not already infected.
+Therefore, length of the boundary when every position is infected is 4n.</p>
+<p>As proved in theorem 1, the length of the boundary cannot increase.
+Since 4(n - 1) &lt; 4n, if there are fewer than n initially infected,
+the boundary length can never reach the boundary length where every position is infected.
+Therefore, the whole class will never be completely infected.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="problem-4">
+<h2>Problem 4<a class="headerlink" href="#problem-4" title="Permalink to this headline">¶</a></h2>
+<p>Find the flaw in the following bogus proof that <span class="math notranslate nohighlight">\(a^n = 1\)</span> for all nonnegative integers n, whenever a is a nonzero real number.</p>
+<p><strong>Proof</strong>. The <em>bogus</em> proof is by induction on n, with hypothesis</p>
+<div class="math notranslate nohighlight">
+\[P(n) ::= \forall k \le n. a^k = 1\]</div>
+<p>where k is a nonnegative integer valued variable.</p>
+<p><strong>Base Case</strong>: P(0) is equivalent to <span class="math notranslate nohighlight">\(a^0 = 1\)</span>, which is true by definition of <span class="math notranslate nohighlight">\(a^0\)</span>.
+(By convention, this holds even if a = 0.)</p>
+<p><strong>Inductive Step</strong>: By induction hypothesis, <span class="math notranslate nohighlight">\(a^k = 1\)</span> for all <span class="math notranslate nohighlight">\(k \in \Bbb N\)</span> such that <span class="math notranslate nohighlight">\(k \le n\)</span>.
+But then</p>
+<div class="math notranslate nohighlight">
+\[a^{n+1} = {a^n \cdot a^n \over a^{n-1}} = {1 \cdot 1 \over 1} = 1,\]</div>
+<p>which implies that P(n + 1) holds.
+It follows by induction that P(n) holds for all <span class="math notranslate nohighlight">\(n \in \Bbb N\)</span>,
+and in particular, <span class="math notranslate nohighlight">\(a^n = 1\)</span> holds for all <span class="math notranslate nohighlight">\(n \in \Bbb N\)</span>.</p>
+<hr><p>Firstly, the proof introduces an additional variable k in the definition of P.
+It also does not specify that a is a nonzero real number.
+It should be;</p>
+<div class="math notranslate nohighlight">
+\[P(n) ::= \forall a \in \Bbb R_{\ne 0}. \forall n \in \Bbb N^{+}. a^n = 1\]</div>
+<p>Next, in the base case, they show that P(0) holds even if a = 0, which contradicts ‘a’ being a <em>nonzero</em> real number.</p>
+<p>Then in the inductive step they use the reasoning that <span class="math notranslate nohighlight">\(a^k = 1\)</span> where k is less than or equal to n.
+However, they then prove <span class="math notranslate nohighlight">\(a^{n+1} = a^k\)</span> - but <span class="math notranslate nohighlight">\(n+1 \ne k\)</span> because k must be equal or less than n.</p>
+</section>
+<section id="problem-5">
+<h2>Problem 5<a class="headerlink" href="#problem-5" title="Permalink to this headline">¶</a></h2>
+<p>Let the sequence <span class="math notranslate nohighlight">\(G_0, G_1, G_2, \dots\)</span> be defined recursively as follows:
+<span class="math notranslate nohighlight">\(G_0 = 0, G_1 = 1\)</span>, and <span class="math notranslate nohighlight">\(G_n = 5G_{n−1} − 6G_{n−2}\)</span>, for every <span class="math notranslate nohighlight">\(n \in \Bbb N, n \ge 2\)</span>.
+Prove that for all <span class="math notranslate nohighlight">\(n \in N, G_n = 3^n − 2^n\)</span>.</p>
+<hr><p>The recursive data type G of non-negative integers over <span class="math notranslate nohighlight">\(\Bbb N\)</span>, are defined as follows,</p>
+<ul class="simple">
+<li><p><strong>Base Case</strong>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(G_0\)</span> is 0</p></li>
+<li><p><span class="math notranslate nohighlight">\(G_1\)</span> is 1</p></li>
+</ol>
+</li>
+<li><p><strong>Constructor Case</strong>: if <span class="math notranslate nohighlight">\(n - 1 \in G\)</span> and <span class="math notranslate nohighlight">\(n - 2 \in G\)</span> then <span class="math notranslate nohighlight">\(G_n = 5 \cdot (n - 1) - 6 \cdot (n - 2)\)</span></p></li>
+</ul>
+<p>Let P(n) be the predicate, defined as follows,</p>
+<div class="math notranslate nohighlight">
+\[P(n) = 5G_{n-1} - 6G_{n-2} = 3^n - 2^n\]</div>
+<p><strong>Theorem</strong>: P(n) holds for all n <span class="math notranslate nohighlight">\(\in \Bbb N\)</span></p>
+<p><strong>Proof</strong>. By structural induction on the definition that <span class="math notranslate nohighlight">\(n \in G\)</span>, using P(n) as the induction hypothesis.</p>
+<p><strong>Base Case</strong>: There are two base cases which we will demonstrate.</p>
+<ol class="arabic">
+<li><p>P(0)</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\0 &amp;= 3^0 - 2^0\\&amp;= 1 - 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>By convention, any real number to the power 0 is 1.</p>
+</li>
+<li><p>P(1)</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\1 &amp;= 3^1 - 2^1\\&amp;= 3 - 2\\\end{aligned}\end{aligned}\end{align} \]</div>
+</li>
+</ol>
+<p><strong>Constructor Case</strong>: We must show P(n) holds given that P(n-1) and P(n-2) hold.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\5(3^{n-1} - 2^{n-1}) - 6(3^{n-2} - 2^{n-2}) &amp;= 3^n - 2^n
+        \qquad &amp;&amp; \text{(by inductive hypothesis)} \cr\\5({3^n \over 3^1}) - 5({2^n \over 2^1}) - 6({3^n \over 3^2}) - 6(-{2^n \over 2^2}) &amp;=
+        \qquad &amp;&amp; \text{(by quotient rule)} \cr\\{12 \cdot 5 \cdot 3^n \over 36} - {18 \cdot 5 \cdot 2^n) \over 36} -
+{4 \cdot 6 \cdot 3^n \over 36} - \bigg( - {9 \cdot 6 \cdot 2^n \over 36} \bigg) &amp;=
+        \qquad &amp;&amp; \text{(multiply up to common factor)} \cr\\{12 \cdot 5 \cdot 3^n \over 36} - {18 \cdot 5 \cdot 2^n) \over 36} -
+{4 \cdot 6 \cdot 3^n \over 36} + {9 \cdot 6 \cdot 2^n \over 36} &amp;=
+        \qquad &amp;&amp; \text{(remove double negative)} \cr\\{60 \cdot 3^n - 90 \cdot 2^n - 24 \cdot 3^n + 54 \cdot 2^n \over 36} &amp;=
+        \qquad &amp;&amp; \text{(add and simplify)} \cr\\{\bcancel{36} \cdot 3^n - \bcancel{36} \cdot 2^n \over \bcancel{36}} &amp;=
+        \qquad &amp;&amp; \text{(remove common divisor)} \cr\\3^n - 2^n &amp;=\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This proves P(n) holds as required, completing the constructor case.
+By structural induction we conclude that P(n) holds of all <span class="math notranslate nohighlight">\(n \in \Bbb N. \blacksquare\)</span></p>
+</section>
+<section id="problem-6">
+<h2>Problem 6<a class="headerlink" href="#problem-6" title="Permalink to this headline">¶</a></h2>
+<p>In the 15-puzzle, there are 15 lettered tiles and a blank square arranged in a 4 × 4 grid.
+Any lettered tile adjacent to the blank square can be slid into the blank.
+For example, a sequence of two moves is illustrated below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-odd"><td><p>I</p></td>
+<td><p>J</p></td>
+<td><p>K</p></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>O</p></td>
+<td><p>N</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-odd"><td><p>I</p></td>
+<td><p>J</p></td>
+<td><p>K</p></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>O</p></td>
+<td></td>
+<td><p>N</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-odd"><td><p>I</p></td>
+<td><p>J</p></td>
+<td></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>O</p></td>
+<td><p>K</p></td>
+<td><p>N</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In the leftmost configuration shown above, the O and N tiles are out of order.
+Using only legal moves, is it possible to swap the N and the O, while leaving all the other tiles in their original position and the blank in the bottom right corner?
+In this problem, you will prove the answer is “no”.</p>
+<p><strong>Theorem</strong>. No sequence of moves transforms the board below on the left into the board below on the right.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-odd"><td><p>I</p></td>
+<td><p>J</p></td>
+<td><p>K</p></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>O</p></td>
+<td><p>N</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td><table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-odd"><td><p>I</p></td>
+<td><p>J</p></td>
+<td><p>K</p></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>N</p></td>
+<td><p>O</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>(a) We define the “order” of the tiles in a board to be the sequence of tiles on the board reading from the top row to the bottom row and from left to right within a row.
+For example, in the right board depicted in the above theorem, the order of the tiles is A, B, C, D, E, etc.
+Can a row move change the order of the tiles? Prove your answer.</p>
+<hr><p>If we take a tile in position p where <span class="math notranslate nohighlight">\(p \in \{\Bbb N | 1 \le n \le n^2\}\)</span> and <span class="math notranslate nohighlight">\(n = 4\)</span>,
+then we can define a row move as,</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(p_1 = p_0 - 1\)</span>, move left one tile within a row</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_1 = p_0 + 1\)</span>, move right one tile within a row</p></li>
+</ol>
+<p>By the rules of the game, a tile can only move to an empty position,
+so between positions <span class="math notranslate nohighlight">\(p_0 \rightarrow p_1\)</span> there are zero tiles.</p>
+<p>This means in <span class="math notranslate nohighlight">\(p_1\)</span> the tile has not moved before or after any other tiles, so the order is not changed.
+More formally, the number of pairs of letters <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> in which <span class="math notranslate nohighlight">\(L_1\)</span> is before <span class="math notranslate nohighlight">\(L_2\)</span> in the order of the tiles before the move,
+and later in the order of the tiles after the move, remains the same.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>(b) How many pairs of tiles will have their relative order changed by a column move?
+More formally, for how many pairs of letters <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> will <span class="math notranslate nohighlight">\(L_1\)</span> appear earlier in the order of the tiles than <span class="math notranslate nohighlight">\(L_2\)</span> before the column move and later in the order after the column move?
+Prove your answer correct.</p>
+<hr><p>We can define a column move as</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(p_1 = p_0 - n\)</span>, move left 4 tiles (up one row within a column)</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_1 = p_0 + n\)</span>, move right 4 tiles (down one row within a column)</p></li>
+</ol>
+<p>By the rules of the game, a tile can only move to an empty position,
+so between positions <span class="math notranslate nohighlight">\(p_0 \rightarrow p_1\)</span> there are <span class="math notranslate nohighlight">\(n - 1\)</span> tiles where <span class="math notranslate nohighlight">\(n = 4\)</span>, so 3 tiles.</p>
+<p>When any given pair of tiles changes order there are two cases,</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(L_1\)</span> was before <span class="math notranslate nohighlight">\(L_2\)</span>, and is now after <span class="math notranslate nohighlight">\(L_2\)</span> after the move (+1 inversion)</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_1\)</span> was after <span class="math notranslate nohighlight">\(L_2\)</span>, and is now before <span class="math notranslate nohighlight">\(L_2\)</span> after the move (-1 inversion)</p></li>
+</ol>
+<p>Since there are two cases for change in number of inversions, there are 8 possibilities with 3 tiles,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>tile 1</p></td>
+<td><p>tile 2</p></td>
+<td><p>tile 3</p></td>
+<td><p>total change</p></td>
+</tr>
+<tr class="row-even"><td><p>-1</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+<td><p>-3</p></td>
+</tr>
+<tr class="row-odd"><td><p>-1</p></td>
+<td><p>-1</p></td>
+<td><p>+1</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-even"><td><p>-1</p></td>
+<td><p>+1</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>-1</p></td>
+<td><p>+1</p></td>
+<td><p>+1</p></td>
+<td><p>+1</p></td>
+</tr>
+<tr class="row-even"><td><p>+1</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>+1</p></td>
+<td><p>-1</p></td>
+<td><p>+1</p></td>
+<td><p>+1</p></td>
+</tr>
+<tr class="row-even"><td><p>+1</p></td>
+<td><p>+1</p></td>
+<td><p>-1</p></td>
+<td><p>+1</p></td>
+</tr>
+<tr class="row-odd"><td><p>+1</p></td>
+<td><p>+1</p></td>
+<td><p>+1</p></td>
+<td><p>+3</p></td>
+</tr>
+</tbody>
+</table>
+<p>As you can see, the sum change in number of inversions is <span class="math notranslate nohighlight">\(\pm 1 \text{ or } \pm 3\)</span>.
+More formally, the number of pairs of letters <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> in which <span class="math notranslate nohighlight">\(L_1\)</span> is before <span class="math notranslate nohighlight">\(L_2\)</span> in the order of the tiles before the move,
+and later in the order of the tiles after the move, increases or decreases by 1 or 3.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>(c) We define an inversion to be a pair of letters <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> for which <span class="math notranslate nohighlight">\(L_1\)</span> precedes <span class="math notranslate nohighlight">\(L_2\)</span> in the alphabet,
+but <span class="math notranslate nohighlight">\(L_1\)</span> appears after <span class="math notranslate nohighlight">\(L_2\)</span> in the order of the tiles.
+For example, consider the following configuration:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>E</p></td>
+</tr>
+<tr class="row-even"><td><p>D</p></td>
+<td><p>H</p></td>
+<td><p>G</p></td>
+<td><p>F</p></td>
+</tr>
+<tr class="row-odd"><td><p>I</p></td>
+<td><p>J</p></td>
+<td><p>K</p></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>M</p></td>
+<td><p>N</p></td>
+<td><p>O</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>There are exactly four inversions in the above configuration: E and D, H and G, H and F, and G and F.
+What effect does a row move have on the parity of the number of inversions?
+Prove your answer.</p>
+<hr><p>As shown in part (a) a row move does not increase or decrease the number of inversions.
+Therefore, a column move has no effect on the parity of the number of inversions.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>(d) What effect does a column move have on the parity of the number of inversions?
+Prove your answer.</p>
+<hr><p>As shown in part (b), a row move increases or decreases the number of inversions by 1 or 3.
+1 and 3 are both odd numbers, and adding any number to an odd number changes the parity.
+So a row move changes the parity of the number of inversions every time.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>(e) The previous problem part implies that we must make an odd number of column moves in order to exchange just one pair of tiles (N and O, say).
+But this is problematic, because each column move also knocks the blank square up or down one row.
+So after an odd number of column moves, the blank can not possibly be back in the last row, where it belongs!
+Now we can bundle up all these observations and state an invariant, a property of the puzzle that never changes, no matter how you slide the tiles around.</p>
+<p><strong>Lemma</strong>. In every configuration reachable from the position shown below,
+the parity of the number of inversions is different from the parity of the row containing the blank square.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>row1</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>C</p></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>row2</p></td>
+<td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-odd"><td><p>row3</p></td>
+<td><p>I</p></td>
+<td><p>J</p></td>
+<td><p>K</p></td>
+<td><p>L</p></td>
+</tr>
+<tr class="row-even"><td><p>row4</p></td>
+<td><p>M</p></td>
+<td><p>O</p></td>
+<td><p>N</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Prove this lemma.</p>
+<hr><p>First, we define the row number containing the black square as,</p>
+<div class="math notranslate nohighlight">
+\[r = \left\lceil {p_b \over n} \right\rceil\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_b\)</span> is the position of the blank square.</p>
+<p>When we do a row move, <span class="math notranslate nohighlight">\(p_b \pm 1\)</span>.
+However, per the rules of the game, this is within the bounds of the grid.
+This means the row number cannot change for a row move, thus the parity of the row number cannot change for a row move.</p>
+<p>As shown in part (d), a row move does not change the number of inversions, and thus doesn’t change the parity of the number of inversions.</p>
+<p>For a column move, <span class="math notranslate nohighlight">\(p_b \pm n\)</span>, again, within the bounds of the grid.
+Per the ceiling calculation, increasing or decreasing by n will change r by 1.
+Since 1 is an odd number, this changes the parity of the row number for a column move.</p>
+<p>As shown in part (c) every column move changes the parity of the number of inversions.
+So any row move will flip the parity of both r and the number of inversions.</p>
+<p>Therefore, in every configuration reachable from the position shown above,
+the parity of the number of inversions is always different to the parity of r.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="loweralpha simple" start="6">
+<li><p>Prove the theorem that we originally set out to prove.</p></li>
+</ol>
+<hr><p>In the initial configuration the row number is 4, which is even.
+There is one inversion (O and N), which is odd.</p>
+<p>In the desired configuration the row number containing the blank square is 4, which is even.
+There are no inversions, i.e. 0, which is even.</p>
+<p>As shown in part (e), for any given move, the parity of the row number containing the blank square and the number of inversions will either stay the same or both will change.</p>
+<p>Therefore, no sequence of moves transforms the initial configuration into the desired configuration.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="problem-7">
+<h2>Problem 7<a class="headerlink" href="#problem-7" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of creature on planet Char, Z-lings and B-lings.
+Furthermore, every creature belongs to a particular generation.
+The creatures in each generation reproduce according to certain rules and then die off.
+The subsequent generation consists entirely of their offspring.</p>
+<p>The creatures of Char pair with a mate in order to reproduce.
+First, as many Z-B pairs as possible are formed.
+The remaining creatures form Z-Z pairs or B-B pairs, depending on whether there is an excess of Z-lings or of B-lings.
+If there are an odd number of creatures, then one in the majority species dies without reproducing.
+The number and type of offspring is determined by the types of the parents</p>
+<ul class="simple">
+<li><p>If both parents are Z-lings, then they have three Z-ling offspring.</p></li>
+<li><p>If both parents are B-lings, then they have two B-ling offspring and one Z-ling offspring.</p></li>
+<li><p>If there is one parent of each type, then they have one offspring of each type.</p></li>
+</ul>
+<p>There are 200 Z-lings and 800 B-lings in the first generation.
+Use induction to prove that the number of Z-lings will always be at most twice the number of B-lings</p>
+<hr><p>First we define,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}z_n ::= \text{ the number of z-lings at generation n}\\b_n ::= \text{ the number of b-lings at generation n}\end{aligned}\end{align} \]</div>
+<p>where n is any non-negative integer.
+The calculation for the number of z-lings or b-lings in the next generation is split into 3 cases,</p>
+<ol class="arabic">
+<li><p><span class="math notranslate nohighlight">\(z_n = b_n\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}z_{n+1} = z_n\\b_{n+1} = b_n\end{aligned}\end{align} \]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(z_n &gt; b_n\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}z_{n+1} = 3 \cdot \left\lfloor {z_n - b_n \over 2} \right\rfloor\\b_n = b_n\end{aligned}\end{align} \]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(z_n &lt; b_n\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}z_{n+1} = \left\lfloor {b_n - z_n \over 2} \right\rfloor\\b_{n+1} = 2 \cdot \left\lfloor {b_n - z_n \over 2} \right\rfloor\end{aligned}\end{align} \]</div>
+</li>
+</ol>
+<p><strong>Theorem</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\forall n \in \Bbb N. z_0 = 200, b_0 = 800. z_n \le b_n\]</div>
+<p>That is, the number of Z-lings is less than or equal to the number of B-lings,
+for any non-negative integer generation n, with a starting population of 200 Z-lings and 800 B-lings.</p>
+<p><strong>Proof</strong>. By strong induction, letting the induction hypothesis P(n) be defined as follows,</p>
+<div class="math notranslate nohighlight">
+\[P(n) ::= z_0 \le b_0 \text{ and } z_1 \le b_1 \text{ and } \dots \text{ and } z_n \le b_n\]</div>
+<p><strong>Base Case</strong>: P(0) is true because <span class="math notranslate nohighlight">\(200 \le 800\)</span>.</p>
+<p><strong>Inductive Step</strong>: Assuming P(n) is true, we must prove P(n + 1) is also true.</p>
+<p>There are two cases to consider.</p>
+<p>If <span class="math notranslate nohighlight">\(z_{n} = b_{n}\)</span> then, per the constructor, <span class="math notranslate nohighlight">\(z_{n+1} = z_{n}\)</span>,
+and <span class="math notranslate nohighlight">\(b_{n+1} = b_{n+1}\)</span>, so <span class="math notranslate nohighlight">\(z_{n+1} \le b_{n+1}\)</span> and the theory holds in this case.</p>
+<p>If <span class="math notranslate nohighlight">\(z_n &lt; b_n\)</span> then, per the constructor,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\z_{n+1} &amp;= \left\lfloor {b_n - z_n \over 2} \right\rfloor \cr\\b_{n+1} &amp;= 2 \cdot \left\lfloor {b_n - z_n \over 2} \right\rfloor \cr\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>So by inductive hypothesis,</p>
+<div class="math notranslate nohighlight">
+\[\left\lfloor {b_n - z_n \over 2} \right\rfloor \le 2 \cdot \left\lfloor {b_n - z_n \over 2} \right\rfloor\]</div>
+<p>Since <span class="math notranslate nohighlight">\(z_n &lt; b_n\)</span> then <span class="math notranslate nohighlight">\(b_n - z_n\)</span> must be a non-negative integer.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\i &amp;::= \text{ a non-negative integer} \cr\\\left\lfloor {i \over 2} \right\rfloor &amp;\le 2 \cdot \left\lfloor {i \over 2} \right\rfloor \cr\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Dividing a non-negative integer by 2 gives a non-negative real number.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\r &amp;::= \text{ a non-negative real number} \cr\\\left\lfloor r \right\rfloor &amp;\le 2 \cdot \left\lfloor r \right\rfloor \cr\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Flooring a non-negative real number gives a non-negative integer.</p>
+<div class="math notranslate nohighlight">
+\[i \le 2 \cdot i\]</div>
+<p>An integer multiplied by an integer &gt; 1 (in this case, 2) will result in a larger integer.
+This proves P(n + 1), so by the principle of induction it follows that P(n) for any non-negative integer n.</p>
+<p>If <span class="math notranslate nohighlight">\(z_n \le b_n\)</span> then <span class="math notranslate nohighlight">\(z_n\)</span> must be less than <span class="math notranslate nohighlight">\(2 b_n\)</span>, so the theory holds.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../recitations/index.html">Recitations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Assignments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="propositions_and_proofs.html">Propositions and Proofs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Number Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="more_number_theory.html">More Number Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_theory.html">Graph Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="more_graph_theory.html">More Graph Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sums_and_asymptotics.html">Sums and Asymptotics</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Assignments</a><ul>
+      <li>Previous: <a href="propositions_and_proofs.html" title="previous chapter">Propositions and Proofs</a></li>
+      <li>Next: <a href="more_number_theory.html" title="next chapter">More Number Theory</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/assignments/number_theory.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>A Protocol For College Admission &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Build Up Error" href="build_up_problem.html" />
+    <link rel="prev" title="Graph Basics" href="graph_basics.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="a-protocol-for-college-admission">
+<h1>A Protocol For College Admission<a class="headerlink" href="#a-protocol-for-college-admission" title="Permalink to this headline">¶</a></h1>
+<p>Next, we are going to talk about a generalization of the stable marriage problem.
+The problem we’re going to talk about is a generalization of the one done in lecture.
+In the new problem, there are N students <span class="math notranslate nohighlight">\(s_1, s_2, \dots , s_N and M\)</span> universities <span class="math notranslate nohighlight">\(u_1, u_2, \dots , u_M\)</span>.</p>
+<p>University <span class="math notranslate nohighlight">\(u_i\)</span> has <span class="math notranslate nohighlight">\(n_i\)</span> slots for students, and we’re guaranteed that <span class="math notranslate nohighlight">\(\sum_{i=1}^M n_i = N\)</span>.
+Each student ranks all universities (no ties) and each university ranks all students (no ties).</p>
+<p>Design an algorithm to assign students to universities with the following properties</p>
+<ol class="arabic simple">
+<li><p>Every student is assigned to one university.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\forall i, u_i\)</span> gets assigned <span class="math notranslate nohighlight">\(n_i\)</span> students.</p></li>
+<li><dl class="simple">
+<dt>There does not exist <span class="math notranslate nohighlight">\(s_i, s_j , u_k, u_l\)</span> where <span class="math notranslate nohighlight">\(s_i\)</span> is assigned to <span class="math notranslate nohighlight">\(u_k\)</span>, <span class="math notranslate nohighlight">\(s_j\)</span> is assigned to <span class="math notranslate nohighlight">\(u_l\)</span>,</dt><dd><p><span class="math notranslate nohighlight">\(s_j\)</span> prefers <span class="math notranslate nohighlight">\(u_k\)</span> to <span class="math notranslate nohighlight">\(u_l\)</span>, and <span class="math notranslate nohighlight">\(u_k\)</span> prefers <span class="math notranslate nohighlight">\(s_j\)</span> to <span class="math notranslate nohighlight">\(s_i\)</span>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>It is student-optimal. This means that of all possible assignments satisfying the first three properties,</dt><dd><p>the students get their top choice of university amongst these assignments.
+The algorithm will be a slight modification of the mating algorithm given in lecture.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<hr><ol class="arabic simple">
+<li><p><strong>Before we can say anything about our algorithm, we need to show that it terminates.</strong>
+<strong>Show that the algorithm terminates after NM + 1 days</strong></p></li>
+</ol>
+<hr><p>The algorithm terminates when each university has every slot filled with students.
+Each iteration, students ‘apply’ to the university they rank highest that they haven’t crossed off already.
+If a university has more applicants than slots, they order the applicants by their own ranking.
+They then reject any that exceed the number of slots they have available (so lowest ranked get rejected first).</p>
+<p>This means at least one student is rejected by one university on each iteration.
+If there are no rejections, it means every slot is filled, so the algorithm terminates.</p>
+<p>Since there are N students and M universities, each student can try each university at most, once (which gives us <span class="math notranslate nohighlight">\(N \cdot M\)</span>).
+At this point every student will have found a match, so the algorithm terminates.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Next, we will show that the four properties stated earlier are true of our algorithm.</strong>
+<strong>To start, let’s show the following:</strong>
+<strong>if during some day a university</strong> <span class="math notranslate nohighlight">\(\ u_j\ \)</span> <strong>has at least</strong> <span class="math notranslate nohighlight">\(\ n_j\ \)</span> <strong>applicants,</strong>
+<strong>then when the algorithm terminates it accepts exactly</strong> <span class="math notranslate nohighlight">\(\ n_j\ \)</span> <strong>students.</strong></p></li>
+</ol>
+<hr><p>When a university receives any application, the university is those applicants top choice so far.
+This means, unless they are rejected by the university, they will still be applying to it on the next iteration.</p>
+<p>Since <span class="math notranslate nohighlight">\(n_j\)</span> refers to the capacity of the university, The university will only reject students <span class="math notranslate nohighlight">\(n_j + 1\)</span> and beyond.
+This means there are still <span class="math notranslate nohighlight">\(n_j\)</span> applicants for whom <span class="math notranslate nohighlight">\(u_j\)</span> is their top choice, and so they will apply on the next iteration.</p>
+<p>By this, we can conclude that there will be at least <span class="math notranslate nohighlight">\(n_j\)</span> applications for university <span class="math notranslate nohighlight">\(u_j\)</span> when the algorithm terminates.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Next, show that every student is assigned to one university.</strong></p></li>
+</ol>
+<hr><p><strong>Invariant</strong>: If a university, <span class="math notranslate nohighlight">\(u_i\)</span> rejects a student, <span class="math notranslate nohighlight">\(s_j\)</span>,
+it’s because there are <span class="math notranslate nohighlight">\(n_i\)</span> students ranked higher than <span class="math notranslate nohighlight">\(s_j\)</span> also applying.</p>
+<p><strong>Proof</strong>: Suppose there are less than <span class="math notranslate nohighlight">\(n_i\)</span> students also applying.
+Then <span class="math notranslate nohighlight">\(u_i\)</span> still has space for <span class="math notranslate nohighlight">\(s_j\)</span>, so it doesn’t reject <span class="math notranslate nohighlight">\(s_j\)</span>.
+Therefore the invariant is vacuously true.
+<span class="math notranslate nohighlight">\(\square\)</span></p>
+<p><strong>Theorem</strong>: Every student is assigned to one university.</p>
+<p><strong>Proof</strong>: By contradiction. Assume, when the algorithm terminates there exists a student rejected by all universities.
+That means every university has higher ranked students.
+But since the algorithm has terminated, it means every university has every slot filled.
+By since <span class="math notranslate nohighlight">\(\sum_{i=1}^M n_i = N\)</span> that can’t be possible, which is a contradiction.
+So we can conclude that every student is assigned to one university.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Next, show that for all i,</strong> <span class="math notranslate nohighlight">\(\ u_i\ \)</span> <strong>gets assigned</strong> <span class="math notranslate nohighlight">\(\ n_i\ \)</span> <strong>students.</strong></p></li>
+</ol>
+<hr><p><strong>Proof</strong> By contradiction.
+Assume, when the algorithm terminates there exists a university <span class="math notranslate nohighlight">\(u_i\)</span>,
+for some <span class="math notranslate nohighlight">\(i \le M\)</span>, that has x applicants, for some x less than <span class="math notranslate nohighlight">\(n_i\)</span>.
+Since the algorithm has terminated we can assume no students have been rejected,
+and no universities has more applicants than slots.
+But since <span class="math notranslate nohighlight">\(\sum_{i=1}^M n_i = N\)</span>, we know that there are <span class="math notranslate nohighlight">\(N - n_i\)</span> slots available at other universities,
+and <span class="math notranslate nohighlight">\(N - x\)</span> students applying to other universities.
+Since x is less than <span class="math notranslate nohighlight">\(n_i\)</span>, then <span class="math notranslate nohighlight">\(N - n_i &lt; N - x\)</span>, which means there are less slots available than applicants.
+So by the algorithm, some of them will be rejected. So the algorithm cannot have terminated.
+This is a contradiction, so we can conclude that all universities get assigned a full roster of students.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="arabic" start="5">
+<li><p><strong>Before continuing, we need to establish the following property.</strong>
+<strong>Suppose that on some day a university</strong> <span class="math notranslate nohighlight">\(\ u_j\ \)</span> <strong>has at least</strong> <span class="math notranslate nohighlight">\(\ n_j\ \)</span> <strong>applicants.</strong>
+<strong>Define the rank of an applicant</strong> <span class="math notranslate nohighlight">\(\ s_i\ \)</span> <strong>with respect to a university</strong> <span class="math notranslate nohighlight">\(\ u_j\ \)</span> <strong>as</strong> <span class="math notranslate nohighlight">\(\ s_i\)</span> <strong>’s location on</strong> <span class="math notranslate nohighlight">\(\ u_j\)</span> <strong>’s preference list.</strong>
+<strong>So, for example,</strong> <span class="math notranslate nohighlight">\(\ u_j\)</span> <strong>’s favorite student has rank 1.</strong>
+<strong>Show that the rank of</strong> <span class="math notranslate nohighlight">\(\ u_j\)</span> <strong>’s least favorite applicant that it says “Maybe, …” to cannot decrease</strong>
+<strong>(e.g., going from 1000 to 1005 is decreasing) on any future day.</strong></p>
+<p><strong>Note that</strong> <span class="math notranslate nohighlight">\(\ u_j\)</span> <strong>’s least favorite applicant might change from one day to the next.</strong></p>
+</li>
+</ol>
+<hr><p>If <span class="math notranslate nohighlight">\(s_i\)</span> was previously the least favourite accepted applicant,
+and there were at least <span class="math notranslate nohighlight">\(n_j\)</span> applicants, then all slots were filled.</p>
+<p>If a student is not rejected, they continue to apply to the same university,
+because that university is currently their top choice,
+so the next iteration those <span class="math notranslate nohighlight">\(n_j\)</span> students will continue to apply to <span class="math notranslate nohighlight">\(u_j\)</span>.</p>
+<p>Suppose another student, <span class="math notranslate nohighlight">\(s_k\)</span> applies on the next iteration as well.
+If <span class="math notranslate nohighlight">\(s_k\)</span> is preferred by the university, then <span class="math notranslate nohighlight">\(s_i\)</span> will by bumped off the list,
+in favour of the next highest ranked student (which may or may not be <span class="math notranslate nohighlight">\(s_k\)</span>).</p>
+<p>Suppose <span class="math notranslate nohighlight">\(s_k\)</span> was ranked lower than <span class="math notranslate nohighlight">\(s_i\)</span>, then the university would prefer <span class="math notranslate nohighlight">\(s_i\)</span> over <span class="math notranslate nohighlight">\(s_k\)</span>,
+so they would reject <span class="math notranslate nohighlight">\(s_k\)</span> because there are no more slots left.</p>
+<p>So the least favourite applicant’s ranking can get no lower than <span class="math notranslate nohighlight">\(s_i\)</span>’s ranking.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="arabic simple" start="6">
+<li><p><strong>Next, show there does not exist</strong> <span class="math notranslate nohighlight">\(\ s_i, s_j, u_k,\ and\ u_l\ \)</span> <strong>where</strong> <span class="math notranslate nohighlight">\(\ s_i\ \)</span> <strong>is assigned to</strong> <span class="math notranslate nohighlight">\(u_k\)</span>,
+<span class="math notranslate nohighlight">\(s_j\ \)</span> is assigned to <span class="math notranslate nohighlight">\(u_l\)</span>, <span class="math notranslate nohighlight">\(s_j\ \)</span> <strong>prefers</strong> <span class="math notranslate nohighlight">\(\ u_k\ \)</span> <strong>to</strong> <span class="math notranslate nohighlight">\(\ u_l\ \)</span>, <strong>and</strong> <span class="math notranslate nohighlight">\(\ uk\ \)</span> <strong>prefers</strong> <span class="math notranslate nohighlight">\(\ s_j\ \)</span> <strong>to</strong> <span class="math notranslate nohighlight">\(\ s_i\ \)</span>.
+<strong>Note that this is analogous to a “rogue couple” considered in lecture.</strong></p></li>
+</ol>
+<hr><p><strong>Proof</strong>: By contradiction.</p>
+<p>Suppose we have a student, <span class="math notranslate nohighlight">\(s_r\)</span> and a university <span class="math notranslate nohighlight">\(u_g\)</span> that are not matched up, and form a rogue couple.</p>
+<p><strong>Case 1</strong>: <span class="math notranslate nohighlight">\(u_g\)</span> rejected <span class="math notranslate nohighlight">\(s_r\)</span> for another student.
+But then <span class="math notranslate nohighlight">\(u_g\)</span> has a preferred match, so they are not a rogue couple.</p>
+<p><strong>Case 2</strong>: The algorithm terminated before <span class="math notranslate nohighlight">\(s_r\)</span> applied to <span class="math notranslate nohighlight">\(u_g\)</span>.
+But then <span class="math notranslate nohighlight">\(s_r\)</span> was accepted by a university they prefer over <span class="math notranslate nohighlight">\(u_g\)</span>, so they are not a rogue couple.</p>
+<p>This proves that for any pair, there are no rogue couples.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<ol class="arabic" start="7">
+<li><p><strong>Finally, we show in a very precise sense that this algorithm is student-optimal.</strong>
+<strong>As in lecture, define the realm of possibility of a student to be the set of all universities</strong> <em>u</em>,
+<strong>for which there exists some assignment satisfying the first three properties above,</strong>
+<strong>in which the student is assigned to u</strong>.
+<strong>Of all universities in the realm of possibility of a student we say that the student’s favorite is optimal for that student.</strong></p>
+<p><strong>Show that each student is assigned to its optimal university.</strong></p>
+</li>
+</ol>
+<hr><p>Suppose we have student <span class="math notranslate nohighlight">\(s_i\)</span> that is the first to not be assigned their optimal university, <span class="math notranslate nohighlight">\(u_k\)</span>.
+<span class="math notranslate nohighlight">\(u_k\)</span> must have rejected <span class="math notranslate nohighlight">\(s_i\)</span> in favour of <span class="math notranslate nohighlight">\(n_k\)</span> other students <span class="math notranslate nohighlight">\(s_a \dots s_j\)</span> where <span class="math notranslate nohighlight">\(n_k\)</span> is the maximum capacity of <span class="math notranslate nohighlight">\(u_k\)</span>.</p>
+<p>Since <span class="math notranslate nohighlight">\(s_i\)</span> was the first to be rejected by their optimal university,
+All students in <span class="math notranslate nohighlight">\(s_a \dots s_j\)</span> haven’t been rejected by their optimal university,
+and so must rank <span class="math notranslate nohighlight">\(u_k\)</span> better than or equal to their optimal university.</p>
+<p>Since <span class="math notranslate nohighlight">\(u_k\)</span> is in <span class="math notranslate nohighlight">\(s_i\)</span>’s realm of possibility,
+there must be some stable matching, S, where <span class="math notranslate nohighlight">\(s_i\)</span> could be assigned to <span class="math notranslate nohighlight">\(u_k\)</span>.</p>
+<p>We know <span class="math notranslate nohighlight">\(u_k\)</span> ranks all of the students in <span class="math notranslate nohighlight">\(s_a \dots s_j\)</span> better than <span class="math notranslate nohighlight">\(s_i\)</span>.
+However, in S, one of the students in <span class="math notranslate nohighlight">\(s_a \dots s_j\)</span>, let’s say <span class="math notranslate nohighlight">\(s_j\)</span>,
+would have to be matched with another university, <span class="math notranslate nohighlight">\(u_l\)</span>, which it ranks worse than <span class="math notranslate nohighlight">\(u_k\)</span>,
+since by accepting <span class="math notranslate nohighlight">\(s_i\)</span>, there would be no space for <span class="math notranslate nohighlight">\(s_j\)</span>.</p>
+<p>So <span class="math notranslate nohighlight">\(s_j\)</span> prefers <span class="math notranslate nohighlight">\(u_k\)</span> to <span class="math notranslate nohighlight">\(u_l\)</span>, and <span class="math notranslate nohighlight">\(u_k\)</span> prefers <span class="math notranslate nohighlight">\(s_j\)</span> to <span class="math notranslate nohighlight">\(s_i\)</span>.
+This forms a rogue couple, which contradict the three properties above.</p>
+<p>Therefore, there cannot exist a stable matching where <span class="math notranslate nohighlight">\(s_i\)</span> is rejected by their optimal choice.
+It follows then, that any given student’s true optimal choice is the university they were not rejected from, which is the one they end up with.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="graph_basics.html" title="previous chapter">Graph Basics</a></li>
+      <li>Next: <a href="build_up_problem.html" title="next chapter">Build Up Error</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/stable_marriage_problem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

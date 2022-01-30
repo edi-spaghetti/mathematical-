@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Induction &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="State Machines" href="state_machines.html" />
+    <link rel="prev" title="Logic" href="logic.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="induction">
+<h1>Induction<a class="headerlink" href="#induction" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="linkhttps://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec02.pdf">source</a></p>
+<p><a class="reference external" href="linkhttps://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec02_sol.pdf">solution</a></p>
+<section id="a-geometric-sum">
+<h2>A Geometric Sum<a class="headerlink" href="#a-geometric-sum" title="Permalink to this headline">¶</a></h2>
+<p>Use the well ordering principle, and then induction, to prove that this formula is correct for all real values <span class="math notranslate nohighlight">\(r \ne 1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[1 + r + r^2 + r^3 + ... r^n = {1 - r^{n+1} \over 1 - r}\]</div>
+<p><strong>Theorem</strong>: <span class="math notranslate nohighlight">\(\forall r \in \Bbb R_{\ne 1}. \forall n \in \Bbb N. 1 + r + r^2 + r^3 + ... r^n = {1 - r^{n+1} \over 1 - r}\)</span></p>
+<p><strong>Proof</strong>. by Well Ordering and contradiction</p>
+<p>We assume the theorem is false and collect a set of counterexamples;</p>
+<div class="math notranslate nohighlight">
+\[C ::= \{\ \forall r \in \Bbb R_{\ne 1}. \forall n \in \Bbb N \mid 1 + r + r^2 + r^3 + ... r^n \ne {1 - r^{n+1} \over 1 - r}\ \}\]</div>
+<p>By our assumption that there can be counterexamples, C is a non-empty set.
+By the well ordering principle, there should be a smallest element, which we shall refer to as c.</p>
+<p>Since c is the smallest counterexample, the theorem should be false for n = c, but true for n &lt; c.
+If n is 0, the theorem is true;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\1 &amp;= {1 - r^{0+1} \over 1 - r}\\&amp;= {1 - r \over 1 - r}\\&amp;= 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>So n must be larger than 0. This also means c - 1 must be a non-negative integer.
+Since it is less that c, the theorem must be true for it;</p>
+<div class="math notranslate nohighlight">
+\[1 + r + r^2 + r^3 + ... r^{c-1} = {1 - r^c \over 1 - r}\]</div>
+<p>But then if we add <span class="math notranslate nohighlight">\(r^c\)</span> to both sides we get;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\1 + r + r^2 + r^3 + ... r^{c-1} + r^c &amp;= {1 - r^c \over 1 - r} + r^c\\&amp;= {1 - r^c + (1 - r) \dotsm r^c \over 1 - r}\\&amp;= {1 - r^c + r^c - r^{c+1} \over 1 - r}\\&amp;= {1 - r^{c+1} \over 1 - r}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>So the theorem holds for c after all. This is a contradiction, so the theorem must be true.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p><strong>Proof</strong>. By induction</p>
+<p>Let P(n) be the predicate defined like so,</p>
+<div class="math notranslate nohighlight">
+\[P(n)\ ::=\ \forall r \in \Bbb R_{\ne 1}. \forall n \in \Bbb N. 1 + r + r^2 + r^3 + ... r^n = {1 - r^{n+1} \over 1 - r}\]</div>
+<p>That is, for any non-negative integer ‘n’, with r being any real number not equal to 1,
+<span class="math notranslate nohighlight">\(1 + r + r^2 + r^3 + ... r^n\)</span> is equal to <span class="math notranslate nohighlight">\({1 - r^{n+1} \over 1 - r}\)</span>.</p>
+<p><strong>Theorem</strong>: <span class="math notranslate nohighlight">\(P(n) \Rightarrow P(n + 1)\)</span></p>
+<p><strong>Base Case</strong>: P(0) is true, because both sides equal 1 when n = 0</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\1 &amp;= {1 - r^{0+1} \over 1 - r}\\&amp;= {1 - r \over 1 - r}\\&amp;= 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Inductive Step: Assuming P(n) is true, where n in a non-negative integer, then;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\1 + r + r^2 + r^3 + ... r^n + r^{n+1} &amp;= {1 - r^{n+1} \over 1 - r} + r^{n+1} \qquad &amp;&amp;\text{(by induction hypothesis)}\\&amp;= {1 - r^{n+1} + ((1 - r) \dotsm r^{n+1}) \over 1 - r}\\&amp; = {1 - r^{n+1} + r^{n+1} - r^{n+2} \over 1 - r}\\&amp;= {1 - r^{n+2} \over 1 - r} \qquad &amp;&amp;\text{(by simple alegebra)}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This proves P(n + 1), so by the principle of induction it follows that P(n) is true for all non-negative n.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="surveyor">
+<h2>Surveyor<a class="headerlink" href="#surveyor" title="Permalink to this headline">¶</a></h2>
+<p>A group of m people are split into two subgroups, p and r.
+If people in subgroup p learn they are in subgroup p, they leave the group at the end of the day.
+People can see what subgroup other people belong to, but cannot see their subgroup.
+On day 1, they are told ‘There is at least one person in subgroup p’. What happens next?</p>
+<p><strong>Answer</strong>: All people in subgroup p leave at the end of the number of days equal to p</p>
+<p><strong>Proof</strong>. By induction</p>
+<p>Let P(n) be the predicate, where the following are true after n number of days have passed;</p>
+<p class="centered">
+<strong>If p &gt; n, then no-one leaves</strong></p><p class="centered">
+<strong>If p = n, then all people in subgroup p leave</strong></p><p class="centered">
+<strong>If p &lt; n, then either everyone leaves or no-one does (see notes below)</strong></p><p><strong>Theorem</strong>: P(n) ⇒ P(n + 1)</p>
+<p><strong>Base Case</strong>: P(1) is true, because it satisfies all three of the conditions in the predicate;</p>
+<p><em>If p &gt; 1</em>, each person, regardless of their own subgroup, will see at least
+one other person in subgroup p. So they cannot be sure of their own subgroup.
+Furthermore, everyone will see that the others came to this conclusion,
+so they also know that p &gt; 1.</p>
+<p><em>If p = 1</em>, the person in subgroup p will see no others in p, so they have to conclude
+that they themselves are in subgroup p. learning this, they must leave the group.
+Additionally, the remainder of the group knows that person came to this conclusion,
+so they are also able to conclude that there was 1 person in subgroup p,
+and that they themselves are in subgroup r.</p>
+<p><em>If p &lt; 1</em>, We assume they are told a true fact that there is at least one person
+in subgroup p, but even so, is p were less than one that would mean
+there are zero people in subgroup p, meaning everyone is in subgroup r,
+so no-one learns they are in subgroup p, so no-one leaves.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If we cannot assume they are told a true fact, everyone, seeing only people in subgroup r,
+would (erroneously) conclude they themselves are in subgroup p, and they would all attempt to leave.
+Depending on how attempting to leave under a false conclusion is handled either everyone would leave, or no-one would.</p>
+</div>
+<p><strong>Inductive Step</strong>: Assuming P(n) is true, we must prove P(n + 1) is also true.
+To do this, we must prove that each of the conditions of the predicate are met;</p>
+<p><em>If p &gt; n + 1</em>, each person, seeing that no-one left on day n knows that p &gt; n.
+A person in subgroup r will see p people in subgroup p and so cannot be sure of their own subgroup.
+A person in subgroup p will see p - 1 people in subgroup p.
+From what they know so far, it will also appear greater than n to them</p>
+<div class="math notranslate nohighlight">
+\[p - 1 \ge n + 1 \land p - 1 &gt; n\]</div>
+<p>Seeing that everyone else came to this conclusion, they all know that p &gt; n + 1</p>
+<p><em>If p = n + 1</em>, again, from the previous day, they know that p &gt; n.
+A person in subgroup r will see p people in subgroup p, and since n + 1 &gt; n, they cannot be sure of their own subgroup.
+A person in subgroup p will see p - 1 people in subgroup p.
+Seeing this, the only way for p &gt; n is for themselves to be in subgroup p.
+Since they’ve all just learned they’re in subgroup p, they all leave.</p>
+<p><em>If p &lt; n + 1</em>, on the previous day, everyone learned that p = n, causing everyone in subgroup p to leave.
+Because of this fact, everyone in subgroup r was also able to conclude that they were not in subgroup p, meaning they don’t leave.</p>
+<p>This proves P(n + 1), so by the principle of induction it follows that P(n) is true for all strictly positive n.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="logic.html" title="previous chapter">Logic</a></li>
+      <li>Next: <a href="state_machines.html" title="next chapter">State Machines</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/induction.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

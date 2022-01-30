@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Greatest Common Divisors &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RSA" href="exponentiation_modular_arithmetic_RSA.html" />
+    <link rel="prev" title="State Machines" href="state_machines.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="greatest-common-divisors">
+<h1>Greatest Common Divisors<a class="headerlink" href="#greatest-common-divisors" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="linkhttps://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec04.pdf">problems</a>
+<a class="reference external" href="linkhttps://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec04_sol.pdf">solutions</a></p>
+<section id="the-pulverizer">
+<h2>The Pulverizer!<a class="headerlink" href="#the-pulverizer" title="Permalink to this headline">¶</a></h2>
+<p><strong>There is a pond. Inside the pond there are n pebbles, arranged in a cycle.</strong>
+<strong>A frog is sitting on one of the pebbles.</strong>
+<strong>Whenever he jumps, he lands exactly k pebbles away in the clockwise direction, where 0 &lt; k &lt; n.</strong>
+<strong>The frog’s meal, a delicious worm, lies on the pebble right next to his, in the clockwise direction.</strong></p>
+<p><strong>(a) Describe a situation where the frog can’t reach the worm.</strong></p>
+<hr><p>If n and k are not relatively prime, then the frog will not be able to reach the worm.
+This is because only steps divisible by the gcd are reachable, and the only number that divides 1 is 1.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p><strong>(b) In a situation where the frog can actually reach the worm, explain how to use the Pulverizer to find how many jumps the frog will need.</strong></p>
+<hr><p>If the frog is able to reach the worm, then it can do so in j hops,
+which is equivalent to m hops around the circle plus 1, for some integers j, m.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\jk &amp;= mn + 1\\1 &amp;= (-m)n + jk\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This means 1 is a linear combination of of k and n.
+We also know the the gcd is a linear combination of k and n,
+and since there can’t be any smaller linear combination of k and n than 1, we can conclude gcd(k, n) = 1.</p>
+<p>This means we can use the pulverizer to find a linear combination of k and n.
+This linear combination is not guaranteed to have the required signs of -m and +j though.
+But we can get this by applying the following,</p>
+<div class="math notranslate nohighlight">
+\[1 = (m - k)n + (n - j)k\]</div>
+<p><strong>(c) Compute the number of jumps if n = 50 and k = 21. Anything strange? Can you fix it?</strong></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\&amp;gcd(n, k) \qquad &amp;&amp; rem(n, k) \qquad &amp;&amp;&amp; = n - jk \cr\\&amp;gcd(50, 21) \qquad &amp;&amp; 8 \qquad &amp;&amp;&amp; = 50 - 2 \cdot 21\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = n - 2k \cr\\&amp;gcd(21, 8) \qquad &amp;&amp; 5 \qquad &amp;&amp;&amp; = 21 - 2 \cdot 8\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = k - 2 \cdot (n - 2k)\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = -2n + 5k \cr\\&amp;gcd(8, 5) \qquad &amp;&amp; 3 \qquad &amp;&amp;&amp; = 8 - 1 \cdot 5\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = (n - 2k) - 1 \cdot (-2n + 5k)\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = 3n - 7k \cr\\&amp;gcd(5, 3) \qquad &amp;&amp; 2 \qquad &amp;&amp;&amp; = 5 - 1 \cdot 3\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = (-2n + 5k) - 1 \cdot (3n - 7k)\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = -5n + 12k \cr\\&amp;gcd(3, 2) \qquad &amp;&amp; 1 \qquad &amp;&amp;&amp; = 3 - 1 \cdot 2\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = 3n - 7k - 1 \cdot (-5n + 12k)\\&amp; \qquad &amp;&amp;      \qquad                         &amp;&amp;&amp; = \boxed{8n - 19k}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This would imply -19 jumps, or 19 jumps in the counter-clockwise direction.
+However, the rules state that the frog can only jump clockwise.</p>
+<p>19 jumps, in fact, get the frog one stone short of the original position,</p>
+<div class="math notranslate nohighlight">
+\[8 \cdot 50 = 19 \cdot 21 - 1\]</div>
+<p>Since there are 50 stones in total, each set of 19 jumps moved the frog 1 stone counter-clockwise.
+So to move 49 stones counter-clockwise (which is the same as 1 stone clockwise) the frog needs <span class="math notranslate nohighlight">\(19 \cdot 49 = 931\)</span> jumps.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="the-fibonacci-numbers">
+<h2>The Fibonacci numbers<a class="headerlink" href="#the-fibonacci-numbers" title="Permalink to this headline">¶</a></h2>
+<p><strong>The Fibonacci numbers are defined as follows:</strong></p>
+<div class="math notranslate nohighlight">
+\[F_0 = 0 \qquad F_1 = 1 \qquad F_n = F_{n−1} + F_{n−2} \text{ (for n ≥ 2).}\]</div>
+<p><strong>Give an inductive proof that the Fibonacci numbers</strong> <span class="math notranslate nohighlight">\(\ F_n\ \)</span> <strong>and</strong> <span class="math notranslate nohighlight">\(\ F_{n+1}\ \)</span> <strong>are relatively prime for all</strong> <span class="math notranslate nohighlight">\(\ n \ge 0\)</span>.</p>
+<hr><p>Let P(n) be the predicate, defined as follows,</p>
+<div class="math notranslate nohighlight">
+\[\forall n \in \Bbb N. gcd(F_n, F_{n+1}) = 1\]</div>
+<p>that is, for all integers greater than or equal to 0, the fibonacci number at <span class="math notranslate nohighlight">\(F_n\)</span> is relatively prime to the fibonacci number at <span class="math notranslate nohighlight">\(F_{n+1}\)</span>.</p>
+<p><strong>Theorem</strong> P(n) holds for all n <span class="math notranslate nohighlight">\(\in \Bbb N\)</span></p>
+<p><strong>Proof</strong>: By induction.</p>
+<p><strong>Base Case</strong>: P(0) is trivially true,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}F_0 = 0\\F_1 = 1\\gcd(0, 1) = 1\end{aligned}\end{align} \]</div>
+<p><strong>Inductive Step</strong>: We must show P(n+1) holds, given P(n) holds.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(F_{n+1}\)</span> and <span class="math notranslate nohighlight">\(F_{n+2}\)</span> are not relatively prime.
+Then there exists a common divisor, d, such that <span class="math notranslate nohighlight">\(d &gt; 1\)</span>.
+Since it’s a common divisor, it also divides a linear combination,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\d &amp; \mid F_{n+2} - F_{n+1}\\&amp; \mid (F_{n+1} + \cancel{F_n}) - (\cancel{F_n} + F_{n-1})\\&amp; \mid F_{n+1} - F_{n-1}\\&amp; \mid F_n \qquad &amp;&amp; \text{ proof?}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>But by the inductive hypothesis <span class="math notranslate nohighlight">\(gcd(F_n, F_{n+1}) = 1\)</span>, so d cannot divide <span class="math notranslate nohighlight">\(F_n\)</span> if d is greater than 1.
+This is a contradiction, so we can conclude that <span class="math notranslate nohighlight">\(F_{n+1}\)</span> and <span class="math notranslate nohighlight">\(F_{n+2}\)</span> are relatively prime,
+and thus by induction P(n) is true for all n.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="power-of-3">
+<h2>Power of 3<a class="headerlink" href="#power-of-3" title="Permalink to this headline">¶</a></h2>
+<p>Let N be a number whose decimal expansion consists of <span class="math notranslate nohighlight">\(3^n\)</span> identical digits.
+Show by induction that <span class="math notranslate nohighlight">\(3^n \mid N\)</span>. For example:</p>
+<div class="math notranslate nohighlight">
+\[3^2 \mid \underbrace{777777777}_{3^2\ =\ 9 \text{ digits}}\]</div>
+<hr><p><strong>Corollary</strong>: <span class="math notranslate nohighlight">\(3 \mid N\)</span></p>
+<p>The decimal representation of N is a sequence of digits, a, of length <span class="math notranslate nohighlight">\(3^n\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\N_{a,n} = \sum_{i=0}^{3^n - 1} a_{3^n - i} \cdot 10^i\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Since <span class="math notranslate nohighlight">\(10 \text{ mod 3 } = 1\)</span>, and any power of 10 mod 3 also equals 1,
+We can conclude that for any <span class="math notranslate nohighlight">\(a_i \in N\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\a_i \cdot 10^i &amp;≡ \text{ (mod 3) }\\a_i \cdot 1 &amp;≡ \text{ (mod 3) }\\a_i &amp;≡ \text{ (mod 3) }\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>So each item in the sequence N (mod 3) is equal to <span class="math notranslate nohighlight">\(a_i\)</span>.
+In our case, each item <span class="math notranslate nohighlight">\(a_i\)</span> is the same integer, so,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\{a \cdot 3^n \over 3} &amp;≡ 0 \text{ (mod 3) }\\3 (a \cdot 3^{n-1}) &amp;≡ 0 \text{ (mod 3) }\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>So we can conclude N is divisible by 3 for any value of a and n <span class="math notranslate nohighlight">\(\square\)</span>.</p>
+<p><strong>Theorem</strong>: <span class="math notranslate nohighlight">\(\forall n \in \Bbb N_+. \forall a \in [1..9]. 3^n \mid N_{a,n}\)</span>.</p>
+<p>That is, for all n greater than 0, and any single digit a (except 0), <span class="math notranslate nohighlight">\(3^n\)</span> divides <span class="math notranslate nohighlight">\(N_{a,n}\)</span> as defined in the question.</p>
+<p><strong>Base Case</strong>: P(0) can be calculated as follows,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\3^0 &amp;\mid \sum_{i=0}^{3^0 - 1} a \cdot 10^i\\1 &amp;\mid \sum_{i=0}^0 a \cdot 10^i\\1 &amp;\mid 0 \qquad &amp;&amp;\text{0 terms to sum, so total is 0}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Since zero is divisible by anything, this proves the base case.</p>
+<p><strong>Inductive Step</strong>: We must show P(n+1) holds given than P(n) holds.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\N_{a,n+1} &amp;= \sum_{i=0}^{3^n - 1} a_{3^n - i} \cdot 10^i + \sum_{j=3^n}^{3^{n+1} - 1} a_{3^{n+1}} \cdot 10^j \cr\\\exists b \in \Bbb N_+,\\&amp;= 3^n \cdot b + \sum_{j=3^n}^{3^{n+1} - 1} a_{3^{n+1}} \cdot 10^j
+        \qquad &amp;&amp; \text{ (by inductive hypothesis)} \cr\\\exists c \in \Bbb N_+,\\&amp;= 3^n \cdot b + 3 \cdot c
+        \qquad &amp;&amp; (3^{n+1} - 3^n = 3) \cr\\\exists d \in \Bbb N_+,\\&amp;= 3^{n+1} \cdot d\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>That is, we know the first term (reduced to b) is divisible by <span class="math notranslate nohighlight">\(3^n\)</span> from the inductive hypothesis.
+The second term (reduced to c) is divisible by 3, because there are a multiple of 3 terms to sum from <span class="math notranslate nohighlight">\(3^n \text{ to } 3^{n+1}\)</span>)</p>
+<p>So in total, the terms added together (reduced to d) are divisible by <span class="math notranslate nohighlight">\(3^{n+1}\)</span>.
+This proves P(n+1).</p>
+<p>By induction, P(n) is true for for all <span class="math notranslate nohighlight">\(n \ge 0\)</span>.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="state_machines.html" title="previous chapter">State Machines</a></li>
+      <li>Next: <a href="exponentiation_modular_arithmetic_RSA.html" title="next chapter">RSA</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/greatest_common_divisor.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

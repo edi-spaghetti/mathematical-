@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Logic &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Induction" href="induction.html" />
+    <link rel="prev" title="Recitations" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="logic">
+<h1>Logic<a class="headerlink" href="#logic" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="linkhttps://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec01.pdf">problems</a>
+<a class="reference external" href="linkhttps://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/recitations/MIT6_042JF10_rec01_sol.pdf">solution</a></p>
+<section id="team-problem-a-mystery">
+<h2>Team Problem: A Mystery<a class="headerlink" href="#team-problem-a-mystery" title="Permalink to this headline">¶</a></h2>
+<p>A certain cabal within the 6.042 course staff is plotting to make the final exam ridiculously hard.
+(“Problem 1. Prove that the axioms of mathematics are complete and consistent. Express your answer in Mayan hieroglyphics.”).
+The only way to stop their evil plan is to determine exactly who is in the cabal.
+The course staff consists of nine people:</p>
+<blockquote>
+<div><p>{Oscar, Stav, Darren, Patrice, David, Nick, Martyna, Marten, Tom}</p>
+</div></blockquote>
+<p>The cabal is a subset of these nine.
+A membership roster has been found and appears below, but it is deviously encrypted in logic notation.
+The predicate <cite>incabal</cite> indicates who is in the cabal; that is, <cite>incabal(x)</cite> is true if and only if x is a member.</p>
+<section id="definitions">
+<h3>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h3>
+<p>For an extra challenge (because I’m a nerd) I’ve defined these here;</p>
+<div class="math notranslate nohighlight">
+\[Staff ::= \{ Oscar, Stav, Darren, Patrice, David, Nick, Martyna, Marten, Tom \}\]</div>
+<div class="math notranslate nohighlight">
+\[incabal(x) ::= \text{x is in the cabal}\]</div>
+<div class="math notranslate nohighlight">
+\[Cabal ::= \{ x \in Staff \mid incabal(x) \}\]</div>
+</section>
+<section id="translation">
+<h3>Translation<a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h3>
+<p>Translate each statement below into English and deduce who is in the cabal.</p>
+<div class="math notranslate nohighlight">
+\[i)\ \exists x \exists y \exists z \ (x \ne y \land x \ne z \land y \ne z \land incabal(x) \land incabal(y) \land incabal(z))\]</div>
+<p class="centered">
+<strong>There are at least 3 people in the cabal, i.e. <span class="math notranslate nohighlight">\(|Cabal| \ge 3\)</span></strong></p><div class="math notranslate nohighlight">
+\[ii)\ \lnot (incabal(Stav) \land incabal(David))\]</div>
+<p class="centered">
+<strong>Stav and David can’t both be in the cabal.</strong></p><div class="math notranslate nohighlight">
+\[iii)\ (incabal(Martyna) \lor incabal(Patrice)) \Rightarrow \forall x\ incabal(x)\]</div>
+<p class="centered">
+<strong>If either Martyna or Patrice are in the cabal, then so is everyone else.</strong></p><div class="math notranslate nohighlight">
+\[iv)\ incabal(Stav) \Rightarrow incabal(David)\]</div>
+<p class="centered">
+<strong>If Stav is in the cabal then so is David.</strong></p><div class="math notranslate nohighlight">
+\[v)\ incabal(Darren) \Rightarrow incabal(Martyna)\]</div>
+<p class="centered">
+<strong>If Darren is in the cabal, then so is Martyna.</strong></p><div class="math notranslate nohighlight">
+\[vi)\ (incabal(Oscar) \lor incabal(Nick)) \Rightarrow \lnot incabal(Tom)\]</div>
+<p class="centered">
+<strong>If either Oscar or Nick (or both) are in the cabal, then Tom is not.</strong></p><div class="math notranslate nohighlight">
+\[vii)\ (incabal(Oscar) \lor incabal(David)) \Rightarrow \lnot incabal(Marten)\]</div>
+<p class="centered">
+<strong>If either Oscar or David (or both) are in the cabal, then Marten is not.</strong></p></section>
+<section id="conclusions">
+<h3>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h3>
+<p>From statement (ii) we know Stav and David can’t both be in the cabal at the same time.
+If we then consider statement (iv), the only way for the implication to be true is if both left and right sides are true.
+This contradicts statement (ii) so the left side must be false, the right side can be true or false.
+This eliminates Stav from the cabal, so we know the cabal has 8 or less members.</p>
+<div class="math notranslate nohighlight">
+\[\{ Oscar, Darren, Patrice, David, Nick, Martyna, Marten, Tom \}\]</div>
+<p>Statement (iii) can now be used to determine both Martyna and Patrice are not in the cabal.
+If we were to assume either of them were, to balance the implication everyone would be in the cabal.
+This contradicts what we established with statements (ii) and (iv).
+With this we can conclude the left side of statement (iii) must be false.
+That means neither Martyna nor Patrice are in the cabal.</p>
+<div class="math notranslate nohighlight">
+\[\{ Oscar, Darren, David, Nick, Marten, Tom \}\]</div>
+<p>Statement (v) can be used by considering the contrapositive,</p>
+<div class="math notranslate nohighlight">
+\[\lnot incabal(Martyna) \Rightarrow \lnot(Darren)\]</div>
+<p>We’ve already established Martyna is not in the cabal from statement (iii),
+so this allows us to safely assume the left side of the contrapositive implication is true.
+This means Darren is also not in the cabal.</p>
+<div class="math notranslate nohighlight">
+\[\{ Oscar, David, Nick, Marten, Tom \}\]</div>
+<p>If we look at the contrapositive of statement (vi),</p>
+<div class="math notranslate nohighlight">
+\[incabal(Tom) \Rightarrow \lnot (incabal(Oscar) \lor incabal(Nick))\]</div>
+<p>we can see that if Tom is in the cabal, then both Oscar and Nick are not.
+This would leave us with a cabal of:</p>
+<div class="math notranslate nohighlight">
+\[\{Marten, David, Tom\}\]</div>
+<p>But then statement (vii) says if either Oscar or David are in the cabal then Marten is not.
+This would leave us with a cabal of</p>
+<div class="math notranslate nohighlight">
+\[\{David, Tom\}\]</div>
+<p>This contradicts statement (i) because now we only have 2 members.
+So we can conclude that Tom is not in the cabal, leaving us with;</p>
+<div class="math notranslate nohighlight">
+\[\{ Oscar, David, Nick, Marten \}\]</div>
+<p>Now we can apply statement (vii) again to eliminate Marten, leaving us with the final cabal;</p>
+<div class="math notranslate nohighlight">
+\[Cabal = \{ Oscar, David, Nick \}\]</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Recitations</a></li>
+      <li>Next: <a href="induction.html" title="next chapter">Induction</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/logic.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

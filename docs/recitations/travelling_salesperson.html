@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Travelling Salesperson &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Networks" href="networks.html" />
+    <link rel="prev" title="Build Up Error" href="build_up_problem.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="travelling-salesperson">
+<h1>Travelling Salesperson<a class="headerlink" href="#travelling-salesperson" title="Permalink to this headline">¶</a></h1>
+<section id="approximation-algorithm-alg">
+<h2>3/2-Approximation Algorithm ALG<a class="headerlink" href="#approximation-algorithm-alg" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Construct a graph G whose vertices are the N cities with an edge between every pair of cities <span class="math notranslate nohighlight">\(A \ne B\)</span> with corresponding weight d(A, B), where d(A, B) is the distance between A and B in the plane.</p>
+<blockquote>
+<div><hr><p>N = 3</p>
+<img alt="../_images/NxN+4.png" class="align-center" src="../_images/NxN+4.png" />
+</div></blockquote>
+</li>
+<li><p>Compute an MST T of G (Recall that a minimum spanning tree (MST) of a graph G is a spanning tree whose sum of edge weights is as small as possible).</p>
+<blockquote>
+<div><hr><img alt="../_images/mst.png" class="align-center" src="../_images/mst.png" />
+</div></blockquote>
+</li>
+<li><p>Compute, for each city <span class="math notranslate nohighlight">\(A \in G\)</span>, the degree <span class="math notranslate nohighlight">\(d_A\)</span> of A in T.</p>
+<blockquote>
+<div><hr><img alt="../_images/degree-of-mst.png" class="align-center" src="../_images/degree-of-mst.png" />
+</div></blockquote>
+</li>
+<li><p>Let <span class="math notranslate nohighlight">\(S = \{A \in G : d_A \text{ is odd}\}\)</span>.</p>
+<blockquote>
+<div><hr><div class="math notranslate nohighlight">
+\[S = \{ A, B, C, D, E, G, J, K, L, M \}\]</div>
+</div></blockquote>
+</li>
+<li><p>Compute a minimum weight perfect matching M on the vertices in S (using the distances <span class="math notranslate nohighlight">\(d(\cdot, \cdot)\)</span> as weights).</p>
+<blockquote>
+<div><hr><img alt="../_images/min-weight-perfect-matching.png" class="align-center" src="../_images/min-weight-perfect-matching.png" />
+</div></blockquote>
+</li>
+<li><p>Compute a new set of edges <span class="math notranslate nohighlight">\(E' = M \cup T\)</span>. Note that the resulting graph <span class="math notranslate nohighlight">\(G' = (V, E')\)</span> is not necessarily a simple graph since it might contain multiple edges.</p>
+<blockquote>
+<div><hr><img alt="../_images/e-prime.png" class="align-center" src="../_images/e-prime.png" />
+</div></blockquote>
+</li>
+<li><p>Take the subgraph <span class="math notranslate nohighlight">\(G' = (V, E')\)</span>, and compute an Euler circuit on it.</p>
+<blockquote>
+<div><hr><img alt="../_images/eulers-circuit.png" class="align-center" src="../_images/eulers-circuit.png" />
+</div></blockquote>
+</li>
+<li><p>Use the Euler circuit to give an induced ordering of the vertices (i.e., the order in which the vertices appear for the first time), and do a TSP tour on this order.</p>
+<blockquote>
+<div><hr><img alt="../_images/tsp-tour.png" class="align-center" src="../_images/tsp-tour.png" />
+</div></blockquote>
+</li>
+</ol>
+<p>Let OPT be the optimum TSP tour cost.</p>
+<ol class="arabic">
+<li><p>Show that the cost of any tour is at least the cost of an MST of G. Hence conclude that the cost of an MST is at most OPT.</p>
+<blockquote>
+<div><hr><p>An MST, by definition, has a path from any node to any other node. That is, there are edges connecting every node.
+Also the edges have the minimum weight possible for every node to remain connected.
+However, OPT requires at least one cycle, because it needs to return to the starting point.
+If we remove one edge from OPT, we are left with a spanning tree.
+So we can conclude the sum of the weights in MST is less than the sum of weights in OPT.</p>
+</div></blockquote>
+</li>
+<li><p>Prove that the size of S is even.</p>
+<blockquote>
+<div><hr><p>Say we add an edge, e, to a graph connecting 2 nodes, x and y.
+The degree of x increases by 1, and so does the degree of y.
+So the sum of degrees on all nodes in the graph increases by 2.
+Therefore, the sum of degrees must be even.</p>
+<p>We know that the sum of degrees is equal to the sum of odd-degrees and even degrees.
+Since we just showed the sum of degrees in total is even,
+then we can conclude that the sum of odd degrees is also even.</p>
+<p>This means we must have an even number of odd degrees.</p>
+</div></blockquote>
+</li>
+<li><p>Prove that the weight of the min weight perfect matching is at most <span class="math notranslate nohighlight">\({OPT \over 2}\)</span>.</p>
+<blockquote>
+<div><hr><p>The min weight perfect matching (MWPM) has at most <span class="math notranslate nohighlight">\(|V|\)</span> nodes connected by <span class="math notranslate nohighlight">\({|V| \over 2}\)</span> edges.
+OPT connects every node in the graph, plus 1 to return to the starting point.
+Suppose the edges in <span class="math notranslate nohighlight">\(wt(OPT) - wt(MWPM) &lt; wt(MWPM)\)</span>. But then <span class="math notranslate nohighlight">\(wt(OPT) - wt(MWPM)\)</span> is also a perfect matching,
+and if it weighs less than the MWPM, that would contradict MWPM being min weight.</p>
+<p>So <span class="math notranslate nohighlight">\(wt(MWPM) \le {wt(OPT \over 2)}\)</span></p>
+</div></blockquote>
+</li>
+<li><p>Prove that <span class="math notranslate nohighlight">\(G'\)</span> has an Euler circuit, and its cost is at most <span class="math notranslate nohighlight">\({3 \cdot OPT \over 2}\)</span>.</p>
+<blockquote>
+<div><hr><p>Every node in <span class="math notranslate nohighlight">\(G'\)</span> was either of even degree (and so excluded from S) or odd degree,
+but then increased by 1 by the perfect matching, making it even.
+Since every node has even degree, it must have Euler circuit.</p>
+<p>In part 1 we showed <span class="math notranslate nohighlight">\(cost(T) \le cost(OPT)\)</span>,
+and the in part 3 we showed <span class="math notranslate nohighlight">\(cost(M) \le cost({OPT \over 2})\)</span>.</p>
+<p>Since <span class="math notranslate nohighlight">\(G'\)</span> is the union of these sets of edges, we get;</p>
+<p><span class="math notranslate nohighlight">\(cost(OPT) + cost({OPT \over 2}) = cost({3 OPT \over 2})\)</span></p>
+</div></blockquote>
+</li>
+<li><p>Show that the length of the TSP tour is at most 3OPT/2.</p>
+<blockquote>
+<div><hr><p>Since the TSP tour proceeds directly to the next unique node along the Euler circuit it either travels along an edge in the Euler circuit,
+or it travels directly to it instead of via another node.</p>
+<p>By the triangle inequality we know that a direct edge cannot weigh more than travelling via another node.
+So <span class="math notranslate nohighlight">\(wt(TSP) \le cost({3 OPT \over 2})\)</span></p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="build_up_problem.html" title="previous chapter">Build Up Error</a></li>
+      <li>Next: <a href="networks.html" title="next chapter">Networks</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/travelling_salesperson.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>More Graph Theory &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Relations" href="relations.html" />
+    <link rel="prev" title="Graph Theory" href="graph_theory.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="more-graph-theory">
+<h1>More Graph Theory<a class="headerlink" href="#more-graph-theory" title="Permalink to this headline">¶</a></h1>
+<section id="problem-1">
+<h2>Problem 1<a class="headerlink" href="#problem-1" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-introduction admonition">
+<p class="admonition-title">Introduction</p>
+<p>Recall that a tree is a connected acyclic graph.
+In particular, a single vertex is a tree.
+We define a Splitting Binary Tree, or SBTree for short, as either the lone vertex, or a tree with the following properties:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>exactly one node of degree 2 (called the root).</p></li>
+<li><p>every other node is of degree 3 or 1 (called internal nodes and leaves, respectively).</p></li>
+</ol>
+</div></blockquote>
+<p>For the case of one single vertex (see above), that vertex is considered to be a leaf.</p>
+</div>
+<section id="a">
+<h3>a)<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Show if an SBTree has more than one vertex, then the induced subgraph obtained by removing the unique root consists of two disconnected SBTrees.
+You may assume that by removing the root you obtain two separate connected components,
+so all you need to prove is that those two components are SBTrees.</p>
+</div>
+<p>An SBTree is a recursive structure that has one transition, split.
+Split can only be applied to nodes with at most one edge.
+Suppose we have a node, n, that we apply the split transition to.</p>
+<div align="center" class="align-center"><div class="graphviz"><img src="../_images/graphviz-c8d1ca91928846c9b43705120cdf4c2e7611684e.png" alt="graph split_before {
+r [style=invis]
+n [color=lightblue style=filled]
+
+r -- n [style=dotted]
+}" class="graphviz" /></div>
+</div>
+<p>Notice that n may or may not be connected to another node at a level higher.
+This is because if n is the root node, then no such edge exists, but the split transition can still be applied to it.</p>
+<p>The split transition adds 2 new nodes to the graph, o and p,
+and then adds an edge between them and n.</p>
+<div align="center" class="align-center"><div class="graphviz"><img src="../_images/graphviz-6d9799239e48d0161d7966c69f3f1b08b8ca9551.png" alt="graph split_after {
+r [style=invis]
+n [color=lightblue style=filled]
+o, p [color=indianred style=filled]
+
+r -- n [style=dotted]
+n -- o
+n -- p
+}" class="graphviz" /></div>
+</div>
+<p>If n was the root node, then the dotted edge does not exist, and it now has a degree of 2.
+If n wasn’t the root node, then it has a degree of 3.
+Either way, its degree is higher than 1, so it can no longer be further split.</p>
+<p>Notice also that the new nodes, o and p, has a degree of 1, so they can be split further.
+When we do so, splitting does not remove any edges, only increases the total number of edges by 2.</p>
+<p>An invariant of the SBTree is that the total number of edges always has even parity.
+Our base case is the root node, which has parity 0, which is even.
+As we showed above, applying the split transition increases the number of edges by 2,
+so will always result in an even total number of edges.</p>
+<p>Suppose n was the root node. If we were to remove it, and the incident edges, we would be left with o and p.</p>
+<div align="center" class="align-center"><div class="graphviz"><img src="../_images/graphviz-95920f6a5e4d2fc707ca9bc7129472c957cbb6b5.png" alt="graph remove_root {
+n [color=lightblue style=invis]
+o, p [color=indianred style=filled]
+
+n -- o [style=invis]
+n -- p [style=invis]
+}" class="graphviz" /></div>
+</div>
+<p>As you can see, both o and p have degree less than 1, so they could be split, following the same process as above.
+Notice also, they have degree 0, and so maintains our invariant of even parity for total number of edges.
+Thus o and p are both SBTrees.</p>
+<p>Suppose the graph has had any number of transitions applied after this transition.
+As showed above, the total number of nodes increases by 2 for each split.
+Since the split can only be applied to a leaf node on one ‘branch’,
+the total number of edges in that branch will increase by 2 (maintaining parity),
+and the other branch will not increase (also maintaining parity).
+This, after any number of transitions, each branch is also an SBTree.</p>
+</section>
+<section id="b">
+<h3>b)<a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Prove that two SBTrees with the same number of leaves must also have the same total number of nodes.
+Hint: As a conjecture, guess an expression for the total number of nodes in terms of the number of leaves N (l).
+Then use induction to prove that it holds for all trees with the same l</p>
+</div>
+<p>For any SBTree, T, the total number of nodes is equal to twice the total number of leaves minus 1,
+where total number of leaves is no less than 1. We define P(L) then as;</p>
+<div class="math notranslate nohighlight">
+\[\forall T(V, E) \in SBTree, L = |\{ v \in V \mid deg(v) \le 1 \}|. |V| \ge 1 \Rightarrow |V| = 2L - 1\]</div>
+<p><strong>Theorem</strong>: The theory holds for P(L) as defined above.</p>
+<p><strong>Proof</strong>: By structural induction.</p>
+<p><strong>Base Case</strong>: P(1) is true, because when there is only one node, per the definition of a PBTree above, it is considered a leaf node.
+So the total number of leaf nodes is 1, and <span class="math notranslate nohighlight">\(2 \cdot 1 - 1 = 1\)</span>.</p>
+<p><strong>Constructor Case</strong>: There is one case to consider, that of splitting a leaf node.
+Per the hypothesis, an SBTree, T has N nodes, where <span class="math notranslate nohighlight">\(N = 2L - 1\)</span>.
+When we split a node the number of leaf nodes is reduced by 1 (because the node we’re splitting is now no longer a leaf node),
+and then increased by 2 (for the two new nodes we add as part of the split).</p>
+<p>This works out as,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\N &amp;= 2(L - 1) - 1 + 2\\&amp;= 2L - 2 - 1 + 2\\&amp;= 2L - 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This proves the constructor case. By structural induction this proves P(L) for any SBTree.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+<section id="problem-2">
+<h2>Problem 2<a class="headerlink" href="#problem-2" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-introduction admonition">
+<p class="admonition-title">Introduction</p>
+<p>In ”Die Hard: The Afterlife”, the ghosts of Bruce and Sam have been sent by the evil Simon
+on another mission to save midtown Manhattan. They have been told that there is a bomb
+on a street corner that lies in Midtown Manhattan, which Simon defines as extending from
+41st Street to 59th Street and from 3rd Avenue to 9th Avenue. Additionally, the code that
+they need to defuse the bomb is on another street corner. Simon, in a good mood, also tosses
+them two carrots:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>He will have a helicopter initially lower them to the street corner where the bomb is.</p></li>
+<li><p>He promises that the code is placed only on a corner of a numbered street and a
+numbered avenue, so they don’t have to search Broadway.</p></li>
+</ul>
+</div></blockquote>
+<p>The map of midtown Manhattan is an example of an <span class="math notranslate nohighlight">\(N \times M\)</span> (undirected) grid.
+In particular, midtown Manhattan is a <span class="math notranslate nohighlight">\(19 \times 7\)</span> grid.
+Bruce and Sam need to check all <span class="math notranslate nohighlight">\(19 \cdot 7 = 133\)</span> street corners for the code in 133 steps or less.</p>
+</div>
+<section id="id1">
+<h3>a)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Show that they cannot do it – that is, more generally, show that if both N and M are odd,
+then the <span class="math notranslate nohighlight">\(N \times M\)</span> grid is not Hamiltonian.</p>
+</div>
+<p>First we will show that any <span class="math notranslate nohighlight">\(N \times M\)</span> grid is bipartite.
+We can do this by considering the fact that any step in the graph must either be horizontally or vertically,
+since it is a 2-dimensional grid - there are no loops backs or diagonals.</p>
+<p>Therefore, any step vertically must have a counterpart step vertically in the opposite direction to return to the same avenue.
+By symmetry the same is true for horizontal steps.</p>
+<p>This means for any cycle, there will be an even number (since any number mutiplied by 2 is even) number of steps.
+As we showed in <a class="reference internal" href="graph_theory.html#graph-theory"><span class="std std-ref">graph theory</span></a> problem 1, a graph is bipartite if and only if it is comprised of paths and even cycles.
+As we’ve just shown an <span class="math notranslate nohighlight">\(N \times M\)</span> grid has only even cycles, this means that it is also bipartite.</p>
+<p>Next we must show that if both N and M are odd, the grid is not Hamiltonian.
+Each step along a Hamiltonian path must travel to a new node, and since the graph is bipartite,
+this means each node will be the opposite colour to the previous one.</p>
+<p>However, if N and M are both odd, this means the total number of nodes is odd.
+Therefore if the node we started as was coloured blue, the last node we arrive at will also be blue.
+But since the graph is bipartite then cannot be a connection between the first and last node.</p>
+<p>Therefore to arrive back at the first node we must revisit at least one of the nodes,
+which contradicts the properties of a Hamiltonian graph.</p>
+<p>Therefore if N and M are both odd, the <span class="math notranslate nohighlight">\(N \times M\)</span> grid is not Hamiltonian.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="id2">
+<h3>b)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-intro admonition">
+<p class="admonition-title">Intro</p>
+<p>Suppose Simon defined Midtown in the more standard way as extending from 40th Street to 59th Street
+and from 3rd Avenue to 9th Avenue (that is suppose Midtown Manhattan was a 20 × 7 grid),
+and gave them another 7 minutes.</p>
+</div>
+<section id="id3">
+<h4>1.<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Show that if either N is even and <span class="math notranslate nohighlight">\(M &gt; 1\)</span> or M is even and <span class="math notranslate nohighlight">\(N &gt; 1\)</span>,
+then the <span class="math notranslate nohighlight">\(N \times M\)</span> grid is Hamiltonian.</p>
+</div>
+<p><strong>Proof</strong> By Induction</p>
+<p>Let P(n) be the predicate, where n is any positive integer greater than 1,
+such that <span class="math notranslate nohighlight">\(N = 2n\)</span>, and M is any any positive integer greater than 1.
+We will show that any combination of <span class="math notranslate nohighlight">\(N \times M\)</span> grid is Hamiltonian.</p>
+<p><strong>Base Case</strong>: n = 1</p>
+<p>This is trivially Hamiltonian as illustrated below,</p>
+<img alt="../_images/hamiltonian-2xM.png" class="align-center" src="../_images/hamiltonian-2xM.png" />
+<p>As you can see, the path can travel down one side and back up the other for any value of M.
+This completes a cycle visiting each node, and so it is Hamiltonian.</p>
+<p><strong>Inductive Step</strong>:</p>
+<p>Next we must show that <span class="math notranslate nohighlight">\(P(n + 1)\)</span> is true, given that <span class="math notranslate nohighlight">\(P(n)\)</span> is true.</p>
+<p>We assume that the grid for <span class="math notranslate nohighlight">\(P(n)\)</span> is arranged as follows,</p>
+<img alt="../_images/hamiltonian-NxM.png" class="align-center" src="../_images/hamiltonian-NxM.png" />
+<p>Note that this pattern would not be possible where M = 2, but by symmetry,
+if M = 2 an <span class="math notranslate nohighlight">\(N \times 2\)</span> grid has the same properties as a <span class="math notranslate nohighlight">\(2 \times M\)</span> grid,
+which as we showed in the base case is Hamiltonian.</p>
+<p>Note also the subsection from the <span class="math notranslate nohighlight">\(2^{nd}\)</span> to the <span class="math notranslate nohighlight">\(M^{th}\)</span> row is also
+a <span class="math notranslate nohighlight">\(2 \times M - 1\)</span> grid, and similar to the base case is also Hamiltonian,
+so the pattern holds for any value of M.</p>
+<p>Notice that any time we increase n by 1, the <span class="math notranslate nohighlight">\(N \times M\)</span> grid increases in size by 2 (so that N remains an even number).
+Therefore, for <span class="math notranslate nohighlight">\(P(n+1)\)</span> the pattern is as follows,</p>
+<img alt="../_images/hamiltonian-N+1xM.png" class="align-center" src="../_images/hamiltonian-N+1xM.png" />
+<p>This creates a path through all new nodes, plus the existing nodes in the <span class="math notranslate nohighlight">\(P(n)\)</span> grid.
+Thus the theory holds for <span class="math notranslate nohighlight">\(P(n+1)\)</span>.
+So by induction we can conclude that for an even N greater 1 one,
+and any value of M, the <span class="math notranslate nohighlight">\(N \times M\)</span> grid is Hamiltonian.</p>
+<p>By symmetry the same is true if M is even and greater than 1.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="id4">
+<h4>2.<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Explain why your proof breaks down when N and M are odd.</p>
+</div>
+<p>If N and M are both odd, then the assumption above about <span class="math notranslate nohighlight">\(P(n+1)\)</span> is no longer true.
+That is, the pattern becomes this,</p>
+<img alt="../_images/hamiltonian-odd-N.png" class="align-center" src="../_images/hamiltonian-odd-N.png" />
+<p>This is invalid because there is no connection between <span class="math notranslate nohighlight">\((N+1, M)\)</span> and <span class="math notranslate nohighlight">\((2, N)\)</span>.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>Any other pattern would also run into a similar issue, trust me :)
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="id5">
+<h4>3.<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Would they survive? Does it depend on where the bomb is placed?</p>
+</div>
+<p>Yes, they would survive, and it does not matter where the bomb is placed.
+Since at least one dimension of the <span class="math notranslate nohighlight">\(20 \times 7\)</span> grid is even, by part 1 the grid is hamiltonian.
+That means every node can be visited once (and only once) on a round trip from the starting location.</p>
+<p>By the rules of the exercise, they start at the location of the bomb,
+and have <span class="math notranslate nohighlight">\(133 + 7 = 140\)</span> steps to return with 2 minutes spare to defuse.
+Since we have a <span class="math notranslate nohighlight">\(20 \times 7\)</span> hamiltonian grid, and :math;`20 cdot 7 = 140`,
+they have exactly enough time to visit every node once and return to the start to defuse the bomb.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+</section>
+<section id="problem-3">
+<h2>Problem 3<a class="headerlink" href="#problem-3" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-introduction admonition">
+<p class="admonition-title">Introduction</p>
+<p>An <span class="math notranslate nohighlight">\(n-node\)</span> graph is said to be tangled if there is an edge leaving every set of <span class="math notranslate nohighlight">\(\lceil {n \over 3} \rceil\)</span> or fewer vertices.
+As a special case, the graph consisting of a single node is considered tangled.</p>
+</div>
+<section id="id6">
+<h3>a)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Find the error in the proof of the following claim.</p>
+</div>
+<div class="admonition-claim admonition">
+<p class="admonition-title">Claim</p>
+<p>Every non-empty, tangled graph is connected.</p>
+<p><strong>Proof</strong>. The proof is by strong induction on the number of vertices in the graph.
+Let <span class="math notranslate nohighlight">\(P(n)\)</span> be the proposition that if an <span class="math notranslate nohighlight">\(n-node\)</span> graph is tangled,
+then it is connected.</p>
+<p>In the base case, <span class="math notranslate nohighlight">\(P(1)\)</span> is true because the graph consisting of a single node is defined to be tangled and is trivially connected.</p>
+<p>In the inductive step, for <span class="math notranslate nohighlight">\(n \ge 1\)</span> assume <span class="math notranslate nohighlight">\(P(1), \dots , P(n)\)</span> to prove <span class="math notranslate nohighlight">\(P(n + 1)\)</span>.
+That is, we want to prove that if an <span class="math notranslate nohighlight">\((n + 1)-node\)</span> graph is tangled, then it is connected.</p>
+<p>Let <span class="math notranslate nohighlight">\(G\)</span> be a tangled, <span class="math notranslate nohighlight">\((n + 1)-node\)</span> graph.
+Arbitrarily partition G into two pieces so that the first piece contains exactly <span class="math notranslate nohighlight">\(\lceil {n \over 3} \rceil\)</span> vertices,
+and the second piece contains all remaining vertices.</p>
+<p>Note that since <span class="math notranslate nohighlight">\(n \ge 1\)</span>, the graph <span class="math notranslate nohighlight">\(G\)</span> has a least two vertices,
+and so both pieces contain at least one vertex.</p>
+<p>By induction, each of these two pieces is connected.
+Since the graph G is tangled, there is an edge leaving the first piece, joining it to the second piece.
+Therefore, the entire graph is connected.</p>
+<p>This shows that <span class="math notranslate nohighlight">\(P(1), \dots , P(n)\)</span> imply <span class="math notranslate nohighlight">\(P(n + 1)\)</span>, and the claim is proved by strong induction.
+<span class="math notranslate nohighlight">\(\square\)</span></p>
+</div>
+<p>The error is with the statement <em>‘By induction each of these two pieces is connected’</em>.
+We cannot assume that every subgraph of a tangled graph is also tangled, and by extension cannot infer that they are connected.</p>
+</section>
+<section id="id7">
+<h3>b)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Draw a tangled graph that is not connected.</p>
+</div>
+<p>The following is a <span class="math notranslate nohighlight">\(6-node\)</span> tangled graph,</p>
+<img alt="../_images/tangled-not-connected.png" class="align-center" src="../_images/tangled-not-connected.png" />
+<p>To be tangled it must have an edge leaving any set of <span class="math notranslate nohighlight">\(\lceil {6 \over 3} \rceil = 2\)</span> or fewer nodes.
+Since the minimum degree on each node is 1, any set of 1 nodes will have an edge leaving it.</p>
+<p>Within the graph there are two components, each with 3 nodes connected.
+For any set of 2 nodes within a component, the third node in the component has an edge leaving the set.
+See below, the red edge gives it the property of being tangled.</p>
+<img alt="../_images/tangled-set-2-of-component.png" class="align-center" src="../_images/tangled-set-2-of-component.png" />
+<p>For any set of nodes between components (i.e. one node per component), there will also be edges leaving the set.</p>
+<img alt="../_images/tangled-set-2-between-components.png" class="align-center" src="../_images/tangled-set-2-between-components.png" />
+<p>However there are no edges between the components, so it is not connected.</p>
+</section>
+<section id="c">
+<h3>c)<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>An <span class="math notranslate nohighlight">\(n-node\)</span> graph is said to be <strong>mangled</strong> if there is an edge leaving every set of <span class="math notranslate nohighlight">\(\lceil {n \over 2} \rceil\)</span> or fewer vertices.
+Again, as a special case, the graph consisting of a single node is considered mangled.
+Prove the following claim. <em>Hint: Prove by contradiction.</em></p>
+</div>
+<div class="admonition-claim admonition">
+<p class="admonition-title">Claim</p>
+<p>Every non-empty, mangled graph is connected.</p>
+</div>
+<p><strong>Proof</strong>: By contradiction</p>
+<p>Let <span class="math notranslate nohighlight">\(G\)</span> be a non-empty, mangled graph that is not connected.
+Since <span class="math notranslate nohighlight">\(G\)</span> is mangled, every node must have a degree of at least 1 in order to meet the requirement that every set of 1 node (the smallest set) has an edge leaving it.
+Since <span class="math notranslate nohighlight">\(G\)</span> is not connected, then it can be grouped into two components, <span class="math notranslate nohighlight">\(G'\ and\ G''\)</span>, such that there is no connection between the them.</p>
+<p>Since <span class="math notranslate nohighlight">\(G\)</span> is mangled, we know the size of both components must be greater than <span class="math notranslate nohighlight">\(\lceil {n \over 2} \rceil\)</span>,
+in order for there to be an edge leaving the largest possible set size to meet the criteria of being mangled,
+but also that edge must connect to a node in the same component, to meet the criteria of not being connected to each other.</p>
+<p>However, by simple arithmetic we also know that <span class="math notranslate nohighlight">\(\lceil {n \over 2} \rceil \ge {|G| \over 2}\)</span>.
+That is, both components need to be larger than the largest set size, but the largest set size is at least half the total size of the graph.
+(They can’t both be larger than half the size of the total).</p>
+<p>This is a contradiction, so we can conclude that the edge leaving any given largest set must connect to a node in the other component, thus connecting the graph.
+Therefore every non-empty, mangled graph is connected.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+<section id="problem-4">
+<h2>Problem 4<a class="headerlink" href="#problem-4" title="Permalink to this headline">¶</a></h2>
+<section id="id8">
+<h3>a)<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Suppose that G is a simple, connected graph of n nodes.
+Show that G has exactly <span class="math notranslate nohighlight">\(n − 1\)</span> edges iff G is a tree.</p>
+</div>
+<p>First we will show the forward relation.</p>
+<p><strong>Proof</strong>: By induction.</p>
+<p>Let <span class="math notranslate nohighlight">\(P(n)\)</span> be the predicate that if G has exactly <span class="math notranslate nohighlight">\(n - 1\)</span> nodes then it is a tree,
+where n is the number of nodes in G</p>
+<p><strong>Base Case</strong>: P(1) is true because a graph of 1 node has 0 edges, and <span class="math notranslate nohighlight">\(1 - 1 = 0\)</span>.</p>
+<p><strong>Inductive Step</strong>: Assuming P(n) is true, let’s consider an <span class="math notranslate nohighlight">\((n+1)-node\)</span> tree, T.
+We know that any graph with at least 2 nodes has at least 2 leaves, so we can choose one of these leaves, <span class="math notranslate nohighlight">\(l\)</span>.
+If we remove <span class="math notranslate nohighlight">\(l\)</span> and the edge associated with it (by definition a leaf has only 1 edge),
+we are left with an <span class="math notranslate nohighlight">\(n-node\)</span> graph, <span class="math notranslate nohighlight">\(T'\)</span>.</p>
+<p>Since we removed a leaf we know <span class="math notranslate nohighlight">\(T'\)</span> remains connected,
+and we also know that any connected subgraph of a tree is also a tree.
+<span class="math notranslate nohighlight">\(T'\)</span> is, then, an <span class="math notranslate nohighlight">\(n-node\)</span> tree, which by induction has <span class="math notranslate nohighlight">\(n - 1\)</span> edges.</p>
+<p>So we can conclude T has <span class="math notranslate nohighlight">\((n - 1) + 1\)</span> edges (<span class="math notranslate nohighlight">\(n-1\)</span> from <span class="math notranslate nohighlight">\(T'\)</span>, and 1 from <span class="math notranslate nohighlight">\(l\)</span>).
+<span class="math notranslate nohighlight">\((n - 1) + 1 = n\)</span> which proves the inductive hypothesis for <span class="math notranslate nohighlight">\(P(n+1)\)</span>.
+<span class="math notranslate nohighlight">\(\square\)</span></p>
+<p>Next we must show the reverse is also true, that is if a connected graph has <span class="math notranslate nohighlight">\(n - 1\)</span> edges then it is a tree.</p>
+<p><strong>Proof</strong>: By contradiction.</p>
+<p>Consider a connected graph, <span class="math notranslate nohighlight">\(G\)</span>, that has <span class="math notranslate nohighlight">\(n - 1\)</span> edges but is not a tree.
+Since it is connected, then there must exist a path from any given node to any other node in the graph.
+Since it is not a tree, then it must contain a cycle.</p>
+<p>We also know that the minimum number of edges for an <span class="math notranslate nohighlight">\(n-node\)</span> graph to be connected in <span class="math notranslate nohighlight">\(n - 1\)</span>.
+That is, removing an edge from it would make it disconnected.</p>
+<p>However, as we concluded above, there is a cycle in G.
+This means there exists two nodes, <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span>, that are part of a cycle.
+However, since they’re part of a cycle, we can remove an edge in the cycle and <span class="math notranslate nohighlight">\(u\)</span> will still be connected to <span class="math notranslate nohighlight">\(v\)</span> in the other direction of the cycle.</p>
+<img alt="../_images/trees-cycle-contradiction.png" class="align-center" src="../_images/trees-cycle-contradiction.png" />
+<p>As illustrated, we can remove an edge from path <span class="math notranslate nohighlight">\(p_0\)</span> and <span class="math notranslate nohighlight">\(u\)</span> will still be connected <span class="math notranslate nohighlight">\(v\)</span> by path <span class="math notranslate nohighlight">\(p_1\)</span></p>
+<p>This contradicts <span class="math notranslate nohighlight">\(n - 1\)</span> edges being the minimum number of edges for an <span class="math notranslate nohighlight">\(n-node\)</span> graph to be connected,
+so we can conclude there are no cycles.</p>
+<p>Since there are no cycles, and the graph is connected, then it is a tree.
+<span class="math notranslate nohighlight">\(\square\)</span></p>
+<p>Thus we have shown the question stated, G has exactly <span class="math notranslate nohighlight">\(n − 1\)</span> edges iff G is a tree,
+holds in both logical directions directions, and so the theory holds.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="id9">
+<h3>b)<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Prove by induction that any connected graph has a spanning tree.</p>
+</div>
+<p>Let P(n) be our predicate where if <span class="math notranslate nohighlight">\(G\)</span> is an <span class="math notranslate nohighlight">\(n-node\)</span> connected graph, then it has a spanning tree.</p>
+<p><strong>Proof</strong>: By induction.</p>
+<p><strong>Base Case</strong>: <span class="math notranslate nohighlight">\(P(1)\)</span> is trivially true because a single node is considered connected, and also a tree.</p>
+<p><strong>Inductive Step</strong>: Given <span class="math notranslate nohighlight">\(P(n)\)</span> is true, we must show <span class="math notranslate nohighlight">\(P(n+1)\)</span> is true.</p>
+<p>Suppose we remove one node, <span class="math notranslate nohighlight">\(v\)</span>, and any adjacent edges, from <span class="math notranslate nohighlight">\(G\)</span> such that we are left with a connected subgraph, <span class="math notranslate nohighlight">\(G'\)</span>.
+We know such a node exists because if we consider <span class="math notranslate nohighlight">\(v\)</span>’s neighbour, <span class="math notranslate nohighlight">\(u\)</span>, then there are only two options (note: they are not mutually exclusive);</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(u\)</span> is part of a cycle <span class="math notranslate nohighlight">\(v — u \dots — v\)</span>.
+But then removing the edge <span class="math notranslate nohighlight">\(v — u\)</span> means any nodes can travel the other direction of the cycle and still connect to <span class="math notranslate nohighlight">\(u\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(u\)</span> is part of path, which by definition must have at least two ends, one of which is <span class="math notranslate nohighlight">\(v\)</span></p></li>
+</ol>
+<p>By the inductive hypothesis we know <span class="math notranslate nohighlight">\(G'\)</span> has a spanning tree, <span class="math notranslate nohighlight">\(T'\)</span>.</p>
+<p>When we add <span class="math notranslate nohighlight">\(v\)</span> back to <span class="math notranslate nohighlight">\(G'\)</span> it must have at least one edge, since <span class="math notranslate nohighlight">\(G\)</span> is connected,
+between <span class="math notranslate nohighlight">\(v\)</span> and a node in <span class="math notranslate nohighlight">\(T'\)</span>.</p>
+<p>This makes <span class="math notranslate nohighlight">\(v\)</span> a leaf of a new spanning tree, <span class="math notranslate nohighlight">\(T\)</span>.
+This proves <span class="math notranslate nohighlight">\(P(n+1)\)</span> and so the theorem is true.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+<section id="problem-5">
+<h2>Problem 5<a class="headerlink" href="#problem-5" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-introduction admonition">
+<p class="admonition-title">Introduction</p>
+<p>The adjacency matrix of a graph is given below.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\lbrack \begin{matrix}
+0 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0
+\end{matrix} \right\rbrack\end{split}\]</div>
+</div>
+<section id="id10">
+<h3>a)<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Draw the graph defined by this adjacency matrix.
+Label the vertices of your graph <span class="math notranslate nohighlight">\(1, 2, \dots , 6\)</span> so that vertex i corresponds to row and column i of the matrix.</p>
+</div>
+<p>Given the above labelling of verices;</p>
+<div class="graphviz"><img src="../_images/graphviz-b1b47a770d4a3d763cab30e7480926668f94bf9a.png" alt="graph adjacency {
+1 -- 2
+1 -- 3
+1 -- 4
+1 -- 6
+
+2 -- 4
+2 -- 5
+2 -- 6
+
+3 -- 4
+3 -- 5
+3 -- 6
+
+4 -- 5
+
+5 -- 6
+}" class="graphviz" /></div>
+</section>
+<section id="id11">
+<h3>b)<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>In a graph, we define the distance between to vertices to be the length of the shortest path between them.
+We define the diameter of a graph to be the largest distance between any two nodes.
+What is the diameter of this graph? Explain why</p>
+</div>
+<p>The diameter of this graph is 2.</p>
+<p>It cannot be shorter than 2 because the following edges do not exist,
+<span class="math notranslate nohighlight">\(\{1, 5\}, \{2, 3\}, \{4, 6\}\)</span>, so there must be a path of at least 2 to connect these nodes.</p>
+<p>It cannot be longer than 2 because every node has a degree of 4,
+so including the node itself that makes 5 nodes.
+There are only 6 nodes in the graph, so for any given node,
+the only possible longer path is to the <span class="math notranslate nohighlight">\(6^{th}\)</span> node,
+which would be of length 2.</p>
+</section>
+<section id="id12">
+<h3>c)<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Find a cycle in this graph of maximum length and explain why it has maximum length.</p>
+</div>
+<p>A cycle of maximum length is : math:<cite>1, 6, 5, 3, 4, 2, 1</cite> which has a length of 6.
+It is maximum length because it contains every node in the graph, so it cannot possibly be longer.
+Since it traverses every node in the graph, this is also called a hamiltonian cycle.</p>
+</section>
+<section id="d">
+<h3>d)<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Give a coloring of the vertices that uses the minimum number of colors.
+Prove that this a minimum coloring.</p>
+</div>
+<div class="graphviz"><img src="../_images/graphviz-2376ccf303e6da02cb59187bd762dceaac738a94.png" alt="graph colouring {
+1, 5[color=indianred style=filled]
+2[color=lightblue style=filled]
+3[color=palegreen style=filled]
+4, 6[color=peachpuff style=filled]
+
+1 -- 2
+1 -- 3
+1 -- 4
+1 -- 6
+
+2 -- 4
+2 -- 5
+2 -- 6
+
+3 -- 4
+3 -- 5
+3 -- 6
+
+4 -- 5
+
+5 -- 6
+}" class="graphviz" /></div>
+<p>4 is the minimum number of colours because every node has a degree of 4.</p>
+</section>
+</section>
+<section id="problem-6">
+<h2>Problem 6<a class="headerlink" href="#problem-6" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-introduction admonition">
+<p class="admonition-title">Introduction</p>
+<p>Let G be a graph.
+In this problem we show every vertex of odd degree is connected to at least one other vertex of odd degree in G.</p>
+</div>
+<section id="id13">
+<h3>a)<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Let v be an odd degree node.
+Consider the longest walk starting at v that does not repeat any edges (though it may omit some).
+Let w be the final node of that walk. Show that <span class="math notranslate nohighlight">\(w \ne v\)</span>.</p>
+</div>
+<p>Suppose we choose any node, <span class="math notranslate nohighlight">\(x\)</span>,  along the path of <span class="math notranslate nohighlight">\((v— \dots —x— \dots —v)\)</span>, where <span class="math notranslate nohighlight">\(x \ne v\)</span>.
+The node x may be crossed any number of times, but each time it does so,
+there is an edge going in to the node, and an edge leading out of the node,
+meaning the number of edges is even.</p>
+<p>With this principle we know for any node starting a cycle, e.g. <span class="math notranslate nohighlight">\((x— \dots —x)\)</span>,
+the degree of that node is even.</p>
+<p>By our criteria, <span class="math notranslate nohighlight">\(v\)</span> is an odd degree node so cannot end the walk where we started,
+because that would make <span class="math notranslate nohighlight">\(v\)</span> have even degree, so <span class="math notranslate nohighlight">\(w\)</span> cannot be <span class="math notranslate nohighlight">\(v\)</span></p>
+<p>However, suppose there is another edge leading out of <span class="math notranslate nohighlight">\(v\)</span> to give it even degree that we haven’t crossed yet.
+But then, that contradicts our assumption that this is the longest walk,
+because there would be another edge to cross, making the walk longer.
+So the hypothesis still stands.</p>
+</section>
+<section id="id14">
+<h3>b)<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Show that w must also have odd degree</p>
+</div>
+<p>Similar to the last part of the previous question,
+suppose we arrive at <span class="math notranslate nohighlight">\(w\)</span> at the end of the longest walk.
+We may have crossed <span class="math notranslate nohighlight">\(w\)</span> any number of times already, across a multiple of 2 edges,
+But suppose we arrive at the end of the longest walk and there is another edge leading out that we haven’t crossed yet.</p>
+<p>But then that contradicts the assumption that this is the longest walk,
+because we could travel along that edge to the node it is connected to.
+So <span class="math notranslate nohighlight">\(w\)</span> must have odd degree.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../recitations/index.html">Recitations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Assignments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="propositions_and_proofs.html">Propositions and Proofs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_theory.html">Number Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="more_number_theory.html">More Number Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_theory.html">Graph Theory</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">More Graph Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sums_and_asymptotics.html">Sums and Asymptotics</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Assignments</a><ul>
+      <li>Previous: <a href="graph_theory.html" title="previous chapter">Graph Theory</a></li>
+      <li>Next: <a href="relations.html" title="next chapter">Relations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/assignments/more_graph_theory.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

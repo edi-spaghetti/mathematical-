@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Graph Basics &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A Protocol For College Admission" href="stable_marriage_problem.html" />
+    <link rel="prev" title="RSA" href="exponentiation_modular_arithmetic_RSA.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="graph-basics">
+<h1>Graph Basics<a class="headerlink" href="#graph-basics" title="Permalink to this headline">¶</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(G = (V, E)\)</span> be a graph. Here is a picture of a graph.</p>
+<div align="center" class="align-center"><div class="graphviz"><img src="../_images/graphviz-645a3fdba8d9fa5e99650c505f79f714a966c040.png" alt="graph G {
+A -- B
+A -- C
+B -- D
+D -- C
+C -- E
+E -- F
+E -- G
+}" class="graphviz" /></div>
+</div>
+<p>Recall that the elements of V are called vertices, and those of E are called edges.
+In this example the vertices are <span class="math notranslate nohighlight">\(\{A, B, C, D, E, F, G\}\)</span> and the edges are</p>
+<div class="math notranslate nohighlight">
+\[\{A—B, B—D, C—D, A—C, E—F, C—E, E—G\}\]</div>
+<p>Deleting some vertices or edges from a graph leaves a subgraph.</p>
+<p>Formally, a subgraph of <span class="math notranslate nohighlight">\(G = (V, E)\)</span> is a graph <span class="math notranslate nohighlight">\(G' = (V', E')\)</span>,
+where <span class="math notranslate nohighlight">\(V'\)</span> is a nonempty subset of V and <span class="math notranslate nohighlight">\(E'\)</span> is a subset of E.
+Since a subgraph is itself a graph, the endpoints of every edge in <span class="math notranslate nohighlight">\(E'\)</span> must be vertices in <span class="math notranslate nohighlight">\(V'\)</span>.
+For example, <span class="math notranslate nohighlight">\(V' = \{A, B, C, D\}\)</span> and <span class="math notranslate nohighlight">\(E' = \{A—B, B—D, C—D, A—C\}\)</span> forms a subgraph of G.</p>
+<p>In the special case where we only remove edges incident to removed nodes,
+we say that <span class="math notranslate nohighlight">\(G'\)</span> is the subgraph induced on <span class="math notranslate nohighlight">\(V'\)</span> if <span class="math notranslate nohighlight">\(E' = \{( x—y \mid x, y \in V' \text{ and } x—y \in E\}\)</span>.
+In other words, we keep all edges unless they are incident to a node not in <span class="math notranslate nohighlight">\(V'\)</span>.
+For instance, for a new set of vertices <span class="math notranslate nohighlight">\(V' = \{A, B, C, D\}\)</span>,
+the induced subgraph <span class="math notranslate nohighlight">\(G'\)</span> has the set of edges <span class="math notranslate nohighlight">\(E' = \{A—B, B—D, C—D, A—C\}\)</span>.</p>
+<section id="problem-1">
+<h2>Problem 1<a class="headerlink" href="#problem-1" title="Permalink to this headline">¶</a></h2>
+<p>An undirected graph G has <strong>width</strong> w if the vertices can be arranged in a sequence</p>
+<div class="math notranslate nohighlight">
+\[v_1, v_2, v_3, \dots , v_n\]</div>
+<p>such that each vertex <span class="math notranslate nohighlight">\(v_i\)</span> is joined by an edge to at most <span class="math notranslate nohighlight">\(w\)</span> preceding vertices.
+(Vertex <span class="math notranslate nohighlight">\(v_j\)</span> precedes <span class="math notranslate nohighlight">\(v_i\)</span> if <span class="math notranslate nohighlight">\(j &lt; i\)</span>.)
+Use induction to prove that every graph with width at most <span class="math notranslate nohighlight">\(w\)</span> is :math:<em>(w + 1)-colorable</em>.</p>
+<p>(Recall that a graph is k-colorable iff every vertex can be assigned one of k colors so that adjacent vertices get different colors.)</p>
+<hr><p>Let <span class="math notranslate nohighlight">\(P(n)\)</span> be the proposition defined as a graph, G, of n vertices, for some positive integer n.
+The graph has a width of w (as defined above), for some <span class="math notranslate nohighlight">\(w \in \Bbb N_+\)</span> where <span class="math notranslate nohighlight">\(0 \le w \le n - 1\)</span></p>
+<p><strong>Theorem</strong>: G is <em>(w + 1)-colourable</em></p>
+<p><strong>Base Case</strong>: We start with P(1), because for this class we don’t allow empty graphs.
+<span class="math notranslate nohighlight">\(P(1)\)</span> is true because there is one vertex and zero edges (since we don’t allow loops), which means w is also zero.
+It follows then, that the graph is <span class="math notranslate nohighlight">\(w + 1\)</span> or 1-colourable.
+Which is enough colours for the one vertex, so this proves the base case.</p>
+<p><strong>Inductive Step</strong>: Let G be any <em>(n+1)-node</em> graph.
+Let w be the width of the graph (as defined above).</p>
+<p>If we remove <span class="math notranslate nohighlight">\(v_{n+1}\)</span> we are left with a graph <span class="math notranslate nohighlight">\(G' = (v', e')\)</span>.
+<span class="math notranslate nohighlight">\(G'\)</span> has n vertices, so by P(n) we know it can be coloured with <span class="math notranslate nohighlight">\(w+1\)</span> colours.</p>
+<p>The vertex <span class="math notranslate nohighlight">\(v_{n+1}\)</span> is adjacent to at most w other vertices.
+This means w (or less) of the set of w+1 colours are used to colour its adjacent vertices.
+Therefore, there exists at least one colour left that can be used to colour <span class="math notranslate nohighlight">\(v_{n+1}\)</span>.</p>
+<p>So G is <em>(w+1)-colourable</em>.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+<section id="problem-2">
+<h2>Problem 2<a class="headerlink" href="#problem-2" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>planar graph</strong> is a graph that can be drawn without any edges crossing.</p>
+<ol class="arabic simple">
+<li><p><strong>First, show that any subgraph of a planar graph is planar.</strong></p></li>
+</ol>
+<hr><p>A planar graph, <span class="math notranslate nohighlight">\(G = (V, E)\)</span> has n nodes, and e edges (none of which cross).
+Removing one node, <span class="math notranslate nohighlight">\(v_n\)</span>, gives us a graph <span class="math notranslate nohighlight">\(G' = (V', E')\)</span>.
+Since <span class="math notranslate nohighlight">\(E'\)</span> is a sub-set of E, and none of the edges in E cross, then none of the edges in <span class="math notranslate nohighlight">\(E'\)</span> cross over either.
+<span class="math notranslate nohighlight">\(\square\)</span></p>
+<p>2. <strong>Also, any planar graph has a node of degree at most 5.</strong>
+<strong>Now, prove by induction that any planar graph can be colored in at most 6 colors.</strong></p>
+<hr><p><strong>Theorem</strong>: Let P(n) be the predicate that any n-node planar graph, G, is colourable in 6 or less colours.</p>
+<p><strong>Base Case</strong>: P(1) is true, because a 1-node graph is actually 1-colourable, which is less than 6 colours.</p>
+<p><strong>Inductive Step</strong>: We must prove P(n+1) is true, assuming P(n) is true.
+For P(n+1) we have an (n+1)-node graph, G.
+Removing a node, <span class="math notranslate nohighlight">\(v_{n+1}\)</span> leaves us with an n-node graph <span class="math notranslate nohighlight">\(G'\)</span>
+By the inductive hypothesis we know an n-node graph is 6 colourable.</p>
+<p>In G, <span class="math notranslate nohighlight">\(v_{n+1}\)</span> is adjacent to at most 5 nodes (by nature of it being a planar graph).
+This leaves us with at least 1 colour to use on <span class="math notranslate nohighlight">\(v_{n+1}\)</span> for a maximum of 6 colours.</p>
+<p>By induction we can conclude any n-node planar graph is at most 6-colourable.
+<span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponentiation_modular_arithmetic_RSA.html">RSA</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="exponentiation_modular_arithmetic_RSA.html" title="previous chapter">RSA</a></li>
+      <li>Next: <a href="stable_marriage_problem.html" title="next chapter">A Protocol For College Admission</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/graph_basics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

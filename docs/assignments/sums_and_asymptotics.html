@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Sums and Asymptotics &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Relations" href="relations.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="sums-and-asymptotics">
+<h1>Sums and Asymptotics<a class="headerlink" href="#sums-and-asymptotics" title="Permalink to this headline">¶</a></h1>
+<section id="problem-1">
+<h2>Problem 1<a class="headerlink" href="#problem-1" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Express</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=0}^{n} i^2 x^i\]</div>
+<p>as a closed-form function of n.</p>
+</div>
+<p>First, I tried the perturbation method, by multiplying the original expression by x.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\S = \sum\limits_{i=0}^{n} i^2 x^i &amp;= (0^2 \cdot x^0) + (1^2 \cdot x^1) + (2^2 \cdot x^2) + \dots + (n^2 \cdot x^n)\\&amp;= x + 4x^2 + \dots + n^2x^n\\xS &amp;= x^2 + 4x^3 + \dots + (n-1)^2x^n + n^2n^{n+1}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>The subtracting one from the other gives us;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\(1-x)S &amp;= x + 4x^2 + \dots + n^2x^n\\-&amp; \qquad x^2 + 4x^3 + \dots + (n-1)^2x^n + n^2n^{n+1} \cr\\&amp;= x + 3x^2 + 5x^3 + \dots + (n^2x^n - (n-1)^2x^n) - n^2x^{n+1}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>However, this doesn’t cancel out neatly, so next I tried the differential method;</p>
+<p>Starting with the closed form of the sum of increasing exponents (which was proved in the lecture);</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=0}^{n} x^i = {1 - x^{n+1} \over 1 - x}\]</div>
+<p>To get the desired form, we can iteratively take the derivative, then multiply up by x;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\{\delta \over \delta x}\left[ \sum\limits_{i=0}^{n} x^i \right] &amp;= \sum\limits_{i=0}^{n} ix^{i-1} \qquad &amp;&amp;\text{power rule} \cr\\x \cdot \sum\limits_{i=0}^{n} ix^{i-1} &amp;= \sum\limits_{i=0}^{n} ix^i \qquad &amp;&amp;\text{multiply by x} \cr\\{\delta \over \delta x}\left[ \sum\limits_{i=0}^{n} ix^i \right] &amp;= \sum\limits_{i=0}^{n} i^2x^{i-1} \qquad &amp;&amp;\text{take deriv again} \cr\\x \cdot \sum\limits_{i=0}^{n} i^2x^{i-1} &amp;= \sum\limits_{i=0}^{n} i^2x^i \qquad &amp;&amp;\text{multiply by x again} \cr\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>If we apply this to the other side of the equation we get;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\{\delta \over \delta x}\left[ {1 - x^{n+1} \over 1 - x} \right] &amp;= {\delta \over \delta x}\left[ (1 - x^{n+}) \cdot (1 - x)^{-1} \right]\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>By separating the terms and applying the product rule we get two functions of x,
+of which we can find their derivatives;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\g(x) &amp;= 1 - x^{n+1}\\g'(x) &amp;= {\delta \over \delta x}\left[ 1 \right] - {\delta \over \delta x}\left[ x^{n+1} \right]\\&amp;= 0 - (n+1)x^n\\h(x) &amp;= (1 - x)^{-1}\\&amp;\text{this require u substitution,}\\u &amp;= 1 - x\\{\delta \over \delta x}\left[ 1 - x \right] &amp;= {\delta \over \delta x}\left[ 1 \right] - {\delta \over \delta x}\left[ x \right]\\&amp;= 0 - 1\\\delta u &amp;= - \delta x\\h(x) &amp;= u^{-1}\\h'(x) &amp;= - {\delta \over \delta u}\left[ u^{-1} \right]\\&amp;= - (- u ^ {-2})\\&amp;= (1 - x)^{-2}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>We can then apply the product rule to finish the first closed form,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\{\delta \over \delta x}\left[ (1 - x^{n+1}) \cdot (1 - x)^{-1} \right] &amp;= -(n+1)x^n \cdot (1 - x)^{-1} + (1 - x^{n+1}) \cdot (1-x)^{-2}\\&amp;= {-(n+1)x^n \over 1 - x} + {1 - x^{n+1} \over (1 - x)^ 2}\\&amp;= {-(1-x)(n+1)x^n \over (1 - x)^{-2}} + {1 - x^{n+1} \over (1 - x)^ 2}\\&amp;= {-(1-x)(n+1)x^n + 1 - x^{n+1} \over (1 - x)^2}\\&amp;= {-((n+1)x^n - (n+1)x^{n+1}) + 1 - x^{n+1} \over (1 - x)^2}\\&amp;= {1 - (n+1)x^n + nx^{n+1} \over (1 - x)^2}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Then we need to multiply by x to get,</p>
+<div class="math notranslate nohighlight">
+\[i(x) = {x - (n+1)x^{n+1} + nx^{n+2} \over (1 - x)^2}\]</div>
+<p>Now we need to take the derivative again,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\j(x) &amp;= x - (n+1)x^{n+1} + nx^{n+2}\\j'(x) &amp;= {\delta \over \delta x}\left[ x \right] - {\delta \over \delta x}\left[ (n+1)x^{n+1} \right] + {\delta \over \delta x}\left[ nx^{n+2} \right]
+\cr \cr\\&amp;\text{first term is trivial}\\{\delta \over \delta x}\left[ x \right] &amp;= 1
+\cr \cr\\&amp;\text{second term requires applying the power rule}\\k(x) &amp;= (n+1)x^{n+1}\\&amp;l(x) = n + 1 \qquad l'(x) = 0\\&amp;m(x) = x^{n+1} \qquad m'(x) = (n+1)x^n\\k'(x) &amp;= 0 \cdot x^{n+1} + (n+1) \cdot (n+1)x^n\\&amp;= (n+1)^2x^n
+\cr \cr\\&amp;\text{third term also requires applying power rule}\\o(x) &amp;= nx^{n+2}\\&amp;p(x) = n \qquad p'(x) = 0\\&amp;q(x) = x^{n+2} \qquad q'(x) = (n+2)x^{n+1}\\o'(x) &amp;= 0 \cdot x^{n+2} + n \cdot (n+2)x^{n+1}\\&amp;= (n^2 + 2n)x^{n+1}
+\cr \cr\\&amp;\text{now we can put it all together}\\j'(x) &amp;= 1 - (n+1)^2x^n + (n^2 + 2n)x^{n+1}
+\cr \cr\\&amp;\text{now we work out the derivative of the second term of i'(x)}\\r(x) &amp;= (1 - x)^{-2}\\&amp;u = 1 - x \qquad \delta u = - \delta x\\r'(x) &amp;= 2(1-x)^{-3}
+\cr \cr\\&amp;\text{and now finally we can apply the power rule to get i'(x)}\\i'(x) &amp;= j'(x) \cdot r(x) + j(x) \cdot r'(x)
+\cr\\&amp;= (1 - (n+1)^2x^n + (n^2 + 2n)x^{n+1}) \cdot (1 - x)^{-2} + (x - (n+1)x^{n+1} + nx^{n+2}) \cdot 2(1-x)^{-3}
+\cr\\&amp;= {(1 - (n+1)^2x^n + (n^2 + 2n)x^{n+1})(1 - x) \over (1 - x)^3} + {2(x - (n+1)x^{n+1} + nx^{n+2}) \over (1 - x)^3}
+\cr\\&amp;= {(1 - (n+1)^2x^n + (n^2 + 2n)x^{n+1}) - (x - (n+1)^2x^{n+1} + (n^2 + 2n)x^{n+2}) + (2x - 2(n+1)x^{n+1} + 2nx^{n+2}) \over (1 - x)^3}
+\cr\\&amp;= {1 + x - (n+1)^2x^n + (2n^2 + 2n - 1)x^{n+1} - n^2x^{n+2} \over (1 - x)^3}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Finally, multiply up by x one last time to get the end result</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\sum\limits_{i=0}^{n} i^2x^i &amp;= x \cdot i'(x)
+\cr\\&amp;= \boxed{{x + x^2 - (n+1)^2x^{n+1} + (2n^2 + 2n - 1)x^{n+2} - n^2x^{n+3} \over (1 - x)^3}}\\\end{aligned}\end{aligned}\end{align} \]</div>
+</section>
+<section id="problem-2">
+<h2>Problem 2<a class="headerlink" href="#problem-2" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-a admonition">
+<p class="admonition-title">(a)</p>
+<p>What is the product of the first n odd powers of two: <span class="math notranslate nohighlight">\(\prod\limits_{k=1}^{n} 2^{2k-1}\)</span></p>
+</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\prod\limits_{k=1}^{n} 2^{2k-1} &amp;= 2^1 \cdot 2^3 + \dots \cdot 2^{2n-1}\\&amp;= 2^{\sum\limits_{j=1}^{n} 2j - 1}\\&amp;= 2^{\sum\limits_{i=1}^{2n - 1} \left[ i \right] - \sum\limits_{h=1}^{n - 1} \left[ 2h \right]}\\&amp;= 2^{{(2n - 1)2n \over 2} - 2({(n-1)n \over 2})}\\&amp;= 2^{4n^2 - 2n - 2(n^2 - n) \over 2}\\&amp;= 2^{2n^2 \over 2}\\&amp;= 2^{n^2}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<div class="admonition-b admonition">
+<p class="admonition-title">(b)</p>
+<p>Find a closed expression for</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=0}^{n} \sum\limits_{j=0}^{m} 3^{i+j}\]</div>
+</div>
+<p>We already know the closed form of the sum of increasing exponents;</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=0}^{n} x^i = {1-x^{n+1} \over 1 - x}\]</div>
+<p>We can use this to solve the closed form,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\sum\limits_{i=0}^{n} \sum\limits_{j=0}^{m} 3^{i+j} &amp;=
+        \sum\limits_{i=0}^{n} \left[ 3^i \cdot {1 - 3^{m+1} \over 1 - 3} \right]
+        \qquad &amp;&amp; \text{apply sum of increasing exponents formula to inner sum}\\&amp;= {1 - 3^{m+1} \over 1 - 3} \cdot \sum\limits_{i=0}^{n} 3^i
+        \qquad &amp;&amp; \text{closed sum is no longer bound to i}\\&amp;= {1 - 3^{m+1} \over 1 - 3} \cdot {1 - 3^{n+1} \over 1 - 3}
+        \qquad &amp;&amp; \text{apply the SIE formula again}\\&amp;= {1 - 3^{n+1} - 3^{m+1} + 3^{n+m+2} \over 4}
+        \qquad &amp;&amp; \text{tidy up}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<div class="admonition-c admonition">
+<p class="admonition-title">(c)</p>
+<p>Find a closed expression for</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i}^{n} \sum\limits_{j}^{n} (i + j)\]</div>
+</div>
+<p>We already know the sum of incrementing integers,</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=1}^n i = {n(n+1) \over 2}\]</div>
+<p>We can apply this first to the innner sum, then work outwards;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\sum\limits_{i}^{n} \sum\limits_{j}^{n} (i + j) &amp;= \sum\limits_{i=1}^{n} \left[ in + {n(n+1) \over 2}\right]\\&amp;= n({n(n+1) \over 2}) + \sum\limits_{i=1}^n in\\&amp;= {n^3 + n^2 \over 2} + {n^3 + n^2 \over 2}\\&amp;= n^3 + n^2\\\end{aligned}\end{aligned}\end{align} \]</div>
+<div class="admonition-d admonition">
+<p class="admonition-title">(d)</p>
+<p>Find a closed expression for</p>
+<div class="math notranslate nohighlight">
+\[\prod\limits_{i=1}^n \prod\limits_{j=1}^n 2^i \cdot 3^j\]</div>
+</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\prod\limits_{i=1}^n \prod\limits_{j=1}^n 2^i \cdot 3^j &amp;=
+        \prod\limits_{i=1}^n \left[ 2^{ni} \cdot \prod\limits_{j=1}^n 3^j \right]
+        \cr\\&amp;= \prod\limits_{i=1}^n \left[ 2^{ni} \cdot 3^{n(n+1) \over 2} \right]
+        \cr\\&amp;= \prod\limits_{i=1}^n \left[ 2^{ni} \right] \cdot (3^{n(n+1) \over 2})^n
+        \cr\\&amp;= 2^{\sum\limits_{i=1}^n ni} \cdot 3^{n^3 + n^2 \over 2}
+        \cr\\&amp;= 2^{n({n(n+1) \over 2})} \cdot 3^{n^3 + n^2 \over 2}
+        \cr\\&amp;= 2^{n^3 + n^2 \over 2} \cdot 3^{n^3 + n^2 \over 2}\\\end{aligned}\end{aligned}\end{align} \]</div>
+</section>
+<section id="problem-3">
+<h2>Problem 3<a class="headerlink" href="#problem-3" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-a admonition">
+<p class="admonition-title">(a)</p>
+<p>Use integration to find upper and lower bounds that differ by at most 0.1 for the following sum.
+(You may need to add the first few terms explicitly and then use integrals to bound the sum of the remaining terms.)</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2}\]</div>
+</div>
+<p>First we can find the limit as the function approaches infinity;</p>
+<div class="math notranslate nohighlight">
+\[\lim\limits_{n \rightarrow \infty} {1 \over (2n + 1)^2} = 0\]</div>
+<p>Since the function is decreasing and converges at zero, we can apply the following bounds,</p>
+<div class="math notranslate nohighlight">
+\[f(\infty) + \int_1^\infty f(x)\delta x \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le f(1) + \int_1^\infty f(x)\delta x\]</div>
+<p>We know <span class="math notranslate nohighlight">\(f(\infty)\)</span> approaches zero so this term is insignificant.
+We can also trivially solve <span class="math notranslate nohighlight">\(f(1) = {1 \over 9}\)</span>.
+We can then solve the integral to get our bounds,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\int_1^\infty {1 \over (2x + 1)^2} \delta x &amp; \qquad \text{requires u-substitution}
+        \cr\\u = 2x + 1 &amp; \qquad \delta u = 2 \delta x
+        \cr\\&amp;= {1 \over 2} \left( \int_9^\infty u^{-2} \delta u \right)
+        \cr\\&amp;= {1 \over 2} \left( {-1 \over u} \Bigm|_9^\infty \right)
+        \cr\\&amp;= {1 \over 2}\left( {-1 \over \infty} - {-1 \over 9} \right)
+        \cr\\&amp;= {1 \over 2} \left( {1 \over 9} \right)
+        \cr\\&amp;= {1 \over 18}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>So our bounds are,</p>
+<div class="math notranslate nohighlight">
+\[{1 \over 18} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {1 \over 18} + {1 \over 9}\]</div>
+<p>However, since the bounds differ by <span class="math notranslate nohighlight">\(1 \over 9\)</span>, this is not accurate enough.
+We can reduce the error by increasing the lower bound;</p>
+<div class="math notranslate nohighlight">
+\[f(1) + \int_2^\infty f(x)\delta x \le f(1) + \sum\limits_{i=2}^{\infty} {1 \over (2i + 1)^2} \le f(1) + f(2) + \int_2^\infty f(x)\delta x\]</div>
+<p>Again, we can calculate the integral to determine our error,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\int_2^\infty f(x)\delta x &amp;= \int_2^\infty {1 \over (2x + 1)^2} \delta x
+        \cr\\u = 2x + 1 &amp; \qquad \delta u = 2 \delta x
+        \cr\\&amp;= {1 \over 2} \left( \int_25^\infty u^{-2} \delta u \right)
+        \cr\\&amp;= {1 \over 2} \left( {-1 \over u} \Bigm|_25^\infty \right)
+        \cr\\&amp;= {1 \over 2}\left( {-1 \over \infty} - {-1 \over 25} \right)
+        \cr\\&amp;= {1 \over 2} \left( {1 \over 25} \right)
+        \cr\\&amp;= {1 \over 50}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This gives us the following bounds,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}{1 \over 9} + {1 \over 50} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {1 \over 9} + {1 \over 25} + {1 \over 50}
+        \cr\\{59 \over 450} \le \sum\limits_{i=1}^{\infty} {1 \over (2i + 1)^2} \le {59 \over 450} + {1 \over 25}\end{aligned}\end{align} \]</div>
+<p>This gives us an error of only <span class="math notranslate nohighlight">\({1 \over 25}\)</span> and so solves the question.</p>
+<div class="admonition-b admonition">
+<p class="admonition-title">(b)</p>
+<p>Assume <span class="math notranslate nohighlight">\(n\)</span> is an integer larger than 1.
+Which of the following inequalities, if any, hold?
+You may find the graph helpful.</p>
+<img alt="../_images/assignment-7-problem-3b.png" class="align-center" src="../_images/assignment-7-problem-3b.png" />
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\sum\limits_{i=1}^n \ln(i+1) \le \int_0^n \ln(x+2)\delta x\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum\limits_{i=1}^n \ln(i+1) \le \ln 2 + \int_1^n \ln(x+1)\delta x\)</span></p></li>
+</ol>
+</div>
+<p>The first inequality is true, because <span class="math notranslate nohighlight">\(\ln(x + 2)\)</span> defines the left Riemann sum of the summed terms,
+and since this function is increasing, that defines the upper bound.</p>
+<p>The second inequality is false, because <span class="math notranslate nohighlight">\(\ln(x+1)\)</span> defines the right Riemann sum of the summed terms,
+and since this function is increasing that defines the lower bound.
+This can be easily verified by calculating where <span class="math notranslate nohighlight">\(n=2\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\sum\limits_{i=1}^2 \ln(i+1) &amp;\cancel{\le} \ln 2 + \int_1^2 \ln(x+1)\delta x\\1.79... &amp;\cancel{\le} 0.69... + (3 \ln 3 - 3) - (2 \ln 2 - 2)\\1.79... &amp;\cancel{\le} 1.60...\\\end{aligned}\end{aligned}\end{align} \]</div>
+</section>
+<section id="problem-4">
+<h2>Problem 4<a class="headerlink" href="#problem-4" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-bug admonition">
+<p class="admonition-title">Bug</p>
+<p>There is a bug on the edge of a 1-meter rug.
+The bug wants to cross to the other side of the rug.
+It crawls at 1 cm per second.
+However, at the end of each second, a malicious first-grader named Mildred Anderson stretches the rug by 1 meter.
+Assume that her action is instantaneous and the rug stretches uniformly.
+Thus, here’s what happens in the first few seconds:</p>
+<ul class="simple">
+<li><p>The bug walks 1 cm in the first second, so 99 cm remain ahead.</p></li>
+<li><p>Mildred stretches the rug by 1 meter, which doubles its length.
+So now there are 2 cm behind the bug and 198 cm ahead.</p></li>
+<li><p>The bug walks another 1 cm in the next second, leaving 3 cm behind and 197 cm ahead.</p></li>
+<li><p>Then Mildred strikes, stretching the rug from 2 meters to 3 meters.
+So there are now <span class="math notranslate nohighlight">\(3 \cdot {3 \over 2} = 4.5\)</span> cm behind the bug and <span class="math notranslate nohighlight">\(197 \cdot {3 \over 2} = 295.5\)</span> cm ahead.</p></li>
+<li><p>The bug walks another 1 cm in the third second, and so on.</p></li>
+</ul>
+<p>Your job is to determine this poor bug’s fate.</p>
+</div>
+<p>After the bug walks for the first time, it has travelled <span class="math notranslate nohighlight">\({1 \over 100}\)</span> of the rug.
+After it gets stretched by 1 metre, the bug has now travelled <span class="math notranslate nohighlight">\({2 \over 200}\)</span> of the rug,
+but as a proportion of the rug travelled, the fraction remains the same, simplifying down to <span class="math notranslate nohighlight">\({1 \over 100}\)</span>.</p>
+<p>The second time around, the bug travels <span class="math notranslate nohighlight">\({1 \over 200}\)</span> of the rug,
+since it travels at a constant 1cm per iteration, and the rug is now 200cm long.
+If we add this to the distance already travelled we get <span class="math notranslate nohighlight">\({1 \over 100} + {1 \over 200} = {3 \over 200}\)</span>.</p>
+<p>The sum for the distance travelled after n steps can be written like this,</p>
+<div class="math notranslate nohighlight">
+\[\sum\limits_{i=1}^n {1 \over 100i}\]</div>
+<p>Since the <span class="math notranslate nohighlight">\({1 \over 100}\)</span> is a constant, this can be extracted, so we get;</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}{1 \over 100} \cdot \sum\limits_{i=1}^n {1 \over i}\\{1 \over 100} \cdot H_n\end{aligned}\end{align} \]</div>
+<p>There is no closed form for the Harmonic Sum, however, since it is a decreasing sum, we can apply integration bounds to it,</p>
+<div class="math notranslate nohighlight">
+\[{1 \over n} + \int_1^n ({1 \over n}) \le H_n \le {1 \over 1} + \int_1^n ({1 \over n})\]</div>
+<p>Solving the integral we get <span class="math notranslate nohighlight">\(\ln n\)</span>, which we can add back to equation to get the following bounds,</p>
+<div class="math notranslate nohighlight">
+\[{1 \over 100} \cdot \left( {1 \over n} + \ln n \right)
+        \le \sum\limits_{i=1}^n {1 \over 100i}
+        \le {1 \over 100} \cdot \left( 1 + \ln n \right)\]</div>
+<p>When the sum is greater than 1, it represents the bug finally reaching the end of the rug.</p>
+<p>We can solve this for the upper limit,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}1 = {1 \over 100} \left( 1 + \ln n \right)\\100 = 1 + \ln n\\99 = \ln n\\n = e^{99}\end{aligned}\end{align} \]</div>
+<p>That is to say, it will take no more than <span class="math notranslate nohighlight">\(e^{99}\)</span> steps for the bug to reach the end of the rug (!).</p>
+</section>
+<section id="problem-5">
+<h2>Problem 5<a class="headerlink" href="#problem-5" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>For each of the following six pairs of functions f and g (parts (i) through (vi)),
+state which of these order-of-growth relations hold (more than one may hold, or none may hold):</p>
+<div class="math notranslate nohighlight">
+\[f = o(g) \qquad f = O(g) \qquad f = \omega(g) \qquad f = \Omega(g) \qquad \Theta(g) \qquad f \thicksim g\]</div>
+</div>
+<div class="admonition-a admonition">
+<p class="admonition-title">(a)</p>
+<div class="math notranslate nohighlight">
+\[f(n) = \log_2 n \qquad g(n) = \log_10 n\]</div>
+</div>
+<p>From our log properties we know that <span class="math notranslate nohighlight">\(\log_x a = {\ln a \over \ln x}\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| &amp;= \lim_{x \rightarrow \infty} \left| {{\ln \infty \over \ln 2} \over { \ln \infty \over \ln 10}} \right|
+        \cr\\&amp;= \lim_{x \rightarrow \infty} \left| {\ln 10 \cdot \ln \infty \over \ln 2 \cdot \ln \infty} \right|
+        \cr\\&amp;= {\ln 10 \over \ln 2} \cdot \lim_{x \rightarrow \infty} \left| {\ln \infty \over \ln \infty} \right|
+        \cr\\&amp;= \log_2 10 \cdot 1
+        \cr\\&amp;= 3.321..\\\end{aligned}\end{aligned}\end{align} \]</div>
+<ol class="lowerroman simple">
+<li><p>For <span class="math notranslate nohighlight">\(f = o(g)\)</span> to be true we must prove,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f = o(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| = 0\]</div>
+<p>Since the limit does not equal zero, <span class="math notranslate nohighlight">\(f = o(g)\)</span> does not hold.</p>
+<ol class="lowerroman simple" start="2">
+<li><p>For <span class="math notranslate nohighlight">\(f = O(g)\)</span> to be true we must prove,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f = O(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| &lt; \infty\]</div>
+<p>Since the limit is <span class="math notranslate nohighlight">\(\log_2 10\)</span>, which is less than infinity, so <span class="math notranslate nohighlight">\(f = O(g)\)</span> holds.</p>
+<ol class="lowerroman simple" start="3">
+<li><p>For <span class="math notranslate nohighlight">\(f = \omega(g)\)</span> to be true we must prove,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f = \omega(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| = \infty\]</div>
+<p>The limit does not equal infinity, so <span class="math notranslate nohighlight">\(f = \omega(g)\)</span> does not hold.</p>
+<ol class="lowerroman simple" start="4">
+<li><p>For <span class="math notranslate nohighlight">\(f = \Omega(g)\)</span> to be true, we must prove,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f = \Omega(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| &gt; 0\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\log_2 10 &gt; 0\)</span>, <span class="math notranslate nohighlight">\(f = \Omega(g)\)</span> is true.</p>
+<ol class="loweralpha simple" start="22">
+<li><p>For <span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> to be true we must prove,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f = \Theta(g) \Rightarrow 0 &lt; \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| &lt; \infty\]</div>
+<p>Since <span class="math notranslate nohighlight">\(0 &lt; \log_2 10 &lt; \infty\)</span>, then <span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> holds.</p>
+<ol class="lowerroman simple" start="6">
+<li><p>For <span class="math notranslate nohighlight">\(f \thicksim g\)</span> to be true, we must prove,</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f \thicksim g \Rightarrow \lim_{x \rightarrow \infty} \left| {\log_2 n \over \log_10 n} \right| = 1\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\log_2 10\)</span> does not equal 1, this is not true.</p>
+<div class="admonition-b admonition">
+<p class="admonition-title">(b)</p>
+<div class="math notranslate nohighlight">
+\[f(n) = 2^n \qquad g(n) = 10^n\]</div>
+</div>
+<p>First we calculate the limit,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\lim_{x \rightarrow \infty} \left| {2^x \over 10^x} \right| &amp;= \lim_{x \rightarrow \infty} \left| {\cancel{2^x} \over \cancel{2^x} \cdot 5^x} \right|\\&amp;= 0\\\end{aligned}\end{aligned}\end{align} \]</div>
+<ol class="lowerroman simple">
+<li><p><span class="math notranslate nohighlight">\(f = o(g)\)</span> holds, because the limit is equal to zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = O(g)\)</span> holds too, because zero is less than infinity.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \omega(g)\)</span> does not hold, because the limit is not infinity.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Omega(g)\)</span> does not hold, because the limit is zero, (as opposed to greater than zero).</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> does not hold because <span class="math notranslate nohighlight">\(0 &lt; limit &lt; \infty\)</span> is not true when the limit is zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f \thicksim g\)</span> does not hold because the limit does not equal 1.</p></li>
+</ol>
+<div class="admonition-c admonition">
+<p class="admonition-title">(c)</p>
+<div class="math notranslate nohighlight">
+\[f(n) = 0 \qquad g(n) = 17\]</div>
+</div>
+<p>First we calculate the limit,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{x \rightarrow \infty} \left| {0 \over 17} \right| = 0\]</div>
+<ol class="lowerroman simple">
+<li><p><span class="math notranslate nohighlight">\(f = o(g)\)</span> holds, which makes sense because 17 is larger than zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = O(g)\)</span> holds, which also makes sense because 17 is larger than zero by a fixed amount.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \omega(g)\)</span> does not hold, because zero cannot not be larger than 17.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Omega(g)\)</span> does not hold either for the same reason.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> does not hold, because f is zero for any value of n, so f cannot grow at a fixed rate relative to g, because f does not grow.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f \thicksim g\)</span> does not hold, because f does not grow exactly as fast as g.</p></li>
+</ol>
+<div class="admonition-d admonition">
+<p class="admonition-title">(d)</p>
+<div class="math notranslate nohighlight">
+\[f(n) = 1 + cos({\pi n \over 2}) \qquad g(n) = 1 + sin({\pi n \over 2})\]</div>
+</div>
+<p>First we must take the limit. However, since <span class="math notranslate nohighlight">\(sin({\pi x \over 2})\)</span> oscillates between -1 and 1,
+the limit does not exist, so we must take the limit superior.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\limsup_{x \rightarrow \infty} \left| {1 + cos({\pi n \over 2}) \over 1 + sin({\pi n \over 2})} \right| &amp;= \limsup_{z \rightarrow \infty} \left| {1 + 1 \over 1 + 1} \right|\\&amp;= 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<ol class="lowerroman simple">
+<li><p><span class="math notranslate nohighlight">\(f = o(g)\)</span> is not true, since the limit is not zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = O(g)\)</span> is true, since the limit is less than <span class="math notranslate nohighlight">\(\infty\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \omega(g)\)</span> is not true, since the limit is not equal to <span class="math notranslate nohighlight">\(\infty\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Omega(g)\)</span> is true, because the limit is greater than zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> is true, because the limit is between zero and infinity.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f \thicksim g\)</span> is true because the limit is exactly 1.</p></li>
+</ol>
+<div class="admonition-e admonition">
+<p class="admonition-title">(e)</p>
+<div class="math notranslate nohighlight">
+\[f(n) = 1.0000000001^n \qquad g(n) = n^{10000000000}\]</div>
+</div>
+<p>Since we know any exponential grows faster than any polynomial, we know the reverse,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty} \left| {a^n \over n^b} \right| = \infty\]</div>
+<p>where a and b are both greater than 1, which is true in our case.</p>
+<ol class="lowerroman simple">
+<li><p><span class="math notranslate nohighlight">\(f = o(g)\)</span> is not true, because the limit is not zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = O(g)\)</span> is also not true, because the limit is <span class="math notranslate nohighlight">\(\infty\)</span>, which is not less than infinity.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \omega(g)\)</span> is true, because the limit is equal to infinity.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Omega(g)\)</span> is also true because infinity is greater than zero.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f = \Theta(g)\)</span> is not true because the limit is not between zero and infinity.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f \thicksim g\)</span> is not true because the limit is not equal to 1.</p></li>
+</ol>
+</section>
+<section id="problem-6">
+<h2>Problem 6<a class="headerlink" href="#problem-6" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>This problem continue the study of asymptotics of factorials.</p>
+</div>
+<div class="admonition-a admonition">
+<p class="admonition-title">(a)</p>
+<p>Either prover or disprove each of the following statements.</p>
+</div>
+<p>If we let <span class="math notranslate nohighlight">\(f(x) = x!\)</span> and <span class="math notranslate nohighlight">\(g(x) = (x+1)!\)</span> then we can calculate the limit</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| &amp;=
+        \lim_{x \rightarrow \infty} \left|
+        {(\cancel{1} \cdot \cancel{2} \cdot \dots \cdot \cancel{n}) \over
+        (\cancel{1} \cdot \cancel{2} \cdot \dots \cdot \cancel{n} \cdot (n+1))} \right|\\&amp;= \lim_{x \rightarrow \infty} \left| {1 \over (n+1)} \right|\\&amp;= 0\\\end{aligned}\end{aligned}\end{align} \]</div>
+<ol class="lowerroman">
+<li><p><span class="math notranslate nohighlight">\(n! = O((n+1)!)\)</span></p>
+<blockquote>
+<div><p>We must prove the inequality,</p>
+<div class="math notranslate nohighlight">
+\[f = O(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| &lt; \infty\]</div>
+<p>Since zero is less than infinity, it holds.</p>
+</div></blockquote>
+</li>
+<li><p><span class="math notranslate nohighlight">\(n! = \Omega((n+1)!)\)</span></p>
+<blockquote>
+<div><p>We must prove the inequality,</p>
+<div class="math notranslate nohighlight">
+\[f = \Omega(g) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| &gt; 0\]</div>
+</div></blockquote>
+<p>Since the limit <em>is</em> zero, this inequality does not hold.</p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(n! = \Theta((n+1)!)\)</span></p>
+<blockquote>
+<div><p>We must prove the inequality,</p>
+<div class="math notranslate nohighlight">
+\[f = \Theta(g) \Rightarrow 0 &lt; \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| &lt; \infty\]</div>
+<p>Again, the limit is zero, and the inequality requires it be strictly greater than, so it does not hold.</p>
+</div></blockquote>
+</li>
+<li><p><span class="math notranslate nohighlight">\(n! = \omega((n+1)!)\)</span></p>
+<blockquote>
+<div><p>We must show,</p>
+<div class="math notranslate nohighlight">
+\[f = \omega((n+1)!) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| = \infty\]</div>
+<p>Zero is not infinity, so this does not hold.</p>
+</div></blockquote>
+</li>
+<li><p><span class="math notranslate nohighlight">\(n! = o((n+1)!)\)</span></p>
+<blockquote>
+<div><p>For this to be true, we must show,</p>
+<div class="math notranslate nohighlight">
+\[f = o((n+1)!) \Rightarrow \lim_{x \rightarrow \infty} \left| {x! \over (x+1)!} \right| = 0\]</div>
+<p>which is true, the limit is zero, so this one holds.</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition-b admonition">
+<p class="admonition-title">(b)</p>
+<p>Show that <span class="math notranslate nohighlight">\(n! = \omega \left( ({n \over 3})^{n+e} \right)\)</span></p>
+</div>
+<p>First we must calculate the limit,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\lim_{n \rightarrow \infty} \left| {n! \over ({n \over 3})^{n+e}} \right|
+        &amp;= \lim_{n \rightarrow \infty} \left| {3^{n+e} \cdot n! \over n^{n+e}} \right|\\&amp;= \lim_{n \rightarrow \infty} \left| {3^{n+e} \over n^e} \cdot {n! \over n^n} \right|\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Note that <span class="math notranslate nohighlight">\(n!\)</span> and <span class="math notranslate nohighlight">\(n^n\)</span> both trend towards infinity, so <span class="math notranslate nohighlight">\({n! \over n^n}\)</span> is indeterminate.
+However, we can make the observation that <span class="math notranslate nohighlight">\(0 \le {n! \over n^n}\)</span>.</p>
+<p>Next, by looking at each term in the equation we can see,</p>
+<div class="math notranslate nohighlight">
+\[{n! \over n^n} = {n \over n} \cdot {(n - 1) \over n} \cdot \dots \cdot {2 \over n} \cdot {1 \over n}\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(n \over n = 1\)</span> and each term after that <span class="math notranslate nohighlight">\(\le 1\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[{n! \over n^n} \le 1 \cdot 1 \cdot \dots \cdot 1 \cdot {1 \over n}\]</div>
+<p>Therefore,</p>
+<div class="math notranslate nohighlight">
+\[0 \le {n! \over n^n} \le {1 \over n}\]</div>
+<p>If we take the limit, we find</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\lim_{n \rightarrow \infty} 0 \le &amp;\lim_{n \rightarrow \infty} {n! \over n^n} \le \lim_{n \rightarrow \infty} {1 \over n}\\0 \le &amp;\lim_{n \rightarrow \infty} {n! \over n^n} \le 0\\&amp;\lim_{n \rightarrow \infty} {n! \over n^n} = 0 &amp;&amp;\qquad \text{by Squeeze Theorem}\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Plugging that back in to our equation above we get,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty} \left| {3^{n+e} \over n^e} \right| \cdot 0 \qquad \text{by Product Rule}\]</div>
+<p>Therefore,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty} \left| ({n \over 3})^{n+e} \right| = 0\]</div>
+<p>Now we can prove the original question,</p>
+<div class="math notranslate nohighlight">
+\[n! = \omega \left( ({n \over 3})^{n+e} \right) \Rightarrow \lim_{n \rightarrow \infty} \left| {n! \over ({n \over 3})^{n+e}} \right| = \infty\]</div>
+<p>However, as we showed above the limit is zero, so <span class="math notranslate nohighlight">\(n! \cancel{=} \omega \left( ({n \over 3})^{n+e} \right)\)</span>.</p>
+<div class="admonition-c admonition">
+<p class="admonition-title">(c)</p>
+<p>Show that <span class="math notranslate nohighlight">\(n! = \Omega(2^n)\)</span></p>
+</div>
+<p>We must show,</p>
+<div class="math notranslate nohighlight">
+\[n! = \Omega(2^n) \Rightarrow \lim_{n \rightarrow \infty} \left| {n! \over 2^n} \right| &gt; 0\]</div>
+<p>First, we explore the limit,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\lim_{n \rightarrow \infty} \left| {n! \over 2^n} \right|
+        &amp;= \lim_{n \rightarrow \infty} \left| {n \cdot (n-1) \cdot (n-2) \cdot \dots \cdot 2 \cdot 1 \over 2 \cdot 2 \cdot 2 \cdot \dots \cdot 2 \cdot 2} \right|\\&amp;= \lim_{n \rightarrow \infty} \left| {n \over 2} \cdot \underbrace{{n-1 \over 2} \cdot {n-2 \over 2} \cdot \dots \cdot {2 \over 2}}_{\ge 1} \cdot {1 \over 2} \right|\\&amp;&gt; \lim_{n \rightarrow \infty} \left| {n \over 4} \right|\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Since the limit of <span class="math notranslate nohighlight">\(n \over 4\)</span> is greater than zero, we know the limit of the original equation is greater than zero.
+Therefore <span class="math notranslate nohighlight">\(n! = \Omega(2^n)\)</span> holds.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../recitations/index.html">Recitations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Assignments</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="propositions_and_proofs.html">Propositions and Proofs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_theory.html">Number Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="more_number_theory.html">More Number Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_theory.html">Graph Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="more_graph_theory.html">More Graph Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Relations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sums and Asymptotics</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Assignments</a><ul>
+      <li>Previous: <a href="relations.html" title="previous chapter">Relations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/assignments/sums_and_asymptotics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

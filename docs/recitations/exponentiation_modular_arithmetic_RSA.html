@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>RSA &#8212; maths 6.042 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Graph Basics" href="graph_basics.html" />
+    <link rel="prev" title="Greatest Common Divisors" href="greatest_common_divisor.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="rsa">
+<h1>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h1>
+<p>You’ll probably need extra paper. Check your work carefully!</p>
+<ol class="arabic">
+<li><p>As a team, go through the beforehand steps.</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><dl class="simple">
+<dt>Choose primes p and q to be relatively small, say in the range 5-15.</dt><dd><p>In practice, p and q might contain several hundred digits, but small numbers are easier to handle with pencil and paper.</p>
+</dd>
+</dl>
+</li>
+<li><p>Calculate n = pq. This number will be used to encrypt and decrypt your messages.</p></li>
+<li><dl class="simple">
+<dt>Find an <span class="math notranslate nohighlight">\(e &gt; 1\)</span> such that <span class="math notranslate nohighlight">\(gcd(e,(p − 1)(q − 1)) = 1\)</span>.</dt><dd><p>The pair (e, n) will be your public key.
+This value will be broadcast to other groups, and they will use it to send you messages.</p>
+</dd>
+</dl>
+</li>
+<li><p>Now you will need to find a d such that <span class="math notranslate nohighlight">\(de ≡ 1\ \big( mod\ (p − 1)(q − 1) \big)\)</span>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Explain how this could be done using the Pulverizer. (Do not carry out the computations!)</p></li>
+<li><dl class="simple">
+<dt>Find d using Euler’s Theorem given in yesterday’s lecture.</dt><dd><p>The pair (d, n) will be your secret key. Do not share this with anybody!</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<p>When you’re done, write your public key and group members’ names on the board.</p>
+<hr><p>First pick p and q. I’m going to choose lucky number 7 and unlucky 13. Perfectly balanced.</p>
+<div class="math notranslate nohighlight">
+\[p = 7, q = 13\]</div>
+<p>Now calculate the product of those primes;</p>
+<div class="math notranslate nohighlight">
+\[n = 7 \cdot 13 = 91\]</div>
+<p>Next find a value for e,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\gcd \big( e, (7 - 1)(13 - 1) \big) &amp;= 1\\gcd(e, 72) &amp;= 1\\e &amp;= 31\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Now we have to find a secret d. With division theorem, we can rewrite <span class="math notranslate nohighlight">\(de ≡ 1\ \big( mod\ (p − 1)(q − 1) \big)\)</span> into,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\de - 1 &amp;= k \cdot (p - 1)(q - 1) &amp;&amp; \exists k \in \Bbb Z \cr\\d \cdot e - k \cdot (p - 1)(q - 1) &amp;= 1\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This gives a linear combination of e and <span class="math notranslate nohighlight">\((p-1)(q-1)\)</span> where d is the multiplicative inverse of e.
+Since we already know <span class="math notranslate nohighlight">\(gcd(e,(p − 1)(q − 1)) = 1\)</span>, we know it exists.</p>
+<p>Using the pulverizer we can find the coefficient of that linear combination.
+If it is negative, we can apply,</p>
+<div class="math notranslate nohighlight">
+\[1 = (s - y) \cdot x + (x - t) \cdot y\]</div>
+<p>In our equation that looks like,</p>
+<div class="math notranslate nohighlight">
+\[1 = (s - (p − 1)(q − 1)) \cdot e + (e - t) \cdot (p − 1)(q − 1)\]</div>
+<p>However, as it turns out, this is not necessary, because the pulveriser yields,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\1 &amp;= 7 \cdot e - 3 \cdot (p - 1)(q - 1)\\&amp;= \boxed{7} \cdot 31 - 3 \cdot 72\\&amp;= 217 - 216\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>The value for d is boxed.</p>
+<p>Using Euler’s Theorem instead, and the fact e and <span class="math notranslate nohighlight">\((p - 1)(q - 1)\)</span> are relatively prime, we know that,</p>
+<div class="math notranslate nohighlight">
+\[e^{\phi \big( (p - 1)(q - 1) \big)} ≡ 1 \ (mod\ (p − 1)(q − 1))\]</div>
+<p>From this, it follows that the inverse of e (mod <span class="math notranslate nohighlight">\((p − 1)(q − 1)\)</span>) is d.
+It can be calculated as,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\e^{\phi \big( (p - 1)(q - 1) \big) - 1} \cdot e &amp;≡ 1 \ (mod\ (p − 1)(q − 1))\\d &amp;= 31^{\phi(72) - 1} \ (mod\ 72)\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>We can then work out Euler’s totient function as follows,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\phi(72) - 1 &amp;= (2^3 - 2^2)(3^2 - 3^1) - 1 \qquad &amp;&amp; \text{factorisation of 72}\\&amp;= (2^3 - 2^2)(3^2 - 3^1) - 1\\&amp;= 2 \cdot 3 - 1\\&amp;= 5\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>This could be be an extremely large number, but we can reduce it by applying repeated squaring.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\31^2 &amp;≡ 25 \ (mod\ 72)\\31^4 &amp;≡ 49\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Well, doesn’t look like repeated squaring helps us much here…
+Anyway,</p>
+<div class="math notranslate nohighlight">
+\[31^5 \ (mod\ 72) = 7\]</div>
+<p>Which is the same answer we got from the pulveriser. Hurray!</p>
+<ol class="arabic" start="2">
+<li><p><strong>Now ask your recitation instructor for a message to encrypt and send to another team using their public key.</strong></p>
+<blockquote>
+<div><p>The messages m correspond to statements from the codebook below:</p>
+<p>2 = Greetings and salutations!</p>
+<p>3 = Wassup, yo?</p>
+<p>4 = You guys are slow!</p>
+<p>5 = All your base are belong to us.</p>
+<p>6 = Someone on our team thinks someone on your team is kinda cute.</p>
+<p>7 = You are the weakest link. Goodbye</p>
+</div></blockquote>
+</li>
+</ol>
+<hr><p>My wife chose 6. Coincidence? Maybe…</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Encode the message you were given using another team’s public key.</strong></p></li>
+</ol>
+<hr><div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\m &amp;= 6\\m` &amp;= rem(m^e, n)\\&amp;= rem(6^31, 91)\\6^2 = 36,\ &amp;mod\ 91 = 36\\6^4 = 1296,\ &amp;mod\ 91 = 22\\6^8 = 1679616,\ &amp;mod\ 91 = 29\\&amp;= 6^{8+8+8+4+2+1} \ (mod\ 91)\\&amp;= 29^3 \cdot 22 \cdot 36 \cdot 6 \ (mod\ 91)\\&amp;= 1 \cdot 22 \cdot 36 \cdot 6 \ (mod\ 91)\\&amp;= 4752 \ (mod\ 91)\\&amp;= 20\\\end{aligned}\end{aligned}\end{align} \]</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Now decrypt the message sent to you and verify that you received what the other team sent!</strong></p></li>
+</ol>
+<hr><p>Since I don’t have any classmates, I’ll just decode my own message :’)</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\m &amp;= rem((m`)^d, n)\\&amp;= rem(20^7, 91)\\20^2 = 400,\ &amp;mod\ 91 = 36\\20^4 = 160000,\ &amp;mod\ 91 = 22\\&amp;= 20^{4+2+1} \ (mod\ 91)\\&amp;= 22 \cdot 36 \cdot 20 \ (mod\ 91)\\&amp;= 15840 \ (mod\ 91)\\&amp;= 6\\\end{aligned}\end{aligned}\end{align} \]</div>
+<p>Huzzah! Someone on my team thinks someone on my team is kinda cute ;)</p>
+<ol class="arabic simple" start="5">
+<li><p><strong>Explain how you could read messages encrypted with RSA if you could quickly factor large numbers.</strong></p></li>
+</ol>
+<hr><p>If you can factor n back into p and q, you can work out the rest following the steps we’ve just gone through.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">maths</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Recitations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logic.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="induction.html">Induction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_machines.html">State Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greatest_common_divisor.html">Greatest Common Divisors</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph_basics.html">Graph Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stable_marriage_problem.html">A Protocol For College Admission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_up_problem.html">Build Up Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="travelling_salesperson.html">Travelling Salesperson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks.html">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Equivalence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doubles.html">Doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html">Asymptotic Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#asymptotic-equivalence">Asymptotic Equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asymptotics.html#more-asymptotic-notation">More Asymptotic Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../assignments/index.html">Assignments</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Recitations</a><ul>
+      <li>Previous: <a href="greatest_common_divisor.html" title="previous chapter">Greatest Common Divisors</a></li>
+      <li>Next: <a href="graph_basics.html" title="next chapter">Graph Basics</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Edward Spencer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/recitations/exponentiation_modular_arithmetic_RSA.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
